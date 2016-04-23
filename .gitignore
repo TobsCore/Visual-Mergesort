@@ -1,0 +1,26 @@
+#LaTeX files
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.vrb
+
+#Other
+*.zip
+*.pdf
+*.tcp
+*.tps
+*.synctex
+.project
+
+#Latex Generation from Atom
+*.fdb_latexmk
+
+#Shitty Mac file
+*.DS_Store
+
+*.synctex.gz
+*.fls
+*.iml
