@@ -3,7 +3,7 @@
 Das Visual Merge Sort Programm ist das Resultat unserer Projektarbeit aus dem fünften Semester and der HsKA. Geschrieben von:
 
 * Tobias Kerst [@TobsCore](https://github.com/TobsCore)
-* Patrick König
+* Patrick König [IKnowHowToAbuseAll39CharactersKingFeget](https://github.com/IKnowHowToAbuseAll39CharactersKingFeget)
 
 ## Beschreibung
 
