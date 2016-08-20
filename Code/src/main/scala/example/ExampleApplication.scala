@@ -6,6 +6,8 @@ import scalafx.application.JFXApp
 import scalafx.application.JFXApp.PrimaryStage
 import scalafx.scene.Scene
 import scalafx.Includes._
+import scalafx.scene.control.Label
+import scalafx.scene.layout.BorderPane
 import scalafxml.core.{FXMLView, NoDependencyResolver}
 
 object ExampleApplication extends JFXApp {
@@ -18,7 +20,16 @@ object ExampleApplication extends JFXApp {
 
   stage = new PrimaryStage() {
     title = "FXML GridPane Demo"
-    scene = new Scene(root)
+
+
+    var borderPane = new BorderPane()
+    var joman = new Label("hello")
+    var joman2 = new Label("hello2")
+    borderPane.setCenter(root)
+    borderPane.setTop(joman)
+    scene = new Scene(borderPane)
+
+
   }
 
 }
