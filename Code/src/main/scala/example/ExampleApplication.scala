@@ -19,14 +19,10 @@ object ExampleApplication extends JFXApp {
   val root = FXMLView(resource, NoDependencyResolver)
 
   stage = new PrimaryStage() {
-    title = "FXML GridPane Demo"
-
-
+    title = "Tobys und Pattys neue beste und faszinierende Application"
     var borderPane = new BorderPane()
     var joman = new Label("hello")
-    var joman2 = new Label("hello2")
     borderPane.setCenter(root)
-    borderPane.setTop(joman)
     scene = new Scene(borderPane)
 
 
