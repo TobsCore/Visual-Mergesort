@@ -15,6 +15,10 @@
 *.synctex
 .project
 
+#BibTex
+*.bbl
+*.blg
+
 #Latex Generation from Atom
 *.fdb_latexmk
 

@@ -23,7 +23,7 @@
 
 % colored links
 \usepackage{color}
-\usepackage[colorlinks]{hyperref}
+\usepackage[colorlinks=true, citecolor=red] {hyperref}
 \definecolor{grey}{rgb}{0.2,0.2,0.2}
 \definecolor{orange}{rgb}{1,0.3,0}
 \definecolor{turqoise}{rgb}{0,0.7,0.5}
@@ -46,6 +46,8 @@
 \usepackage{graphicx}
 \graphicspath{{images/}}
 
+% BibTex lib - used for citation
+\usepackage{cite}
 % fancy headers and footers
 \usepackage{fancyhdr}
 \pagestyle{fancy}
@@ -113,4 +115,7 @@
 
 \input{intro}
 
+\addcontentsline{toc}{chapter}{Literatur}
+\bibliography{sources}
+\bibliographystyle{alpha}
 \end{document}
