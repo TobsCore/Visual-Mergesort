@@ -20,7 +20,7 @@ object ExampleApplication extends JFXApp {
   stage = new PrimaryStage() {
     title = "Tobys und Pattys neue beste und faszinierende Application"
     val borderPane = new BorderPane()
-    var canvas = new Canvas(300,300)
+    var canvas = new Canvas(400,300)
     borderPane.setTop(root)
     borderPane.setCenter(canvas)
     scene = new Scene(borderPane)
