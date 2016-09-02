@@ -5,6 +5,7 @@ import java.io.IOException
 import scalafx.application.JFXApp
 import scalafx.application.JFXApp.PrimaryStage
 import scalafx.scene.Scene
+import scalafx.scene.canvas.Canvas
 import scalafx.scene.layout.BorderPane
 import scalafxml.core.{FXMLView, NoDependencyResolver}
 
@@ -19,7 +20,9 @@ object ExampleApplication extends JFXApp {
   stage = new PrimaryStage() {
     title = "Tobys und Pattys neue beste und faszinierende Application"
     val borderPane = new BorderPane()
-    borderPane.setCenter(root)
+    var canvas = new Canvas(300,300)
+    borderPane.setTop(root)
+    borderPane.setCenter(canvas)
     scene = new Scene(borderPane)
 
 
