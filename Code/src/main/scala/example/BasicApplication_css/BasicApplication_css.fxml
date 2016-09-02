@@ -12,7 +12,7 @@
 
 <VBox prefHeight="258.0" prefWidth="453.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="example.MyController">
   <children>
-    <MenuBar VBox.vgrow="NEVER">
+    <MenuBar VBox.vgrow="NEVER" useSystemMenuBar="true">
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
