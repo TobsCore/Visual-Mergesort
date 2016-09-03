@@ -10,7 +10,7 @@ import scalafx.scene.layout.{BorderPane, Pane}
 import scalafxml.core.{FXMLView, NoDependencyResolver}
 
 object ExampleApplication extends JFXApp {
-  val resource = getClass.getResource("BasicApplication_css/BasicApplication_css.fxml")
+  val resource = getClass.getResource("/BasicApplication_css.fxml")
   if (resource == null) {
     throw new IOException("Cannot load resource: AdoptionForm.fxml")
   }

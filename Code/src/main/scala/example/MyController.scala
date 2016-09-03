@@ -1,10 +1,17 @@
 package example
 
-import scalafx.scene.control.{Button, Label, TextField}
+import java.net.URL
+import java.util.ResourceBundle
+import javafx.fxml.Initializable
+
+import scalafx.scene.control.{Button, Label, TextField, Tooltip}
 import javafx.scene.layout.{BorderPane, Pane}
 import javafx.scene.paint.Color
-import scalafx.scene.shape.Rectangle
 
+import scalafx.animation.FadeTransition
+import scalafx.scene.image.ImageView
+import scalafx.scene.shape.Rectangle
+import scalafx.util.Duration
 import scalafxml.core.macros.sfxml
 
 /**
@@ -14,7 +21,9 @@ import scalafxml.core.macros.sfxml
 class MyController (
   private val button: Button,
   private val clickTimeTextField: TextField,
-  private val infolabel: Label) {
+  private val infoLabel: Label,
+  private val infoImage: ImageView) {
+
 
 
 
@@ -30,7 +39,7 @@ class MyController (
       }
       case _ => throw new ClassCastException("Cannot cast to BorderPane")
     }
-    
+
 
 
       def getUserInput = () => {try {
@@ -43,7 +52,7 @@ class MyController (
     val userSetLimit: Integer = getUserInput()
 
     if (userSetLimit >= 1 && userSetLimit <= 15) {
-      infolabel.text_=("")
+      hideInfoMessageOnCorrectInput()
       canvas.getChildren.clear()
 
       for (i <- 1 to userSetLimit) {
@@ -56,18 +65,51 @@ class MyController (
         canvas.getChildren.add(rectangle)
       }
     } else {
-      infolabel.text_=("Please enter a number between 1 and 15");
+      displayInfoMessageOnError()
     }
 
-    canvas.lookup("#jo1").relocate(300,100)
-
-
-
-
-
-
   }
- }
+
+  var isPermanentlySet = false
+
+  def displayInfoMessageOnError(): Unit = {
+    infoLabel.opacity = 1
+    isPermanentlySet = true
+  }
+
+  def hideInfoMessageOnCorrectInput(): Unit = {
+    infoLabel.opacity = 0
+    isPermanentlySet = false
+  }
+
+  def displayInfoMessage(): Unit = {
+    if(!isPermanentlySet) {
+      val fadeIn: FadeTransition = new FadeTransition {
+        duration = Duration(150)
+        fromValue = 0
+        toValue = 1
+        node = infoLabel
+      }
+      fadeIn.play()
+    }
+  }
+
+
+
+  def hideInfoMessage(): Unit ={
+    if(!isPermanentlySet) {
+      val fadeOut: FadeTransition = new FadeTransition {
+        duration = Duration(150)
+        fromValue = 1
+        toValue = 0
+        node = infoLabel
+      }
+      fadeOut.play()
+
+    }
+  }
+
+}
 
 
 
