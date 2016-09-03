@@ -81,8 +81,10 @@ var aboutStage: Stage = null;
       aboutStage = new Stage() {
         title = "About Dialog"
         scene = new Scene(root)
+        resizable = false
       }
     }
+
     if (!aboutStage.showing()) {
       aboutStage.show()
     } else {
