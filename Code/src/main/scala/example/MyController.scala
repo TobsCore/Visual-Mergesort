@@ -1,14 +1,8 @@
 package example
 
-import java.net.URL
-import java.util.ResourceBundle
-import javafx.fxml.Initializable
-
-import scalafx.scene.control.{Button, Label, TextField, Tooltip}
 import javafx.scene.layout.{BorderPane, Pane}
-import javafx.scene.paint.Color
-
 import scalafx.animation.FadeTransition
+import scalafx.scene.control.{Button, Label, TextField}
 import scalafx.scene.image.ImageView
 import scalafx.scene.shape.Rectangle
 import scalafx.util.Duration
@@ -56,11 +50,8 @@ class MyController (
       canvas.getChildren.clear()
 
       for (i <- 1 to userSetLimit) {
-
-
-       // canvas.getGraphicsContext2D.setFill(Color.color(Math.random(),Math.random(),Math.random()))
         val random = Math.random()*100
-        var rectangle = new Rectangle(new javafx.scene.shape.Rectangle(i * 20, 100-random, 10, random))
+        var rectangle = new Rectangle(new javafx.scene.shape.Rectangle(i * 20, 100 - random, 10, random))
         rectangle.id = "jo" + i
         canvas.getChildren.add(rectangle)
       }
