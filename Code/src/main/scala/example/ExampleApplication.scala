@@ -4,15 +4,15 @@ import java.io.IOException
 
 import scalafx.application.JFXApp
 import scalafx.application.JFXApp.PrimaryStage
-import scalafx.scene.Scene
-import scalafx.scene.canvas.Canvas
+import scalafx.scene.{Node, Parent, Scene}
 import scalafx.scene.layout.{BorderPane, Pane}
 import scalafxml.core.{FXMLView, NoDependencyResolver}
 
 object ExampleApplication extends JFXApp {
   val resource = getClass.getResource("/BasicApplication_css.fxml")
   if (resource == null) {
-    throw new IOException("Cannot load resource: AdoptionForm.fxml")
+    //TODO: Externalize String
+    throw new IOException("Cannot load resource: BasicApplication_css.fxml")
   }
 
   val root = FXMLView(resource, NoDependencyResolver)

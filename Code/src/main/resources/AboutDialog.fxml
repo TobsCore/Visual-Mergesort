@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.stage.Stage?>
+
+<?import javafx.scene.Scene?>
+
+      <VBox prefHeight="274.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+         <children>
+            <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="320.0" prefWidth="640.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <ImageView fitHeight="234.0" fitWidth="258.0" layoutX="14.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Logo.png" />
+                     </image>
+                  </ImageView>
+                  <AnchorPane layoutX="277.0" layoutY="44.0" prefHeight="230.0" prefWidth="341.0">
+                     <children>
+                        <Label layoutX="14.0" layoutY="3.0" text="Visual Mergesort">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="14.0" layoutY="93.0" text="Version 1.0" textFill="#908080">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="14.0" layoutY="108.0" text="By Patrick König &amp; Tobias Kerst" textFill="#908080">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="14.0" layoutY="124.0" text="Written in 2016" textFill="#908080">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Hyperlink layoutX="9.0" layoutY="46.0" style="-fx-border-width: 0;" text="https://github.com/TobsCore/Visual-Mergesort" textFill="#3276e4">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Hyperlink>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>

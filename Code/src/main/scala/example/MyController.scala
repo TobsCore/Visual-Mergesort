@@ -1,11 +1,18 @@
 package example
 
+import java.io.IOException
 import javafx.scene.layout.{BorderPane, Pane}
+
 import scalafx.animation.FadeTransition
+import scalafx.application.JFXApp.PrimaryStage
 import scalafx.scene.control.{Button, Label, TextField}
 import scalafx.scene.image.ImageView
 import scalafx.scene.shape.Rectangle
 import scalafx.util.Duration
+import scalafx.Includes._
+import scalafx.scene.Scene
+import scalafx.stage.{Popup, Stage}
+import scalafxml.core.{FXMLView, NoDependencyResolver}
 import scalafxml.core.macros.sfxml
 
 /**
@@ -59,6 +66,29 @@ class MyController (
       displayInfoMessageOnError()
     }
 
+  }
+var aboutStage: Stage = null;
+
+  def openAboutDialog(): Unit = {
+    if (aboutStage == null) {
+      val resource = getClass.getResource("/AboutDialog.fxml")
+      if (resource == null) {
+        //TODO: Externalize String
+        throw new IOException("Cannot load resource: AboutDialog.fxml")
+      }
+
+      val root = FXMLView(resource, NoDependencyResolver)
+
+      aboutStage = new Stage() {
+        title = "About Dialog"
+        scene = new Scene(root)
+      }
+    }
+    if (!aboutStage.showing()) {
+      aboutStage.show()
+    } else {
+      aboutStage.requestFocus()
+    }
   }
 
   var isPermanentlySet = false
