@@ -3,17 +3,16 @@ package example
 import java.io.IOException
 import javafx.scene.layout.{BorderPane, Pane}
 
+import scalafx.Includes._
 import scalafx.animation.FadeTransition
-import scalafx.application.JFXApp.PrimaryStage
+import scalafx.scene.Scene
 import scalafx.scene.control.{Button, Label, TextField}
 import scalafx.scene.image.ImageView
 import scalafx.scene.shape.Rectangle
+import scalafx.stage.Stage
 import scalafx.util.Duration
-import scalafx.Includes._
-import scalafx.scene.Scene
-import scalafx.stage.{Popup, Stage}
-import scalafxml.core.{FXMLView, NoDependencyResolver}
 import scalafxml.core.macros.sfxml
+import scalafxml.core.{FXMLView, NoDependencyResolver}
 
 /**
   * Created by Patrick König on 19.08.16.
