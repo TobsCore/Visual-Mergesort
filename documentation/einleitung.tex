@@ -2,21 +2,41 @@
 \section{Motivation}
 
 \section{Scala}
-%TODO: Jahr einfügen
-Wir haben uns entschieden, das Programm in Scala zu schreiben, einer Sprache, die zwar bereits schon im Jahr xxxx von Martin Odersky entwickelt wurde, jedoch erst seit kurzem einen großen Bekanntheitsgrad erlangt hat. Grund dafür ist der Hype um die sogenannte \texttt{funktionale Programmierung} und das Bedürfnis, Anwendungen nebenläufig zu entwickeln. Wir möchten nun zu Beginn die Gründe nennen, warum Scala sich als moderne Programmiersprache anbietet, die sogar von Javas Gründer xxxx Gosling als Javas Nachfolger betitelt wurde. (Quelle, etc.)
+Wir haben uns entschieden, das Programm in Scala zu schreiben, einer Sprache, die bereits schon im Jahr 2001 von Martin Odersky entwickelt wurde, jedoch erst seit kurzem einen großen Bekanntheitsgrad erlangt hat. Grund dafür ist der Hype um die sogenannte \texttt{funktionale Programmierung} und das Bedürfnis, Anwendungen nebenläufig zu entwickeln. 
+Wir möchten nun zu Beginn die Gründe nennen, warum Scala sich als moderne Programmiersprache anbietet, die sogar von Javas Hauptentwickler James Gosling als bevorzugte Java-Alternative betitelt wurde \footnote{\url{http://www.adam-bien.com/roller/abien/entry/java_net_javaone_which_programming}}.
+
+\subsection{Laufzeit-Umgebung}
+Scala ist wie Java eine Programmiersprache, die zu Bytecode kompiliert wird. Dieser Bytecode wird dann von der \textit{Java Virtual Machine} (\texttt{JVM}) benutzt um daraus Maschinencode zu erstellen. Die JVM ist mittlerweile auf sehr vielen Rechnern installiert und sogar das Android Betriebssystem setzt auf eine Variante der \texttt{JVM} (\texttt{Dalvik}).
+
+Die JVM hat den großen Vorteil, dass sie mittlerweile seit 20 Jahren aktiv entwickelt wird und die gesamte Java-Umgebung besonders im Enterprise Bereich eingesetzt wird. Das Resultat ist ein sehr stabiles und vor allem perfomantes System, das aus dem heutigen IT-Markt nicht mehr wegzudenken ist. 
+
+\subsection{Bibliotheken}
+Scala wird also nicht zu irgendeinem Bytecode kompiliert, sondern zu Java-Bytecode, um genau zu sein. Dies hat den großen Vorteil, dass man neben der JVM-Unterstützung auch auf etablierte Java Bibliotheken zugreifen kann. Beispielsweise ist der Einsatz von Google GSON\footnote{Link zu der Projektseite von Google GSON: \url{https://github.com/google/gson}}, das das Serialisieren von Objekten in JSON und zurück ermöglicht, über Scala so möglich, wie über Java.
+
+So ist es dann auch kaum überraschend, dass der Einsatz von den üblichen Java Bibliotheken in Scala möglich ist. Ein Beispiel ist \texttt{JavaFX}, welches seit Java 8 Teil des \textit{Java Development Kit} (\textit{JDK}) ist.
+
+\subsection{JavaFX und ScalaFX}
+\texttt{JavaFX 8} ist der offzielle Nachfolger von \texttt{Swing}. Zu Beginn sollte es eine Scriptssprache werden, jedoch wurde dieser Fokus mit Version 2 aufgegeben und JavaFX wurde zu der GUI Bibliothek, wie man sie heute nutzt. In der aktuellen Version 8 (welcher der direkte Nachfolger von Version 2 ist und wegen der Einbindung in das JDK 8 diesen Versionssprung vollzogen hat), wurde die Bibliothek um wichtige Komponenten erweitert und bietet die folgendenden Vorteile: 
+
+\begin{description}
+\item[Scene Graph] JavaFX ist besonders leicht zu entwickeln, da es auf den \texttt{Scene Graph} setzt. Der Scene Graph ist eine Baumstruktur, bei der die Elemente hierachisch angeordnet werden. Elemente im Scene Graph sind vom Type \texttt{Node} ~\cite{ProJavaFX8}. Wenn man also beispielsweise einen Button auf der Bildfläche platzieren möchte, dann hat man ein Button Objekt, welches von \texttt{Node} erbt
+
+\begin{figure}[!htb]
+    \centering
+      \includegraphics[width=0.75\linewidth]{scene-graph}
+    \caption{Darstellung der Baumstruktur im Scene Graph}
+    \label{fig:scene-graph}
+\end{figure}
+
+Ein Vorteil ist, dass man so Objekte gruppieren kann und dadurch Operationen auf der Gruppe ausführen kann. So wird bei einer Verschiebe-Operation (auch \texttt{Translation} genannt) jedes Element in der Gruppe verschoben, was den Code lesbarer und wartbarer macht.\
+Außerdem ist somit eine zum Eltern Element relative Positionierung möglich.
+
+%TODO: Section FXML einbinden
+\item[Klares MVC] Bei JavaFX wird das Konzept für das Design in einer separaten Datei, einer \texttt{FXML} Datei geführt. So muss man das Layout nicht im Code generieren. Im Abschnitt zu FXML~\ref{sec:fxml} wird dies ausführlicher beschrieben.
+
+\end{description}
+
+\subsection{FXML}\label{sec:fxml}
+
 \section{Ziele \& Fragen}
 \section{Methodische Vorgehensweise}
-This is an example quote \cite{TKerst12}
-
-Another important thing is to be able to reference a url \cite{referenceURL}
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam a arcu est. Nunc tempus, risus congue viverra vulputate, neque nisl iaculis ipsum, eget malesuada quam ligula a leo. Phasellus vulputate pulvinar dolor. Aliquam urna orci, varius et nisl vel, dapibus maximus nisl. Morbi vel interdum ligula. Donec dignissim tellus mauris, in luctus dui dignissim non. Curabitur euismod sapien elit, in elementum urna elementum vitae. In eu pulvinar ligula, a imperdiet massa. Nunc tempus sapien laoreet, volutpat massa id, laoreet diam. Donec dapibus et magna et consequat. Nam ac tincidunt felis. Cras in nibh non velit aliquet dignissim. Donec dapibus nulla eget orci vulputate, at ornare est varius. Mauris molestie nisl non nibh venenatis, vel auctor risus consequat. Nunc egestas massa erat, feugiat mattis massa fermentum a.
-
-Example link: \url{http://www.tobscore.com}
-Vestibulum vitae elit pulvinar nibh vestibulum condimentum. Aenean tempus dapibus ipsum, vel finibus risus posuere sed. Aliquam placerat mauris vitae mi fermentum, id convallis mi congue. Donec ultricies enim eget lacus finibus pulvinar. Donec dapibus, nulla sit amet pulvinar viverra, mauris augue aliquet ligula, vitae ullamcorper justo arcu a quam. Pellentesque maximus ornare nulla, sollicitudin porta lacus interdum non. Fusce rutrum mollis tortor, at scelerisque mauris pharetra placerat. Quisque condimentum sagittis nunc a sodales. Praesent ornare pellentesque felis in blandit. Integer risus mi, dictum in eros non, rhoncus venenatis enim. Mauris feugiat nisl eget gravida consectetur. Ut suscipit ullamcorper scelerisque. Duis quis commodo odio. Nullam arcu ex, accumsan quis metus et, pellentesque convallis velit.
-
-Maecenas eu porttitor nulla. Vivamus at hendrerit elit. Etiam ac varius felis. Maecenas tristique convallis nisi, vehicula bibendum metus eleifend eget. Nulla libero augue, interdum quis facilisis eget, luctus suscipit risus. Nunc congue vitae dui ut elementum. Morbi volutpat sapien nec leo ullamcorper, in sodales arcu cursus. Phasellus a nibh vitae metus feugiat congue et et magna. Donec mauris ante, vehicula eget turpis in, commodo scelerisque nunc. Cras hendrerit aliquet turpis vitae tristique. Maecenas ullamcorper dui eget orci mollis interdum. Vivamus malesuada ante euismod dui imperdiet porta.
-
-Sed elementum non tortor sit amet placerat. Duis eros mauris, porttitor et viverra sed, ornare sit amet purus. Morbi tempus, mi vel rhoncus pellentesque, lacus nisl interdum enim, sed bibendum enim est at mi. Nam convallis ipsum ut orci rutrum, sed interdum purus accumsan. Proin tincidunt massa sapien, ac tincidunt justo porta at. Quisque nec pharetra enim. Fusce at efficitur sapien. Nulla auctor purus dui, ac cursus neque blandit et. Proin sit amet augue in ex pellentesque placerat eu vel eros. Etiam ultrices nibh nisi, blandit fringilla nisl volutpat molestie. Aliquam ultricies, tellus eu vulputate hendrerit, arcu ante tincidunt erat, a consectetur est sem non enim. Duis vel semper libero. Cras non mi euismod, cursus nisi ac, scelerisque eros.
-
-Quisque imperdiet neque vel dolor ullamcorper, eu elementum arcu placerat. Nam ut augue ut odio varius dapibus. Fusce non dapibus leo. Pellentesque a finibus justo. Aenean viverra ante neque, ut maximus urna lobortis eget. Vestibulum dictum eu velit at blandit. Integer sed laoreet urna, lobortis aliquam libero. Curabitur ullamcorper ultrices viverra. Nullam aliquam laoreet urna eu posuere.
