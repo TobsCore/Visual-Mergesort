@@ -2,25 +2,26 @@
 \section{Motivation}
 
 \section{Scala}
-Wir haben uns entschieden, das Programm in Scala zu schreiben, einer Sprache, die bereits schon im Jahr 2001 von Martin Odersky entwickelt wurde, jedoch erst seit kurzem einen großen Bekanntheitsgrad erlangt hat. Grund dafür ist der Hype um die sogenannte \texttt{funktionale Programmierung} und das Bedürfnis, Anwendungen nebenläufig zu entwickeln.
-Wir möchten nun zu Beginn die Gründe nennen, warum Scala sich als moderne Programmiersprache anbietet, die sogar von Javas Hauptentwickler James Gosling als bevorzugte Java-Alternative betitelt wurde \footnote{\url{http://www.adam-bien.com/roller/abien/entry/java_net_javaone_which_programming}}.
+Wir haben uns entschieden, das Programm in Scala zu schreiben, einer Sprache, die bereits schon im Jahr 2001 von Martin Odersky entwickelt wurde, jedoch erst seit kurzem einen großen Bekanntheitsgrad erlangt hat. Grund dafür ist der Hype um die sogenannte \textit{funktionale Programmierung} und das Bedürfnis, Anwendungen nebenläufig zu entwickeln.
+Wir möchten nun zu Beginn die Gründe nennen, warum Scala sich als moderne Programmiersprache anbietet, die sogar von Javas Hauptentwickler James Gosling als bevorzugte Java-Alternative betitelt wurde \footnote{James Gosling wurde auf einer Konferenz gefragt, welche Programmiersprache er heutzutage anstelle von Java auf der JVM nutzen würde, worauf er entschieden mit "Scala" antwortete --- \url{http://www.adam-bien.com/roller/abien/entry/java_net_javaone_which_programming}}.
 
 \subsection{Laufzeit-Umgebung}
-Scala ist wie Java eine Programmiersprache, die zu Bytecode kompiliert wird. Dieser Bytecode wird dann von der \textit{Java Virtual Machine} (\texttt{JVM}) benutzt um daraus Maschinencode zu erstellen. Die JVM ist mittlerweile auf sehr vielen Rechnern installiert und sogar das Android Betriebssystem setzt auf eine Variante der \texttt{JVM} (\texttt{Dalvik}).
+Scala ist wie Java eine Programmiersprache, die zu Bytecode kompiliert wird. Dieser Bytecode wird dann von der \textit{Java Virtual Machine} (\texttt{JVM}) benutzt um daraus Maschinencode zu erstellen. Die JVM ist mittlerweile auf sehr vielen Rechnern installiert und sogar das Android Betriebssystem setzt auf eine Variante der JVM (\texttt{Dalvik}).
 
 Die JVM hat den großen Vorteil, dass sie mittlerweile seit 20 Jahren aktiv entwickelt wird und die gesamte Java-Umgebung besonders im Enterprise Bereich eingesetzt wird. Das Resultat ist ein sehr stabiles und vor allem perfomantes System, das aus dem heutigen IT-Markt nicht mehr wegzudenken ist.
 
 \subsection{Bibliotheken}
 Scala wird also nicht zu irgendeinem Bytecode kompiliert, sondern zu Java-Bytecode, um genau zu sein. Dies hat den großen Vorteil, dass man neben der JVM-Unterstützung auch auf etablierte Java Bibliotheken zugreifen kann. Beispielsweise ist der Einsatz von Google GSON\footnote{Link zu der Projektseite von Google GSON: \url{https://github.com/google/gson}}, das das Serialisieren von Objekten in JSON und zurück ermöglicht, über Scala so möglich, wie über Java.
 
-So ist es dann auch kaum überraschend, dass der Einsatz von den üblichen Java Bibliotheken in Scala möglich ist. Ein Beispiel ist \texttt{JavaFX}, welches seit Java 8 Teil des \textit{Java Development Kit} (\textit{JDK}) ist.
+So ist es dann auch kaum überraschend, dass der Einsatz von den üblichen Java Bibliotheken in Scala möglich ist. Ein Beispiel ist \texttt{JavaFX}, welches seit Java 8 Teil des \textit{Java Development Kit} (\texttt{JDK}) ist.
 
 \subsection{JavaFX und ScalaFX}
 \subsubsection{JavaFX}
-\texttt{JavaFX 8} ist der offzielle Nachfolger von \texttt{Swing}. Zu Beginn sollte es eine Scriptssprache werden, jedoch wurde dieser Fokus mit Version 2 aufgegeben und JavaFX wurde zu der GUI Bibliothek, wie man sie heute nutzt. In der aktuellen Version 8 (welcher der direkte Nachfolger von Version 2 ist und wegen der Einbindung in das JDK 8 diesen Versionssprung vollzogen hat), wurde die Bibliothek um wichtige Komponenten erweitert und bietet die folgendenden Vorteile:
+JavaFX 8 ist der offzielle Nachfolger von Swing. Zu Beginn sollte es eine Scriptssprache werden, jedoch wurde dieser Fokus mit Version 2 aufgegeben und JavaFX wurde zu der GUI Bibliothek, wie man sie heute nutzt. In der aktuellen Version 8 (welcher der direkte Nachfolger von Version 2 ist und wegen der Einbindung in das JDK 8 diesen Versionssprung vollzogen hat), wurde die Bibliothek um wichtige Komponenten erweitert und bietet die folgendenden Vorteile:
 
 \begin{description}
-\item[Scene Graph] JavaFX ist besonders leicht zu entwickeln, da es auf den \texttt{Scene Graph} setzt. Der Scene Graph ist eine Baumstruktur, bei der die Elemente hierachisch angeordnet werden. Elemente im Scene Graph sind vom Type \texttt{Node} ~\cite{ProJavaFX8}. Wenn man also beispielsweise einen Button auf der Bildfläche platzieren möchte, dann hat man ein Button Objekt, welches von \texttt{Node} erbt
+\item[Scene Graph]\hfill\\
+JavaFX ist besonders leicht zu entwickeln, da es auf den \texttt{Scene Graph} setzt. Der Scene Graph ist eine Baumstruktur, bei der die Elemente hierachisch angeordnet werden. Elemente im Scene Graph sind vom Type \texttt{Node} ~\cite{ProJavaFX8}. Wenn man also beispielsweise einen Button auf der Bildfläche platzieren möchte, dann hat man ein Button Objekt, welches von \texttt{Node} erbt
 
 \begin{figure}[!htb]
     \centering
@@ -29,12 +30,14 @@ So ist es dann auch kaum überraschend, dass der Einsatz von den üblichen Java 
     \label{fig:scene-graph}
 \end{figure}
 
-Ein Vorteil ist, dass man so Objekte gruppieren kann und dadurch Operationen auf der Gruppe ausführen kann. So wird bei einer Verschiebe-Operation (auch \texttt{Translation} genannt) jedes Element in der Gruppe verschoben, was den Code lesbarer und wartbarer macht.\\
+Ein Vorteil ist, dass man so Objekte gruppieren kann und dadurch Operationen auf der Gruppe ausführen kann. So wird bei einer Verschiebe-Operation (auch \textit{Translation} genannt) jedes Element in der Gruppe verschoben, was den Code lesbarer und wartbarer macht.\\
 Außerdem ist somit eine zum Eltern Element relative Positionierung möglich.
 
-\item[Klares MVC] Bei JavaFX wird das Konzept für das Design in einer separaten Datei, einer \texttt{FXML} Datei geführt. So muss man das Layout nicht im Code generieren. Im Abschnitt zu FXML~\ref{sec:fxml} wird dies ausführlicher beschrieben.
+\item[Klares MVC]\hfill\\
+Bei JavaFX wird das Konzept für das Design in einer separaten Datei, einer \textbf{FXML} Datei geführt. So muss man das Layout nicht im Code generieren. Im Abschnitt zu FXML~\ref{sec:fxml} wird dies ausführlicher beschrieben.
 
-\item[Styling über CSS] Neben der Trennung von Ablauf, Logik und Gestaltung nach dem \texttt{MVC}-Prinzip, lässt sich das Styling durch eine CSS-ähnliche Syntax durchführen, was das Gestalten von Oberflächen durch Designer ermöglicht. Es wird jedoch eine leicht abgewandelte Syntax verwendet. Das Setzen der Textfarbe auf rot (\texttt{\#ff0000} im RGB-Farbraum) wird durch die CSS-Syntax
+\item[Styling über CSS]\hfill\\
+Neben der Trennung von Ablauf, Logik und Gestaltung nach dem \textit{MVC}-Prinzip, lässt sich das Styling durch eine CSS-ähnliche Syntax durchführen, was das Gestalten von Oberflächen durch Designer ermöglicht. Es wird jedoch eine leicht abgewandelte Syntax verwendet. Das Setzen der Textfarbe auf rot (\texttt{\#ff0000} im RGB-Farbraum) wird durch die CSS-Syntax
 \begin{verbatim}
 .button: {
   -fx-color: #f00;
@@ -42,16 +45,18 @@ Außerdem ist somit eine zum Eltern Element relative Positionierung möglich.
 \end{verbatim}
 ermöglicht. Man erkennt, dass das Präfix \texttt{-fx-} vor dem CSS-Befehl steht.
 
-\item[Properties und Bindings] Das Koppeln von von Eigenschaften einer Klasse an eine andere Klasse ist ein tolles Feature, welches das Entwickeln von komplexen Anwendungen noch weiter vereinfacht. Intern wird das \texttt{Observable}-Interface benutzt, die Komponenten zu aneinander zu binden.
+\item[Properties und Bindings]\hfill\\
+Das Koppeln von von Eigenschaften einer Klasse an eine andere Klasse ist ein tolles Feature, welches das Entwickeln von komplexen Anwendungen noch weiter vereinfacht. Intern wird das \texttt{Observable}-Interface benutzt, die Komponenten zu aneinander zu binden.
 
 Um Bindings und die dazu benutzten Properties besser zu verstehen, verweisen wir auf die sehr gute Zusammenfassung auf \cite{JavaBeginner-Binding}
 \end{description}
 
 \subsubsection{ScalaFX}
-\texttt{ScalaFX} ist eine \textit{Domain Specifig Language}\footnote{Bei einer \texttt{DSL} handelt es sich um eine formale Sprache, die ein bestimmtes Problemfeld abdeckt. In dem Fall von \texttt{ScalaFX} handelt es sich um eine \texttt{UI DSL}, die als Wrapper um \texttt{JavaFX} gelegt wird.} (\texttt{DSL}) für JavaFX. Als \texttt{DSL} bietet ScalaFX syntaktischen Zucker für die \texttt{JavaFX}-Bibliothek, und die folgenden Vorteile:
+\textbf{ScalaFX} ist eine \textit{Domain Specifig Language}\footnote{Bei einer \texttt{DSL} handelt es sich um eine formale Sprache, die ein bestimmtes Problemfeld abdeckt. In dem Fall von ScalaFX handelt es sich um eine \textit{UI DSL}, die als Wrapper um JavaFX gelegt wird.} (\texttt{DSL}) für JavaFX. Als \texttt{DSL} bietet ScalaFX syntaktischen Zucker für die JavaFX--Bibliothek, und die folgenden Vorteile:
 
 \begin{description}
-\item[Lesbare Bind-Ausdrücke] Binding und Properties gehören zu den tollen Funktionen, die JavaFX bietet, jedoch ist die Syntax teilweise sehr umständlich.
+\item[Lesbare Bind-Ausdrücke]\hfill\\
+Binding und Properties gehören zu den tollen Funktionen, die JavaFX bietet, jedoch ist die Syntax teilweise sehr umständlich.
 \paragraph{Beispiel:} Wenn man 3 Rechtecke hat (\texttt{rect1}, \texttt{rect2} und \texttt{reckt3}) und man möchte, dass das Rechteck \texttt{rect1} so hoch ist, wie \texttt{rect2} und \texttt{rect3}, dann bindet man die Höhe von \texttt{rect1} an die summierte Höhe von \texttt{rect2} und \texttt{rect3}.
 
 \underline{Scala}:
@@ -66,7 +71,8 @@ rect1.heightProperty().bind(rect2.heightProperty().add(rect3.heightProperty()))
 
 Der Scala Code ist wesentlich intuitiver und lesbarer, was genau der Sinn dieser \texttt{DSL} ist. Das Beispiel stammt aus \cite{ProJavaFX8} (Seite 574f.).
 
-\item[Angepasste Animations Syntax] Da Animationen ein wichtiger Bestandteil von \texttt{JavaFX} sind, wurde die Syntax wesentlich verbessert. Auch hier möchten wir uns an \cite{ProJavaFX8} halten und Scala Code mit Java Code vergleichen.
+\item[Angepasste Animations Syntax]\hfill\\
+Da Animationen ein wichtiger Bestandteil von JavaFX sind, wurde die Syntax wesentlich verbessert. Auch hier möchten wir uns an \cite{ProJavaFX8} halten und Scala Code mit Java Code vergleichen.
 
 \underline{Scala}:
 \begin{lstlisting}[language=scala,caption=Scala Beispiel für eine einface Animation,numbers=none]
@@ -79,9 +85,11 @@ KeyValue collapse = new KeyValue(circle.radiusProperty(), 0);
 new Timeline(new KeyFrame(Duration.seconds(3), collapse)).play();
 \end{lstlisting}
 
-\item[Typsichere APIs] Ein Vorteil von Scala, wie wir noch kennen lernen werden, ist dass die Sprache \texttt{statisch typisiert} ist. \texttt{ScalaFX} ist garantiert \texttt{typsicher}, was zur Folge hat, dass Fehler bereits beim Kompilieren auftreten und nicht erst zur Laufzeit zu Fehlern führen wird. ~\cite{TypesAndProgrammingLanguages}
+\item[Typsichere APIs]\hfill\\
+Ein Vorteil von Scala, wie wir noch kennen lernen werden, ist dass die Sprache \textit{statisch typisiert} ist. ScalaFX ist garantiert \textit{typsicher}, was zur Folge hat, dass Fehler bereits beim Kompilieren auftreten und nicht erst zur Laufzeit zu Fehlern führen wird. ~\cite{TypesAndProgrammingLanguages}
 
-\item[Interoperabilität zwischen ScalaFX und JavaFX] \texttt{ScalaFX} liegt wie ein Wrapper um \texttt{JavaFX} und bietet Funktionen an, die die Arbeit mit JavaFX erleichtern. Dies wird dadurch vereinfacht, dass man ganz einfach zwischen \texttt{JavaFX} und \texttt{ScalaFX} wechseln kann. Ein besonders hilfreiches Konzept sind hierbei \texttt{Implizite Konvertierungen}. So kann man beispielsweise eine \texttt{javafx.scene.Shape.button} an eine Methode übergeben, die ein \texttt{scalafx.scene.Shape.button} als Argument erwartet.
+\item[Interoperabilität zwischen ScalaFX und JavaFX]\hfill\\
+ScalaFX liegt wie ein Wrapper um JavaFX und bietet Funktionen an, die die Arbeit mit JavaFX erleichtern. Dies wird dadurch vereinfacht, dass man ganz einfach zwischen JavaFX und ScalaFX wechseln kann. Ein besonders hilfreiches Konzept sind hierbei \textit{Implizite Konvertierungen}. So kann man beispielsweise eine \texttt{javafx.scene.Shape.button} an eine Methode übergeben, die ein \texttt{scalafx.scene.Shape.button} als Argument erwartet.
 \end{description}
 
 Da es sich bei ScalaFX primär um syntaktische Verbesserungen handelt, kann man argumentieren, dass die Benutzung obsolet ist. Wir haben uns bewusst für die Integration entschieden, da wir näher an der Scala Syntax bleiben wollten und die Lesbarkeit von Source-Code für uns ein wichtiger Aspekt ist\footnote{Eine Interessante Diskussion zu diesem Thema findet man auch hier \cite{StackoverflowDiscussionScalaFX}}.
