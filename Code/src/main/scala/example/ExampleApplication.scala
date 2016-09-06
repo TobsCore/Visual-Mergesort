@@ -5,7 +5,7 @@ import java.io.IOException
 import scalafx.application.JFXApp
 import scalafx.application.JFXApp.PrimaryStage
 import scalafx.scene.Scene
-import scalafx.scene.layout.{BorderPane, Pane}
+import scalafx.Includes._
 import scalafxml.core.{FXMLView, NoDependencyResolver}
 
 object ExampleApplication extends JFXApp {
@@ -18,13 +18,8 @@ object ExampleApplication extends JFXApp {
   val root = FXMLView(resource, NoDependencyResolver)
 
   stage = new PrimaryStage() {
-    title = "Tobys und Pattys neue beste und faszinierende Application"
-    val borderPane = new BorderPane()
-    var canvas = new Pane();
-    canvas.setPrefSize(400,300)
-    borderPane.setTop(root)
-    borderPane.setCenter(canvas)
-    scene = new Scene(borderPane)
+    title = "Visual Mergesort"
+    scene = new Scene(root)
 
 
   }

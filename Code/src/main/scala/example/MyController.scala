@@ -58,7 +58,7 @@ class MyController (
 
       for (i <- 1 to userSetLimit) {
         val min = 1
-        val max = 99
+        val max = 10
         val random: Int = ThreadLocalRandom.current.nextInt(min, max + 1)
         var sortElement = new SortElement(random, i * 20, 100 - random)
         canvas.getChildren.add(sortElement)
