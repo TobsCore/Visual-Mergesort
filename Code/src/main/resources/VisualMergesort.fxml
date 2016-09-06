@@ -11,6 +11,7 @@
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
@@ -20,13 +21,13 @@
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
-            <MenuItem mnemonicParsing="false" text="Import" disable="true"/>
-            <MenuItem mnemonicParsing="false" text="Export" disable="true"/>
+            <MenuItem disable="true" mnemonicParsing="false" text="Import" />
+            <MenuItem disable="true" mnemonicParsing="false" text="Export" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <Menu mnemonicParsing="false" text="Generate Random Data">
               <items>
                 <MenuItem mnemonicParsing="false" text="Randomly Shuffled" />
-                <MenuItem mnemonicParsing="false" text="Sorted Numbers" disable="true"/>
+                <MenuItem disable="true" mnemonicParsing="false" text="Sorted Numbers" />
                 </items>
                 </Menu>
             <SeparatorMenuItem mnemonicParsing="false" />
@@ -35,7 +36,7 @@
         </Menu>
         <Menu mnemonicParsing="false" text="View">
           <items>
-            <MenuItem mnemonicParsing="false" text="Show Statistic" disable="true" />
+            <MenuItem disable="true" mnemonicParsing="false" text="Show Statistic" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Run">
@@ -46,33 +47,36 @@
         <Menu mnemonicParsing="false" text="Help">
           <items>
             <MenuItem mnemonicParsing="false" onAction="#openAboutDialog" text="About" />
-            <MenuItem mnemonicParsing="false" text="Help" disable="true"/>
+            <MenuItem disable="true" mnemonicParsing="false" text="Help" />
           </items>
         </Menu>
       </menus>
     </MenuBar>
-      <BorderPane prefHeight="609.0" prefWidth="800.0">
+      <BorderPane fx:id="borderPane" prefHeight="609.0" prefWidth="800.0">
          <top>
             <AnchorPane prefHeight="106.0" prefWidth="453.0" BorderPane.alignment="CENTER">
                <children>
-                  <Slider blockIncrement="2.0" layoutX="326.0" layoutY="18.0" majorTickUnit="20.0" max="64.0" min="4.0" prefHeight="26.0" prefWidth="248.0" showTickMarks="true" snapToTicks="true" value="16.0" AnchorPane.rightAnchor="70.0" />
-                  <Label layoutX="413.0" layoutY="17.0" text="Elemente" AnchorPane.rightAnchor="315.0">
+                  <Slider fx:id="amountOfElementsSlider" blockIncrement="2.0" layoutX="326.0" layoutY="18.0" majorTickUnit="20.0" max="64.0" min="4.0" prefHeight="26.0" prefWidth="248.0" showTickMarks="true" snapToTicks="true" value="16.0" AnchorPane.rightAnchor="70.0" />
+                  <Label layoutX="413.0" layoutY="17.0" text="Elements" AnchorPane.rightAnchor="315.0">
                      <padding>
                         <Insets right="15.0" />
                      </padding>
                   </Label>
-                  <Slider blockIncrement="1.0" layoutX="313.0" layoutY="53.0" majorTickUnit="1.0" max="4.0" min="1.0" minorTickCount="0" prefHeight="38.0" prefWidth="246.0" showTickMarks="true" snapToTicks="true" value="1.0" AnchorPane.rightAnchor="70.0" />
+                  <Slider fx:id="amountOfThreadsSlider" blockIncrement="1.0" layoutX="313.0" layoutY="53.0" majorTickUnit="1.0" max="4.0" min="1.0" minorTickCount="0" prefHeight="38.0" prefWidth="246.0" showTickMarks="true" snapToTicks="true" value="1.0" AnchorPane.rightAnchor="70.0" />
                   <Label layoutX="419.0" layoutY="58.0" text="Threads" AnchorPane.rightAnchor="315.0">
                      <padding>
                         <Insets right="15.0" />
                      </padding></Label>
-                  <Text layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="17" textAlignment="RIGHT" wrappingWidth="40.71502685546875" AnchorPane.rightAnchor="35.0" />
-                  <Text layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2" textAlignment="RIGHT" textOrigin="TOP" wrappingWidth="40.715087890625" AnchorPane.rightAnchor="35.0" />
-                  <Button defaultButton="true" layoutX="48.0" layoutY="19.0" mnemonicParsing="false" text="Generate" />
-                  <Button disable="true" layoutX="48.0" layoutY="62.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="74.0" text="Run" />
+                  <Text fx:id="amountOfElementsLabel" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="17" textAlignment="RIGHT" wrappingWidth="40.71502685546875" AnchorPane.rightAnchor="35.0" />
+                  <Text fx:id="amountOfThreadsLabel" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2" textAlignment="RIGHT" textOrigin="TOP" wrappingWidth="40.715087890625" AnchorPane.rightAnchor="35.0" />
+                  <Button fx:id="generateButton" defaultButton="true" layoutX="48.0" layoutY="19.0" mnemonicParsing="false" onAction="#generateNumbers" text="Generate" />
+                  <Button fx:id="runButton" disable="true" layoutX="48.0" layoutY="62.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="74.0" text="Run" />
                </children>
             </AnchorPane>
          </top>
+         <center>
+            <Pane fx:id="pane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+         </center>
       </BorderPane>
   </children>
   <stylesheets>

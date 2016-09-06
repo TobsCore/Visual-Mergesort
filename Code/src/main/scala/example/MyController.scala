@@ -1,17 +1,21 @@
 package example
 
 import java.io.IOException
-import javafx.scene.layout.{BorderPane, Pane}
 
+import scalafx.scene.layout.{BorderPane, Pane}
 import scala.concurrent.forkjoin.ThreadLocalRandom
 import scalafx.Includes._
 import scalafx.animation.FadeTransition
+import scalafx.beans.binding.Bindings
+import scalafx.beans.property.DoubleProperty
 import scalafx.scene.Scene
-import scalafx.scene.control.{Button, Label, TextField}
+import scalafx.scene.control.{Button, Label, Slider, TextField}
 import scalafx.scene.image.ImageView
 import scalafx.scene.shape.Rectangle
+import scalafx.scene.text.Text
 import scalafx.stage.Stage
 import scalafx.util.Duration
+import scalafx.util.converter.{DoubleStringConverter, NumberStringConverter}
 import scalafxml.core.macros.sfxml
 import scalafxml.core.{FXMLView, NoDependencyResolver}
 
@@ -20,55 +24,40 @@ import scalafxml.core.{FXMLView, NoDependencyResolver}
   */
 @sfxml
 class MyController (
-  private val button: Button,
-  private val clickTimeTextField: TextField,
-  private val infoLabel: Label,
-  private val infoImage: ImageView) {
+  private val generateButton: Button,
+  private val runButton: Button,
+  private val amountOfElementsSlider: Slider,
+  private val amountOfThreadsSlider: Slider,
+  private val amountOfElementsLabel: Text,
+  private val amountOfThreadsLabel: Text,
+  private val borderPane: BorderPane,
+  private val pane: Pane
+                   ) {
+
+  var aboutStage: Stage = null;
+  val originalPattern = "%.0f"
+  amountOfElementsSlider.labelFormatter = new DoubleStringConverter
+  amountOfElementsLabel.text <== amountOfElementsSlider.value.asString(originalPattern)
+  amountOfThreadsSlider.labelFormatter = new DoubleStringConverter
+  amountOfThreadsLabel.text <== amountOfThreadsSlider.value.asString(originalPattern)
 
 
+  def generateNumbers(): Unit = {
+    val canvas: Pane = pane
+    val userSetLimit: Integer = amountOfElementsSlider.value.toInt
 
-
-  def countClicks(): Unit = {
-
-    val content = clickTimeTextField.getText
-
-
-    val canvas: Pane = ExampleApplication.stage.scene.value.getRoot match {
-      case a: BorderPane => a.getCenter match {
-        case b: Pane => b
-        case _ => throw new ClassCastException("Cannot cast to Pane")
-      }
-      case _ => throw new ClassCastException("Cannot cast to BorderPane")
-    }
-
-
-
-      def getUserInput = () => {try {
-      content.toInt
-    }
-    catch {
-      case e: NumberFormatException =>  0
-    }}
-
-    val userSetLimit: Integer = getUserInput()
-
-    if (userSetLimit >= 1 && userSetLimit <= 15) {
-      hideInfoMessageOnCorrectInput()
       canvas.getChildren.clear()
 
       for (i <- 1 to userSetLimit) {
         val min = 1
-        val max = 10
+        val max = 99
         val random: Int = ThreadLocalRandom.current.nextInt(min, max + 1)
         var sortElement = new SortElement(random, i * 20, 100 - random)
         canvas.getChildren.add(sortElement)
       }
-    } else {
-      displayInfoMessageOnError()
-    }
 
   }
-var aboutStage: Stage = null;
+
 
   def openAboutDialog(): Unit = {
     if (aboutStage == null) {
@@ -94,44 +83,6 @@ var aboutStage: Stage = null;
     }
   }
 
-  var isPermanentlySet = false
-
-  def displayInfoMessageOnError(): Unit = {
-    infoLabel.opacity = 1
-    isPermanentlySet = true
-  }
-
-  def hideInfoMessageOnCorrectInput(): Unit = {
-    infoLabel.opacity = 0
-    isPermanentlySet = false
-  }
-
-  def displayInfoMessage(): Unit = {
-    if(!isPermanentlySet) {
-      val fadeIn: FadeTransition = new FadeTransition {
-        duration = Duration(150)
-        fromValue = 0
-        toValue = 1
-        node = infoLabel
-      }
-      fadeIn.play()
-    }
-  }
-
-
-
-  def hideInfoMessage(): Unit ={
-    if(!isPermanentlySet) {
-      val fadeOut: FadeTransition = new FadeTransition {
-        duration = Duration(150)
-        fromValue = 1
-        toValue = 0
-        node = infoLabel
-      }
-      fadeOut.play()
-
-    }
-  }
 
 }
 
