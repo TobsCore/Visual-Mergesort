@@ -81,8 +81,9 @@ Timeline(at (3 s) {radius -> 0}).play()
 
 \underline{Java}:
 \begin{lstlisting}[language=Java,caption=Das selbe Beispiel in Java,numbers=none]
-KeyValue collapse = new KeyValue(circle.radiusProperty(), 0);
-new Timeline(new KeyFrame(Duration.seconds(3), collapse)).play();
+KeyValue collapse = new KeyValue(circle.radiusProperty(),0);
+new Timeline(new KeyFrame(Duration.seconds(3), collapse))
+  .play();
 \end{lstlisting}
 
 \item[Typsichere APIs]\hfill\\

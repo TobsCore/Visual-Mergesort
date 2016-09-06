@@ -30,18 +30,6 @@
 
 % code listings
 \usepackage{listings}
-\lstset{%
-	basicstyle={\ttfamily \small},
-	breaklines=true,
-	commentstyle=\color{grey},
-	keywordstyle=\color{orange},
-	language=C,
-	numbers=left,
-	showspaces=false,
-	stringstyle=\color{turqoise},
-	xleftmargin=20pt
-}
-
 % "define" Scala
 \lstdefinelanguage{scala}{
   morekeywords={abstract,case,catch,class,def,%
@@ -59,6 +47,32 @@
   morestring=[b]',
   morestring=[b]"""
 }
+
+% Style languages
+\lstset{%
+	language=Java,
+	basicstyle={\ttfamily \small},
+	breaklines=true,
+	commentstyle=\color{grey},
+	keywordstyle=\color{orange},
+	numbers=left,
+	showspaces=false,
+	stringstyle=\color{turqoise},
+	xleftmargin=20pt
+}
+
+\lstset{%
+	language=scala,
+	basicstyle={\ttfamily \small},
+	breaklines=true,
+	commentstyle=\color{grey},
+	keywordstyle=\color{orange},
+	numbers=left,
+	showspaces=false,
+	stringstyle=\color{turqoise},
+	xleftmargin=20pt
+}
+
 
 % graphics
 \usepackage{graphicx}
