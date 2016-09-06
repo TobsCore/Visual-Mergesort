@@ -3,6 +3,7 @@ package example
 import java.io.IOException
 import javafx.scene.layout.{BorderPane, Pane}
 
+import scala.concurrent.forkjoin.ThreadLocalRandom
 import scalafx.Includes._
 import scalafx.animation.FadeTransition
 import scalafx.scene.Scene
@@ -56,10 +57,11 @@ class MyController (
       canvas.getChildren.clear()
 
       for (i <- 1 to userSetLimit) {
-        val random = Math.random()*100
-        var rectangle = new Rectangle(new javafx.scene.shape.Rectangle(i * 20, 100 - random, 10, random))
-        rectangle.id = "jo" + i
-        canvas.getChildren.add(rectangle)
+        val min = 1
+        val max = 99
+        val random: Int = ThreadLocalRandom.current.nextInt(min, max + 1)
+        var sortElement = new SortElement(random, i * 20, 100 - random)
+        canvas.getChildren.add(sortElement)
       }
     } else {
       displayInfoMessageOnError()
