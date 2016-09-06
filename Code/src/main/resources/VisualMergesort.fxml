@@ -76,6 +76,6 @@
       </BorderPane>
   </children>
   <stylesheets>
-    <URL value="@BasicApplication.css" />
+    <URL value="@style.css" />
   </stylesheets>
 </VBox>

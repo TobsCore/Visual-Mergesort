@@ -9,10 +9,11 @@ import scalafx.Includes._
 import scalafxml.core.{FXMLView, NoDependencyResolver}
 
 object ExampleApplication extends JFXApp {
-  val resource = getClass.getResource("/BasicApplication_css.fxml")
+  private val layoutFile: String = "/VisualMergesort.fxml"
+  val resource = getClass.getResource(layoutFile)
   if (resource == null) {
     //TODO: Externalize String
-    throw new IOException("Cannot load resource: BasicApplication_css.fxml")
+    throw new IOException(s"Cannot load resource: $layoutFile")
   }
 
   val root = FXMLView(resource, NoDependencyResolver)
