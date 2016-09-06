@@ -9,7 +9,7 @@ import scalafx.animation.FadeTransition
 import scalafx.beans.binding.Bindings
 import scalafx.beans.property.DoubleProperty
 import scalafx.scene.Scene
-import scalafx.scene.control.{Button, Label, Slider, TextField}
+import scalafx.scene.control._
 import scalafx.scene.image.ImageView
 import scalafx.scene.shape.Rectangle
 import scalafx.scene.text.Text
@@ -31,6 +31,7 @@ class MyController (
   private val amountOfElementsLabel: Text,
   private val amountOfThreadsLabel: Text,
   private val borderPane: BorderPane,
+  private val scrollPane: ScrollPane,
   private val pane: Pane
                    ) {
 
@@ -55,6 +56,7 @@ class MyController (
         var sortElement = new SortElement(random, i * 20, 100 - random)
         canvas.getChildren.add(sortElement)
       }
+canvas.setPrefWidth(userSetLimit*20)
 
   }
 
