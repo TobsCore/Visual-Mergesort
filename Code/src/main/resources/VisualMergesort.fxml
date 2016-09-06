@@ -68,8 +68,8 @@
                      <padding>
                         <Insets right="15.0" />
                      </padding></Label>
-                  <Text fx:id="amountOfElementsLabel" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="17" textAlignment="RIGHT" wrappingWidth="40.71502685546875" AnchorPane.rightAnchor="35.0" />
-                  <Text fx:id="amountOfThreadsLabel" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2" textAlignment="RIGHT" textOrigin="TOP" wrappingWidth="40.715087890625" AnchorPane.rightAnchor="35.0" />
+                  <Text fx:id="amountOfElementsLabel" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="16" textAlignment="RIGHT" wrappingWidth="40.71502685546875" AnchorPane.rightAnchor="35.0" />
+                  <Text fx:id="amountOfThreadsLabel" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="RIGHT" textOrigin="TOP" wrappingWidth="40.715087890625" AnchorPane.rightAnchor="35.0" />
                   <Button fx:id="generateButton" defaultButton="true" layoutX="48.0" layoutY="19.0" mnemonicParsing="false" onAction="#generateNumbers" text="Generate" />
                   <Button fx:id="runButton" disable="true" layoutX="48.0" layoutY="62.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="74.0" text="Run" />
                </children>
