@@ -28,6 +28,9 @@ class MainController(
                       private val scrollPane: ScrollPane,
                       private val pane: Pane) {
 
+
+  val defaultMinimumNumber = 1
+  val defaultMaximumNumber = 99
   var aboutStage: Stage = _
   val originalPattern = "%.0f"
   amountOfElementsSlider.labelFormatter = new DoubleStringConverter
@@ -47,8 +50,8 @@ class MainController(
 
     // Place the elements on the pane
     for (elementID <- 1 to userSetLimit) {
-      val min = MainController.DefaultMinimumNumber
-      val max = MainController.DefaultMaximumNumber
+      val min = defaultMinimumNumber
+      val max = defaultMaximumNumber
       val random: Int = ThreadLocalRandom.current.nextInt(min, max + 1)
       val sortElement = new SortElement(random, elementID * SortElement.wholeElementWidth, SortElement.maxHeight - random)
       elementGroup.getChildren.add(sortElement)
@@ -82,16 +85,3 @@ class MainController(
     }
   }
 }
-
-object MainController {
-  val DefaultMinimumNumber = 1
-  val DefaultMaximumNumber = 99
-}
-
-
-
-
-
-
-
-
