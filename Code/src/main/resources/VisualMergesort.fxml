@@ -45,6 +45,11 @@
                                 </MenuItem>
                             </items>
                         </Menu>
+                        <MenuItem mnemonicParsing="false" text="Create Custom Elements" onAction="#createCustomElements">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="U" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                            </accelerator>
+                        </MenuItem>
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Quit" >
                         </MenuItem>

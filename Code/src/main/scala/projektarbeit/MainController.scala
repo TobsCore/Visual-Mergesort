@@ -7,6 +7,7 @@ import projektarbeit.ElementOrder.EnumVal
 
 import scala.concurrent.forkjoin.ThreadLocalRandom
 import scalafx.Includes._
+import scalafx.scene.control.Alert.AlertType
 import scalafx.scene.control._
 import scalafx.scene.layout.{BorderPane, Pane}
 import scalafx.scene.text.Text
@@ -53,6 +54,22 @@ class MainController(
     generateNumbers(ElementOrder.Inverse)
   }
 
+  def createCustomElements(): Unit = {
+    val dialog = new TextInputDialog() {
+      title = "Create Custom Elements"
+      headerText = "Create a custom list of elements"
+      contentText = "Enter the values:"
+    }
+
+    val result = dialog.showAndWait.get.split(",").map(_.trim)
+    try {
+      // TODO: Checken, ob die Values aus der Liste in der Range an erlaubten Werten liegen. Z.B. 120 darf nicht dargestellt werden und führt richtigerweise intern zu einer Exception.
+      val elementList: List[Int] = result.map(_.toInt).toList
+      placeElementsOnPane(elementList)
+    } catch {
+      case ex: NumberFormatException => new Alert(AlertType.Error) {title = "Input error"; headerText = "Input error!"; contentText = "Cannot convert input to element"}.showAndWait()
+    }
+  }
 
   def generateNumbers(elementOrder: EnumVal): Unit = {
 
@@ -67,16 +84,19 @@ class MainController(
       case _ => throw new IllegalArgumentException(s"$elementOrder is not supported")
     }
 
-    println(elements)
+    placeElementsOnPane(elements)
+  }
 
+
+  def placeElementsOnPane(elements: List[Int]): Unit = {
     // Setting up the canvas
     val elementGroup = new Group()
-
     // Place the elements on the pane
-    for((value, position) <- elements.zipWithIndex) {
+    for ((value, position) <- elements.zipWithIndex) {
       val xPos = position * SortElement.wholeElementWidth
       val yPos = SortElement.maxHeight - value
       val sortElement = new SortElement(value, xPos, yPos)
+      sortElement.id() = s"sortElement-$position"
       elementGroup.getChildren.add(sortElement)
     }
 
@@ -84,7 +104,6 @@ class MainController(
     pane.getChildren.add(elementGroup)
     pane.setPrefWidth(elementGroup.getBoundsInParent.getWidth)
   }
-
 
   def openAboutDialog(): Unit = {
     if (aboutStage == null) {
