@@ -8,7 +8,7 @@ import scalafx.Includes._
 import scalafx.animation.FadeTransition
 import scalafx.beans.binding.Bindings
 import scalafx.beans.property.DoubleProperty
-import scalafx.scene.Scene
+import scalafx.scene.{Group, Scene}
 import scalafx.scene.control._
 import scalafx.scene.image.ImageView
 import scalafx.scene.shape.Rectangle
@@ -44,20 +44,19 @@ class MyController (
 
 
   def generateNumbers(): Unit = {
-    val canvas: Pane = pane
+
     val userSetLimit: Integer = amountOfElementsSlider.value.toInt
-
-      canvas.getChildren.clear()
-
+      pane.getChildren.clear()
+      val elementGroup = new Group()
       for (i <- 1 to userSetLimit) {
         val min = 1
         val max = 99
         val random: Int = ThreadLocalRandom.current.nextInt(min, max + 1)
         var sortElement = new SortElement(random, i * 20, 100 - random)
-        canvas.getChildren.add(sortElement)
+        elementGroup.getChildren.add(sortElement)
       }
-canvas.setPrefWidth(userSetLimit*20)
-
+    pane.getChildren.add(elementGroup)
+    pane.setPrefWidth(elementGroup.getBoundsInParent.getWidth)
   }
 
 
