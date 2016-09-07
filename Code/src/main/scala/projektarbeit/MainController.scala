@@ -2,6 +2,9 @@ package projektarbeit
 
 import java.io.IOException
 
+import com.sun.scenario.effect.Offset
+import projektarbeit.ElementOrder.EnumVal
+
 import scala.concurrent.forkjoin.ThreadLocalRandom
 import scalafx.Includes._
 import scalafx.scene.control._
@@ -38,15 +41,37 @@ class MainController(
   amountOfThreadsSlider.labelFormatter = new DoubleStringConverter
   amountOfThreadsLabel.text <== amountOfThreadsSlider.value.asString(originalPattern)
 
+  def generateRandomNumbers(): Unit = {
+    generateNumbers(ElementOrder.Random)
+  }
 
-  def generateNumbers(): Unit = {
+  def generateOrderedNumbers(): Unit = {
+    generateNumbers(ElementOrder.Ordered)
+  }
+
+  def generateInverseNumbers(): Unit = {
+    generateNumbers(ElementOrder.Inverse)
+  }
+
+
+  def generateNumbers(elementOrder: EnumVal): Unit = {
+
+    // Get the selected amount of elements
+    val userSetLimit: Integer = amountOfElementsSlider.value.toInt
+
+    val randomNumberList = List.tabulate(userSetLimit)(_ => ThreadLocalRandom.current.nextInt(defaultMinimumNumber, defaultMaximumNumber + 1))
+    val elements = elementOrder match {
+      case ElementOrder.Random => randomNumberList
+      case ElementOrder.Ordered => randomNumberList.sorted
+      case ElementOrder.Inverse => randomNumberList.sorted.reverse
+      case _ => throw new IllegalArgumentException(s"$elementOrder is not supported")
+    }
+
+    println(elements)
 
     // Setting up the canvas
     pane.getChildren.clear()
     val elementGroup = new Group()
-
-    // Get the selected amount of elements
-    val userSetLimit: Integer = amountOfElementsSlider.value.toInt
 
     // Place the elements on the pane
     for (elementID <- 1 to userSetLimit) {
@@ -84,4 +109,13 @@ class MainController(
       aboutStage.requestFocus()
     }
   }
+}
+
+
+object ElementOrder {
+  sealed trait EnumVal
+  case object Random extends EnumVal
+  case object Ordered extends EnumVal
+  case object Inverse extends EnumVal
+  val elementOrder = Seq(Random, Ordered, Inverse)
 }
