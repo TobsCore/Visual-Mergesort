@@ -70,17 +70,17 @@ class MainController(
     println(elements)
 
     // Setting up the canvas
-    pane.getChildren.clear()
     val elementGroup = new Group()
 
     // Place the elements on the pane
-    for (elementID <- 1 to userSetLimit) {
-      val min = defaultMinimumNumber
-      val max = defaultMaximumNumber
-      val random: Int = ThreadLocalRandom.current.nextInt(min, max + 1)
-      val sortElement = new SortElement(random, elementID * SortElement.wholeElementWidth, SortElement.maxHeight - random)
+    for((value, position) <- elements.zipWithIndex) {
+      val xPos = position * SortElement.wholeElementWidth
+      val yPos = SortElement.maxHeight - value
+      val sortElement = new SortElement(value, xPos, yPos)
       elementGroup.getChildren.add(sortElement)
     }
+
+    pane.getChildren.clear()
     pane.getChildren.add(elementGroup)
     pane.setPrefWidth(elementGroup.getBoundsInParent.getWidth)
   }
