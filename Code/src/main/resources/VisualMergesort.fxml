@@ -10,6 +10,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
@@ -27,22 +28,42 @@
             <SeparatorMenuItem mnemonicParsing="false" />
             <Menu mnemonicParsing="false" text="Generate Random Data">
               <items>
-                <MenuItem mnemonicParsing="false" text="Randomly Shuffled" />
-                <MenuItem disable="true" mnemonicParsing="false" text="Sorted Numbers" />
+                <MenuItem mnemonicParsing="false" text="Randomly Shuffled" onAction="#generateNumbers">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="B" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                           </accelerator>
+                </MenuItem>
+                <MenuItem disable="true" mnemonicParsing="false" text="Sorted Numbers">
+                  <accelerator>
+                      <KeyCodeCombination alt="DOWN" code="B" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                  </accelerator>
+                  </MenuItem>
                 </items>
                 </Menu>
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
+            <MenuItem mnemonicParsing="false" text="Quit" >
+              <accelerator>
+                  <KeyCodeCombination alt="UP" code="Q" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+              </accelerator>
+              </MenuItem>
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="View">
           <items>
-            <MenuItem disable="true" mnemonicParsing="false" text="Show Statistic" />
+            <MenuItem disable="true" mnemonicParsing="false" text="Show Statistic">
+              <accelerator>
+                  <KeyCodeCombination alt="UP" code="H" control="UP" meta="UP" shift="DOWN" shortcut="DOWN" />
+              </accelerator>
+              </MenuItem>
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Run">
           <items>
-            <MenuItem mnemonicParsing="false" text="Start Algorithm" />
+            <MenuItem mnemonicParsing="false" text="Start Algorithm">
+              <accelerator>
+                  <KeyCodeCombination alt="UP" code="R" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+              </accelerator>
+              </MenuItem>
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
