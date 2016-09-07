@@ -1,4 +1,4 @@
-package example
+package projektarbeit
 
 import java.io.IOException
 
@@ -8,11 +8,12 @@ import scalafx.scene.Scene
 import scalafx.Includes._
 import scalafxml.core.{FXMLView, NoDependencyResolver}
 
-object ExampleApplication extends JFXApp {
+object VisualMergesort extends JFXApp {
+
   private val layoutFile: String = "/VisualMergesort.fxml"
   val resource = getClass.getResource(layoutFile)
+
   if (resource == null) {
-    //TODO: Externalize String
     throw new IOException(s"Cannot load resource: $layoutFile")
   }
 
@@ -21,8 +22,6 @@ object ExampleApplication extends JFXApp {
   stage = new PrimaryStage() {
     title = "Visual Mergesort"
     scene = new Scene(root)
-
-
   }
 
 }
