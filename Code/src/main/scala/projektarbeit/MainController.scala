@@ -2,7 +2,6 @@ package projektarbeit
 
 import java.io.IOException
 
-import com.sun.scenario.effect.Offset
 import projektarbeit.ElementOrder.EnumVal
 
 import scala.concurrent.forkjoin.ThreadLocalRandom
@@ -55,28 +54,41 @@ class MainController(
   }
 
   def createCustomElements(): Unit = {
-    val dialog = new TextInputDialog() {
+    createCustomElements(None)
+  }
+
+  def createCustomElements(preselectedValue: Option[String]): Unit = {
+    val preselectedValueText = preselectedValue.getOrElse("")
+    val dialog = new TextInputDialog(preselectedValueText) {
       title = "Create Custom Elements"
       headerText = "Create a custom list of elements"
       contentText = "Enter the values:"
     }
 
-    val result = dialog.showAndWait.get.split(",").map(_.trim)
+    // TODO: What happens, when the user simply hits Enter without entering a number sequence (String = "")?
+    val result = dialog.showAndWait.getOrElse("")
+    val resultMap = result.split(",").map(_.trim)
     try {
-      // TODO: Checken, ob die Values aus der Liste in der Range an erlaubten Werten liegen. Z.B. 120 darf nicht dargestellt werden und führt richtigerweise intern zu einer Exception.
-      val elementList: List[Int] = result.map(_.toInt).toList
-      placeElementsOnPane(elementList)
+      if (!result.equals("")) {
+        val elementList: List[Int] = resultMap.map(_.toInt).toList
+        placeElementsOnPane(elementList)
+      }
     } catch {
-      case ex: NumberFormatException => new Alert(AlertType.Error) {title = "Input error"; headerText = "Input error!"; contentText = "Cannot convert input to element"}.showAndWait()
+      case ex: NumberFormatException => new Alert(AlertType.Error) {
+        title = "Input error"
+        headerText = "Input error!"
+        contentText = "Cannot convert input to element"
+      }.showAndWait
+        createCustomElements(Some(result))
     }
   }
 
   def generateNumbers(elementOrder: EnumVal): Unit = {
 
     // Get the selected amount of elements
-    val userSetLimit: Integer = amountOfElementsSlider.value.toInt
+    val amountOfElements: Integer = amountOfElementsSlider.value.toInt
 
-    val randomNumberList = List.tabulate(userSetLimit)(_ => ThreadLocalRandom.current.nextInt(defaultMinimumNumber, defaultMaximumNumber + 1))
+    val randomNumberList = List.tabulate(amountOfElements)(_ => ThreadLocalRandom.current.nextInt(defaultMinimumNumber, defaultMaximumNumber + 1))
     val elements = elementOrder match {
       case ElementOrder.Random => randomNumberList
       case ElementOrder.Ordered => randomNumberList.sorted
