@@ -12,7 +12,7 @@ import scalafx.scene.text.{Text, TextAlignment}
 /**
   * Created by Patrick König on 06.09.16.
   */
-class SortElement(val number: Int, var xPos: Int, var yPos: Int) extends Group  {
+class SortElement(val number: Int, var xPos: Int, var yPos: Int) extends Group with Ordered[SortElement]  {
   require(number >= 1 && number <= 99 , "the number must be between 1 and 99 (inclusive)")
 
   var text = new Text(number.toString)
@@ -24,6 +24,27 @@ class SortElement(val number: Int, var xPos: Int, var yPos: Int) extends Group  
 
   var rectangle = new Rectangle(new javafx.scene.shape.Rectangle(xPos, yPos, SortElement.width, number))
   this.getChildren.addAll(rectangle,text)
+
+  override def compare(that: SortElement): Int = {
+    this.number - that.number
+  }
+
+  override def <(that: SortElement): Boolean = {
+    (this.number < that.number)
+  }
+
+  override def <=(that: SortElement): Boolean = {
+    (this.number <= that.number)
+  }
+
+  override def >(that: SortElement): Boolean = {
+    (this.number > that.number)
+  }
+
+  override def >=(that: SortElement): Boolean = {
+    (this.number > that.number)
+  }
+
 }
 
 object SortElement{
