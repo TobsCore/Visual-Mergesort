@@ -3,33 +3,64 @@ package projektarbeit
 import java.util
 
 import scala.collection.JavaConverters._
+import scalafx.animation.{Interpolator, KeyFrame, PathTransition, Timeline, Transition}
 import scalafx.scene.Group
+import scalafx.Includes._
+import scalafx.event.ActionEvent
 import scalafx.scene.layout.Pane
+import scalafx.scene.transform.Translate
+import scalafx.util.Duration
 
 /**
   * Created by Patrick König on 08.09.16.
   */
 class SortElementsController(val pane: Pane) {
 
-  def sort(elements: List[SortElement]): Unit = {
+  private var groupCounter = 0
 
-    var firstListLength = (elements.size/2)
-    var splitList = elements.splitAt(firstListLength)
 
-    val first = splitList._1
-    val second = splitList._2
+  def relocateElementGroup(group: Group, list: List[SortElement]) = {
+    pane.prefWidth() = pane.prefWidth() + 200
+    val timeline = new Timeline {
+      autoReverse = false
+      keyFrames = Seq(
+        at (2 s) {group.translateY -> 200d }
 
-    val duplicateEntryList = first.map(_.duplicate())
-
-    def changeYValue(e: SortElement): SortElement = {
-      e.yPos = e.yPos + 200.0;
-      e
+      )
+    }
+    timeline.play()
+    timeline.onFinished = {
+      event: ActionEvent =>
+        //ForTobyFallsErDasVorMorgenLiest: Nimmt man hierfür die eigentliche Liste, werden die Elemente dennoch um weitere 200 heruntergesetzt
+      var newlist = list.map(_.duplicate())
+        newlist.foreach(_.yPos += 200)
+       sort(newlist)
     }
 
-    val group = new Group()
-    group.getChildren.addAll((duplicateEntryList.map(changeYValue(_))).asJava)
 
-    pane.getChildren.add(group)
+  }
+
+  def sort(elements: List[SortElement]): Unit = {
+    if (elements.size > 1) {
+      groupCounter += 1
+
+      var firstListLength = (elements.size / 2)
+      var splitList = elements.splitAt(firstListLength)
+
+      val first = splitList._1
+      val second = splitList._2
+
+      val duplicateEntryList = first.map(_.duplicate())
+
+
+      val group = new Group()
+      group.getChildren.addAll((duplicateEntryList).asJava)
+      group.id = "level-" + groupCounter
+      relocateElementGroup(group, duplicateEntryList)
+      pane.getChildren.add(group)
+
+
+    }
   }
 
   /*def sortOriginal(elements: List[SortElement]): SortElement = {

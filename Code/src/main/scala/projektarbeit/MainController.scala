@@ -115,6 +115,7 @@ class MainController(
   def placeElementsOnPane(elements: List[Int]): Unit = {
     // Setting up the canvas
     val elementGroup = new Group()
+    elementGroup.id() = "level-1"
     // Place the elements on the pane
     for ((value, position) <- elements.zipWithIndex) {
       val xPos: Double = (position * SortElement.wholeElementWidth).toDouble
@@ -127,6 +128,8 @@ class MainController(
     pane.getChildren.clear()
     pane.getChildren.add(elementGroup)
     pane.setPrefWidth(elementGroup.getBoundsInParent.getWidth)
+
+
   }
 
   def openAboutDialog(): Unit = {
