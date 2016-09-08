@@ -1,24 +1,18 @@
 package projektarbeit
 
-import java.util
-
 import scala.collection.JavaConverters._
-import scalafx.animation.{Interpolator, KeyFrame, PathTransition, Timeline, Transition}
-import scalafx.scene.Group
 import scalafx.Includes._
+import scalafx.animation.Timeline
 import scalafx.event.ActionEvent
+import scalafx.scene.Group
 import scalafx.scene.layout.Pane
-import scalafx.scene.transform.Translate
-import scalafx.util.Duration
 
 /**
   * Created by Patrick König on 08.09.16.
   */
 class SortElementsController(val pane: Pane) {
 
-  private var groupCounter = 0
-
-
+  private var groupCounter = 1
   def relocateElementGroup(group: Group) = {
     pane.prefWidth() = pane.prefWidth() + 200
     val timeline = new Timeline {
@@ -32,9 +26,6 @@ class SortElementsController(val pane: Pane) {
     timeline.play()
     timeline.onFinished = {
       event: ActionEvent =>
-        /*
-        ForTobyFallsErDasVorMorgenLiest: Nimmt man hierfür die eigentliche Liste, werden die Elemente dennoch um weitere 200 heruntergesetzt
-        */
 
         group.translateY() -= 200
         group.getChildren.toList.asInstanceOf[List[SortElement]].foreach(_.yPos += 200)
@@ -57,14 +48,21 @@ class SortElementsController(val pane: Pane) {
       val second = splitList._2
 
       val duplicateFirst = first.map(_.duplicate())
-      val duplicateSeconds = second.map(_.duplicate())
+      val duplicateSecond = second.map(_.duplicate())
 
 
-      val group = new Group()
-      group.getChildren.addAll(duplicateFirst.asJava)
-      group.id = "level-" + groupCounter
-      pane.getChildren.add(group)
-      relocateElementGroup(group)
+      val groupFirst = new Group()
+      groupFirst.getChildren.addAll(duplicateFirst.asJava)
+      groupFirst.id = s"level-$groupCounter"
+      pane.getChildren.add(groupFirst)
+
+      val groupSecond = new Group()
+      groupSecond.getChildren.addAll(duplicateSecond.asJava)
+      groupSecond.id = s"level-$groupCounter"
+      pane.getChildren.add(groupSecond)
+
+      relocateElementGroup(groupFirst)
+      relocateElementGroup(groupSecond)
     }
   }
 
