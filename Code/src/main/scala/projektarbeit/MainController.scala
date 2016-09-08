@@ -157,9 +157,7 @@ class MainController(
     val elementGroup: javafx.scene.Group = pane.getChildren.get(0).asInstanceOf[javafx.scene.Group]
     val ele: List[SortElement] = elementGroup.getChildren().asInstanceOf[ObservableList[SortElement]].toList
 
-    pane.getChildren.clear()
-
-    new SortElements(pane).sort(ele)
+    new SortElementsController(pane).sort(ele)
 
 
   }

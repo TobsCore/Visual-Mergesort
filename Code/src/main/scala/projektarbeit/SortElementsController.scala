@@ -2,14 +2,14 @@ package projektarbeit
 
 import java.util
 
-import scalafx.scene.Node
-import scalafx.scene.layout.Pane
 import scala.collection.JavaConverters._
+import scalafx.scene.Group
+import scalafx.scene.layout.Pane
 
 /**
-  * Created by patrickkoenig on 08.09.16.
+  * Created by Patrick König on 08.09.16.
   */
-class SortElements (val pane: Pane) {
+class SortElementsController(val pane: Pane) {
 
   def sort(elements: List[SortElement]): Unit = {
 
@@ -25,9 +25,11 @@ class SortElements (val pane: Pane) {
       e.yPos = e.yPos + 200.0;
       e
     }
-    val duplicateEntryListWithChangedYValues: util.Collection[SortElement] = (duplicateEntryList.map(changeYValue(_))).asJava
 
-    pane.getChildren.addAll(duplicateEntryListWithChangedYValues)
+    val group = new Group()
+    group.getChildren.addAll((duplicateEntryList.map(changeYValue(_))).asJava)
+
+    pane.getChildren.add(group)
   }
 
   /*def sortOriginal(elements: List[SortElement]): SortElement = {
