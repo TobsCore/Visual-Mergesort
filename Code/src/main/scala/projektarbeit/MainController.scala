@@ -77,7 +77,7 @@ class MainController(
       case ex: NumberFormatException => new Alert(AlertType.Error) {
         title = "Input error"
         headerText = "Input error!"
-        contentText = "Cannot convert input to element"
+        contentText = "Cannot convert this to a list of elements"
       }.showAndWait
         createCustomElements(Some(result))
     }
