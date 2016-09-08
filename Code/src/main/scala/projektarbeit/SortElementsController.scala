@@ -19,22 +19,28 @@ class SortElementsController(val pane: Pane) {
   private var groupCounter = 0
 
 
-  def relocateElementGroup(group: Group, list: List[SortElement]) = {
+  def relocateElementGroup(group: Group) = {
     pane.prefWidth() = pane.prefWidth() + 200
     val timeline = new Timeline {
       autoReverse = false
       keyFrames = Seq(
-        at (2 s) {group.translateY -> 200d }
-
+        at (2 s) {
+          group.translateY -> 200d
+        }
       )
     }
     timeline.play()
     timeline.onFinished = {
       event: ActionEvent =>
-        //ForTobyFallsErDasVorMorgenLiest: Nimmt man hierfür die eigentliche Liste, werden die Elemente dennoch um weitere 200 heruntergesetzt
-      var newlist = list.map(_.duplicate())
-        newlist.foreach(_.yPos += 200)
-       sort(newlist)
+        /*
+        ForTobyFallsErDasVorMorgenLiest: Nimmt man hierfür die eigentliche Liste, werden die Elemente dennoch um weitere 200 heruntergesetzt
+        */
+
+        group.translateY() -= 200
+        group.getChildren.toList.asInstanceOf[List[SortElement]].foreach(_.yPos += 200)
+
+        sort(group.getChildren.toList.asInstanceOf[List[SortElement]])
+
     }
 
 
@@ -44,22 +50,21 @@ class SortElementsController(val pane: Pane) {
     if (elements.size > 1) {
       groupCounter += 1
 
-      var firstListLength = (elements.size / 2)
-      var splitList = elements.splitAt(firstListLength)
+      val firstListLength = elements.size / 2
+      val splitList = elements.splitAt(firstListLength)
 
       val first = splitList._1
       val second = splitList._2
 
-      val duplicateEntryList = first.map(_.duplicate())
+      val duplicateFirst = first.map(_.duplicate())
+      val duplicateSeconds = second.map(_.duplicate())
 
 
       val group = new Group()
-      group.getChildren.addAll((duplicateEntryList).asJava)
+      group.getChildren.addAll(duplicateFirst.asJava)
       group.id = "level-" + groupCounter
-      relocateElementGroup(group, duplicateEntryList)
       pane.getChildren.add(group)
-
-
+      relocateElementGroup(group)
     }
   }
 
