@@ -1,6 +1,7 @@
 package projektarbeit
 
 import java.io.IOException
+import javafx.collections.ObservableList
 
 import projektarbeit.ElementOrder.EnumVal
 
@@ -10,7 +11,7 @@ import scalafx.scene.control.Alert.AlertType
 import scalafx.scene.control._
 import scalafx.scene.layout.{BorderPane, Pane}
 import scalafx.scene.text.Text
-import scalafx.scene.{Group, Scene}
+import scalafx.scene.{Group, Node, Scene}
 import scalafx.stage.Stage
 import scalafx.util.converter.DoubleStringConverter
 import scalafxml.core.macros.sfxml
@@ -41,20 +42,31 @@ class MainController(
   amountOfThreadsSlider.labelFormatter = new DoubleStringConverter
   amountOfThreadsLabel.text <== amountOfThreadsSlider.value.asString(originalPattern)
 
+  runButton.defaultButton <== !generateButton.defaultButton
+
+  def changeButtonActivationToRun(): Unit = {
+    runButton.disable = false
+    generateButton.defaultButton() = false
+  }
+
   def generateRandomNumbers(): Unit = {
     generateNumbers(ElementOrder.Random)
+    changeButtonActivationToRun()
   }
 
   def generateOrderedNumbers(): Unit = {
     generateNumbers(ElementOrder.Ordered)
+    changeButtonActivationToRun()
   }
 
   def generateInverseNumbers(): Unit = {
     generateNumbers(ElementOrder.Inverse)
+    changeButtonActivationToRun()
   }
 
   def createCustomElements(): Unit = {
     createCustomElements(None)
+    changeButtonActivationToRun()
   }
 
   def createCustomElements(preselectedValue: Option[String]): Unit = {
@@ -65,9 +77,9 @@ class MainController(
       contentText = "Enter the values:"
     }
 
-    // TODO: What happens, when the user simply hits Enter without entering a number sequence (String = "")?
     val result = dialog.showAndWait.getOrElse("")
     val resultMap = result.split(",").map(_.trim)
+
     try {
       if (!result.equals("")) {
         val elementList: List[Int] = resultMap.map(_.toInt).toList
@@ -105,8 +117,8 @@ class MainController(
     val elementGroup = new Group()
     // Place the elements on the pane
     for ((value, position) <- elements.zipWithIndex) {
-      val xPos = position * SortElement.wholeElementWidth
-      val yPos = SortElement.maxHeight - value
+      val xPos: Double = (position * SortElement.wholeElementWidth).toDouble
+      val yPos: Double = (SortElement.maxHeight - value).toDouble
       val sortElement = new SortElement(value, xPos, yPos)
       sortElement.id() = s"sortElement-$position"
       elementGroup.getChildren.add(sortElement)
@@ -140,7 +152,20 @@ class MainController(
       aboutStage.requestFocus()
     }
   }
+
+  def runSorting():Unit = {
+    val elementGroup: javafx.scene.Group = pane.getChildren.get(0).asInstanceOf[javafx.scene.Group]
+    val ele: List[SortElement] = elementGroup.getChildren().asInstanceOf[ObservableList[SortElement]].toList
+
+    pane.getChildren.clear()
+
+    new SortElements(pane).sort(ele)
+
+
+  }
 }
+
+
 
 
 object ElementOrder {
