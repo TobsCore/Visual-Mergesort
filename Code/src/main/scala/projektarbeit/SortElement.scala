@@ -1,15 +1,9 @@
 package projektarbeit
 
-
-
-
-import javafx.beans.property.IntegerProperty
 import javafx.scene.Group
 
-import scalafx.beans.property.DoubleProperty
-import scalafx.geometry.Pos
 import scalafx.scene.shape.Rectangle
-import scalafx.scene.text.{Text, TextAlignment}
+import scalafx.scene.text.Text
 
 /**
   * Created by Patrick König on 06.09.16.
@@ -47,7 +41,7 @@ class SortElement(val number: Int, var _xPos: Double, var _yPos: Double) extends
 
 
   def duplicate(): SortElement = {
-    return new SortElement(number, _xPos, _yPos)
+    new SortElement(number, _xPos, _yPos)
   }
 
   override def compare(that: SortElement): Int = {
@@ -55,19 +49,19 @@ class SortElement(val number: Int, var _xPos: Double, var _yPos: Double) extends
   }
 
   override def <(that: SortElement): Boolean = {
-    (this.number < that.number)
+    this.number < that.number
   }
 
   override def <=(that: SortElement): Boolean = {
-    (this.number <= that.number)
+    this.number <= that.number
   }
 
   override def >(that: SortElement): Boolean = {
-    (this.number > that.number)
+    this.number > that.number
   }
 
   override def >=(that: SortElement): Boolean = {
-    (this.number > that.number)
+    this.number > that.number
   }
 
 }
