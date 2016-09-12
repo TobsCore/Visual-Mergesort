@@ -12,29 +12,27 @@ import scalafx.scene.layout.Pane
   */
 class SortElementsController(val pane: Pane) {
 
-  private var firstanimation = true
+  // TODO: Move this to a better location - a case class maybe
+  private val moveDownByPixel = 130
 
   private val sequence: SequentialTransition = new SequentialTransition()
 
   def relocateElementGroup(group: Group, depth: Int) = {
-    pane.prefWidth() = pane.prefWidth() + 200
-
     val timeline = new Timeline {
       autoReverse = false
       keyFrames = Seq(
         at (0.2 s) {
           group.opacity -> 1.0},
         at(1 s) {
-          group.translateY -> (group.translateY() + 200)
+          group.translateY -> (group.translateY() + moveDownByPixel)
         }
       )
     }
 
     sequence.children.add(timeline)
-    if(!firstanimation) {
-      group.getChildren.toList.asInstanceOf[List[SortElement]].foreach(_.yPos += 200)
+    if(depth > 0) {
+      group.getChildren.toList.asInstanceOf[List[SortElement]].foreach(_.yPos += moveDownByPixel)
     }
-    firstanimation = false
     sort(group, depth + 1)
 
   }
@@ -56,7 +54,7 @@ class SortElementsController(val pane: Pane) {
       val groupFirst = new Group()
       groupFirst.opacity = 0.0
       groupFirst.getChildren.addAll(duplicateFirst.asJava)
-      groupFirst.translateX <== elementGroup.translateX - groupFirst.getBoundsInParent.getWidth/2
+      groupFirst.translateX <== elementGroup.translateX - groupFirst.getBoundsInParent.getWidth/2 + SortElement.width/2
    //   groupFirst.translateY() = elementGroup.translateY() + 200
       groupFirst.id = s"level-${depth + 1}"
       pane.getChildren.add(groupFirst)
@@ -70,7 +68,7 @@ class SortElementsController(val pane: Pane) {
       groupSecond.getChildren.addAll(duplicateSecond.asJava)
       groupSecond.id = s"level-${depth + 1}"
       pane.getChildren.add(groupSecond)
-      groupSecond.translateX <== elementGroup.translateX + elementGroup.getBoundsInParent.getWidth / 2 -  groupSecond.getBoundsInParent.getWidth/2 + SortElement.width
+      groupSecond.translateX <== elementGroup.translateX + elementGroup.getBoundsInParent.getWidth / 2 - groupSecond.getBoundsInParent.getWidth/2 - SortElement.width/2
       //groupSecond.translateY() = elementGroup.translateY() + 200
 
 
