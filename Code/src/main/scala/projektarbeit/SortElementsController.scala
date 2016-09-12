@@ -12,6 +12,8 @@ import scalafx.scene.layout.Pane
   */
 class SortElementsController(val pane: Pane) {
 
+  private var firstanimation = true
+
   private val sequence: SequentialTransition = new SequentialTransition()
 
   def relocateElementGroup(group: Group, depth: Int) = {
@@ -27,13 +29,12 @@ class SortElementsController(val pane: Pane) {
         }
       )
     }
-   /* timeline.onFinished = {
-      event: ActionEvent =>
 
-        group.translateY() -= 200
-        group.getChildren.toList.asInstanceOf[List[SortElement]].foreach(_.yPos += 200)
-    }*/
     sequence.children.add(timeline)
+    if(!firstanimation) {
+      group.getChildren.toList.asInstanceOf[List[SortElement]].foreach(_.yPos += 200)
+    }
+    firstanimation = false
     sort(group, depth + 1)
 
   }
@@ -53,11 +54,10 @@ class SortElementsController(val pane: Pane) {
 
 
       val groupFirst = new Group()
-      //groupFirst.visible = false;
       groupFirst.opacity = 0.0
       groupFirst.getChildren.addAll(duplicateFirst.asJava)
       groupFirst.translateX <== elementGroup.translateX - groupFirst.getBoundsInParent.getWidth/2
-      groupFirst.translateY() = elementGroup.translateY() + 200
+   //   groupFirst.translateY() = elementGroup.translateY() + 200
       groupFirst.id = s"level-${depth + 1}"
       pane.getChildren.add(groupFirst)
 
@@ -71,9 +71,11 @@ class SortElementsController(val pane: Pane) {
       groupSecond.id = s"level-${depth + 1}"
       pane.getChildren.add(groupSecond)
       groupSecond.translateX <== elementGroup.translateX + elementGroup.getBoundsInParent.getWidth / 2 -  groupSecond.getBoundsInParent.getWidth/2 + SortElement.width
-      groupSecond.translateY() = elementGroup.translateY() + 200
+      //groupSecond.translateY() = elementGroup.translateY() + 200
+
 
       relocateElementGroup(groupSecond, depth)
+
     }
   }
 
