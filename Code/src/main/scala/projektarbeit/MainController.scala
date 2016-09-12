@@ -169,7 +169,7 @@ class MainController(
 
     val sorter = new SortElementsController(pane)
     sorter.sort(elementGroup, 0)
-//    sorter.getSequence.play()
+    sorter.getSequence.play()
 
   }
 }

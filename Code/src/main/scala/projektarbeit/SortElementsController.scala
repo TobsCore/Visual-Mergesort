@@ -16,23 +16,26 @@ class SortElementsController(val pane: Pane) {
 
   def relocateElementGroup(group: Group, depth: Int) = {
     pane.prefWidth() = pane.prefWidth() + 200
+
     val timeline = new Timeline {
       autoReverse = false
       keyFrames = Seq(
-        at(2 s) {
-          group.translateY -> 200d
+        at (0.2 s) {
+          group.opacity -> 1.0},
+        at(1 s) {
+          group.translateY -> (group.translateY() + 200)
         }
       )
     }
-    timeline.onFinished = {
+   /* timeline.onFinished = {
       event: ActionEvent =>
 
         group.translateY() -= 200
         group.getChildren.toList.asInstanceOf[List[SortElement]].foreach(_.yPos += 200)
-        sort(group, depth + 1)
-    }
+    }*/
+    sequence.children.add(timeline)
+    sort(group, depth + 1)
 
-    timeline.play()
   }
 
   def sort(elementGroup: Group, depth: Int): Unit = {
@@ -50,8 +53,11 @@ class SortElementsController(val pane: Pane) {
 
 
       val groupFirst = new Group()
+      //groupFirst.visible = false;
+      groupFirst.opacity = 0.0
       groupFirst.getChildren.addAll(duplicateFirst.asJava)
       groupFirst.translateX <== elementGroup.translateX - groupFirst.getBoundsInParent.getWidth/2
+      groupFirst.translateY() = elementGroup.translateY() + 200
       groupFirst.id = s"level-${depth + 1}"
       pane.getChildren.add(groupFirst)
 
@@ -60,10 +66,12 @@ class SortElementsController(val pane: Pane) {
 
 
       val groupSecond = new Group()
+      groupSecond.opacity = 0.0
       groupSecond.getChildren.addAll(duplicateSecond.asJava)
       groupSecond.id = s"level-${depth + 1}"
       pane.getChildren.add(groupSecond)
       groupSecond.translateX <== elementGroup.translateX + elementGroup.getBoundsInParent.getWidth / 2 -  groupSecond.getBoundsInParent.getWidth/2 + SortElement.width
+      groupSecond.translateY() = elementGroup.translateY() + 200
 
       relocateElementGroup(groupSecond, depth)
     }
