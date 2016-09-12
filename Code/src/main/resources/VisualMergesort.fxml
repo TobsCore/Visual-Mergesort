@@ -64,7 +64,7 @@
                         </MenuItem>
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Run">
+                <Menu mnemonicParsing="false" text="Run" onAction="#runSorting">
                     <items>
                         <MenuItem mnemonicParsing="false" text="Start Algorithm">
                             <accelerator>
