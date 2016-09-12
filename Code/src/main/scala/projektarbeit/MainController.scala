@@ -129,13 +129,16 @@ class MainController(
     }
 
     elementGroup.translateX <== scrollPane.getScene.getWindow.width/2 - elementGroup.getBoundsInParent.getWidth/2
+    elementGroup.id = "level-0"
+    println(elementGroup.translateX())
+
     pane.getChildren.clear()
     pane.getChildren.add(elementGroup)
     pane.setPrefWidth(elementGroup.getBoundsInParent.getWidth)
   }
 
   def openAboutDialog(): Unit = {
-    
+
     if (aboutStage == null) {
       val aboutDialogFXML: String = "/AboutDialog.fxml"
       val resource = getClass.getResource(aboutDialogFXML)
@@ -162,10 +165,11 @@ class MainController(
   def runSorting():Unit = {
 
     val elementGroup: javafx.scene.Group = pane.getChildren.get(0).asInstanceOf[javafx.scene.Group]
-    val ele: List[SortElement] = elementGroup.getChildren().asInstanceOf[ObservableList[SortElement]].toList
+//    val ele: List[SortElement] = elementGroup.getChildren().asInstanceOf[ObservableList[SortElement]].toList
 
-    new SortElementsController(pane).sort(ele)
-
+    val sorter = new SortElementsController(pane)
+    sorter.sort(elementGroup, 0)
+//    sorter.getSequence.play()
 
   }
 }

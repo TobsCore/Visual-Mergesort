@@ -2,9 +2,9 @@ package projektarbeit
 
 import scala.collection.JavaConverters._
 import scalafx.Includes._
-import scalafx.animation.Timeline
+import scalafx.animation.{SequentialTransition, Timeline}
 import scalafx.event.ActionEvent
-import scalafx.scene.Group
+import scalafx.scene.{Group, Node}
 import scalafx.scene.layout.Pane
 
 /**
@@ -12,34 +12,32 @@ import scalafx.scene.layout.Pane
   */
 class SortElementsController(val pane: Pane) {
 
-  private var groupCounter = 1
-  def relocateElementGroup(group: Group) = {
+  private val sequence: SequentialTransition = new SequentialTransition()
+
+  def relocateElementGroup(group: Group, depth: Int) = {
     pane.prefWidth() = pane.prefWidth() + 200
     val timeline = new Timeline {
       autoReverse = false
       keyFrames = Seq(
-        at (2 s) {
+        at(2 s) {
           group.translateY -> 200d
         }
       )
     }
-    timeline.play()
     timeline.onFinished = {
       event: ActionEvent =>
 
         group.translateY() -= 200
         group.getChildren.toList.asInstanceOf[List[SortElement]].foreach(_.yPos += 200)
-
-        sort(group.getChildren.toList.asInstanceOf[List[SortElement]])
-
+        sort(group, depth + 1)
     }
 
-
+    timeline.play()
   }
 
-  def sort(elements: List[SortElement]): Unit = {
+  def sort(elementGroup: Group, depth: Int): Unit = {
+    val elements: List[SortElement] = elementGroup.getChildren.toList.asInstanceOf[List[SortElement]]
     if (elements.size > 1) {
-      groupCounter += 1
 
       val firstListLength = elements.size / 2
       val splitList = elements.splitAt(firstListLength)
@@ -53,17 +51,26 @@ class SortElementsController(val pane: Pane) {
 
       val groupFirst = new Group()
       groupFirst.getChildren.addAll(duplicateFirst.asJava)
-      groupFirst.id = s"level-$groupCounter"
+      groupFirst.translateX <== elementGroup.translateX - groupFirst.getBoundsInParent.getWidth/2
+      groupFirst.id = s"level-${depth + 1}"
       pane.getChildren.add(groupFirst)
+
+      relocateElementGroup(groupFirst, depth)
+
+
 
       val groupSecond = new Group()
       groupSecond.getChildren.addAll(duplicateSecond.asJava)
-      groupSecond.id = s"level-$groupCounter"
+      groupSecond.id = s"level-${depth + 1}"
       pane.getChildren.add(groupSecond)
+      groupSecond.translateX <== elementGroup.translateX + elementGroup.getBoundsInParent.getWidth / 2 -  groupSecond.getBoundsInParent.getWidth/2 + SortElement.width
 
-      relocateElementGroup(groupFirst)
-      relocateElementGroup(groupSecond)
+      relocateElementGroup(groupSecond, depth)
     }
+  }
+
+  def getSequence : SequentialTransition = {
+    this.sequence
   }
 
   /*def sortOriginal(elements: List[SortElement]): SortElement = {
