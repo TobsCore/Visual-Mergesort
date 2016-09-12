@@ -70,6 +70,7 @@ class MainController(
   }
 
   def createCustomElements(preselectedValue: Option[String]): Unit = {
+
     val preselectedValueText = preselectedValue.getOrElse("")
     val dialog = new TextInputDialog(preselectedValueText) {
       title = "Create Custom Elements"
@@ -113,6 +114,7 @@ class MainController(
 
 
   def placeElementsOnPane(elements: List[Int]): Unit = {
+
     // Setting up the canvas
     val elementGroup = new Group()
     elementGroup.id() = "level-1"
@@ -123,16 +125,17 @@ class MainController(
       val sortElement = new SortElement(value, xPos, yPos)
       sortElement.id() = s"sortElement-$position"
       elementGroup.getChildren.add(sortElement)
+
     }
 
+    elementGroup.translateX <== scrollPane.getScene.getWindow.width/2 - elementGroup.getBoundsInParent.getWidth/2
     pane.getChildren.clear()
     pane.getChildren.add(elementGroup)
     pane.setPrefWidth(elementGroup.getBoundsInParent.getWidth)
-
-
   }
 
   def openAboutDialog(): Unit = {
+    
     if (aboutStage == null) {
       val aboutDialogFXML: String = "/AboutDialog.fxml"
       val resource = getClass.getResource(aboutDialogFXML)
@@ -157,6 +160,7 @@ class MainController(
   }
 
   def runSorting():Unit = {
+
     val elementGroup: javafx.scene.Group = pane.getChildren.get(0).asInstanceOf[javafx.scene.Group]
     val ele: List[SortElement] = elementGroup.getChildren().asInstanceOf[ObservableList[SortElement]].toList
 
