@@ -129,6 +129,7 @@ class MainController(
     }
 
     elementGroup.translateX <== scrollPane.getScene.getWindow.width/2 - elementGroup.getBoundsInParent.getWidth/2
+    
     elementGroup.id = "level-0"
     println(elementGroup.translateX())
 
