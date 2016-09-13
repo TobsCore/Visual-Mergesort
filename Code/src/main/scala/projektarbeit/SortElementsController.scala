@@ -41,14 +41,11 @@ class SortElementsController(val pane: Pane) {
     val elements: List[SortElement] = elementGroup.getChildren.toList.asInstanceOf[List[SortElement]]
     if (elements.size > 1) {
 
-      val firstListLength = elements.size / 2
+      val firstListLength = (elements.size / 2.0).ceil.toInt
       val splitList = elements.splitAt(firstListLength)
 
-      val first = splitList._1
-      val second = splitList._2
-
-      val duplicateFirst = first.map(_.duplicate())
-      val duplicateSecond = second.map(_.duplicate())
+      val duplicateFirst = splitList._1.map(_.duplicate())
+      val duplicateSecond = splitList._2.map(_.duplicate())
 
 
       val groupFirst = new Group()
@@ -70,10 +67,7 @@ class SortElementsController(val pane: Pane) {
       pane.getChildren.add(groupSecond)
       groupSecond.translateX <== elementGroup.translateX + elementGroup.getBoundsInParent.getWidth / 2 - groupSecond.getBoundsInParent.getWidth/2 - SortElement.width/2
       //groupSecond.translateY() = elementGroup.translateY() + 200
-
-
       relocateElementGroup(groupSecond, depth)
-
     }
   }
 
@@ -132,5 +126,12 @@ class SortElementsController(val pane: Pane) {
       }
     }
   }*/
+}
 
+
+object Part {
+  sealed trait EnumVal
+  case object Left extends EnumVal
+  case object Right extends EnumVal
+  val partitions = Seq(Left, Right)
 }

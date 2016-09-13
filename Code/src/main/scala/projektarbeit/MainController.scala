@@ -175,8 +175,6 @@ class MainController(
 }
 
 
-
-
 object ElementOrder {
   sealed trait EnumVal
   case object Random extends EnumVal
