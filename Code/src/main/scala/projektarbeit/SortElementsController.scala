@@ -1,10 +1,11 @@
 package projektarbeit
 
+import projektarbeit.Part.{EnumVal, Left, Right}
+
 import scala.collection.JavaConverters._
 import scalafx.Includes._
 import scalafx.animation.{SequentialTransition, Timeline}
-import scalafx.event.ActionEvent
-import scalafx.scene.{Group, Node}
+import scalafx.scene.Group
 import scalafx.scene.layout.Pane
 
 /**
@@ -22,7 +23,7 @@ class SortElementsController(val pane: Pane) {
       autoReverse = false
       keyFrames = Seq(
         at (0.2 s) {
-          group.opacity -> 1.0},
+          group.opacity -> 1.0 },
         at(1 s) {
           group.translateY -> (group.translateY() + moveDownByPixel)
         }
@@ -30,44 +31,50 @@ class SortElementsController(val pane: Pane) {
     }
 
     sequence.children.add(timeline)
-    if(depth > 0) {
-      group.getChildren.toList.asInstanceOf[List[SortElement]].foreach(_.yPos += moveDownByPixel)
-    }
     sort(group, depth + 1)
 
   }
 
-  def sort(elementGroup: Group, depth: Int): Unit = {
-    val elements: List[SortElement] = elementGroup.getChildren.toList.asInstanceOf[List[SortElement]]
+  def createGroup(parentGroup: Group, splitList: (List[SortElement], List[SortElement]), part: EnumVal, depth: Int): Group = {
+
+    val duplicateList = (part match {
+      case Part.Left => splitList._1
+      case Part.Right => splitList._2
+      case _ => throw new IllegalArgumentException(s"$part is not a valid argument")
+    }).map(_.duplicate())
+
+    val group = new Group() {
+        opacity = 0.0
+        children.addAll(duplicateList.asJava)
+        translateY = parentGroup.translateY() + (if (depth > 0) moveDownByPixel else 0)
+        id = s"level-${depth + 1}"
+      }
+      part match {
+        case Part.Left =>
+          group.translateX <== parentGroup.translateX - group.getBoundsInParent.getWidth / 2 + SortElement.width / 2
+        case Part.Right =>
+          group.translateX <== parentGroup.translateX + parentGroup.getBoundsInParent.getWidth / 2 - group.getBoundsInParent.getWidth/2 - SortElement.width/2
+
+      }
+    group
+  }
+
+  def sort(parentGroup: Group, depth: Int): Unit = {
+    val elements: List[SortElement] = parentGroup.getChildren.toList.asInstanceOf[List[SortElement]]
     if (elements.size > 1) {
 
       val firstListLength = (elements.size / 2.0).ceil.toInt
       val splitList = elements.splitAt(firstListLength)
 
-      val duplicateFirst = splitList._1.map(_.duplicate())
-      val duplicateSecond = splitList._2.map(_.duplicate())
+      val left = createGroup(parentGroup, splitList, Left, depth)
+      pane.getChildren.add(left)
+      relocateElementGroup(left, depth)
+
+      val right = createGroup(parentGroup, splitList, Right, depth)
+      pane.getChildren.add(right)
+      relocateElementGroup(right, depth)
 
 
-      val groupFirst = new Group()
-      groupFirst.opacity = 0.0
-      groupFirst.getChildren.addAll(duplicateFirst.asJava)
-      groupFirst.translateX <== elementGroup.translateX - groupFirst.getBoundsInParent.getWidth/2 + SortElement.width/2
-   //   groupFirst.translateY() = elementGroup.translateY() + 200
-      groupFirst.id = s"level-${depth + 1}"
-      pane.getChildren.add(groupFirst)
-
-      relocateElementGroup(groupFirst, depth)
-
-
-
-      val groupSecond = new Group()
-      groupSecond.opacity = 0.0
-      groupSecond.getChildren.addAll(duplicateSecond.asJava)
-      groupSecond.id = s"level-${depth + 1}"
-      pane.getChildren.add(groupSecond)
-      groupSecond.translateX <== elementGroup.translateX + elementGroup.getBoundsInParent.getWidth / 2 - groupSecond.getBoundsInParent.getWidth/2 - SortElement.width/2
-      //groupSecond.translateY() = elementGroup.translateY() + 200
-      relocateElementGroup(groupSecond, depth)
     }
   }
 
