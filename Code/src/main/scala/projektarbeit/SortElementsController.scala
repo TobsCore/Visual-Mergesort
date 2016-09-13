@@ -22,9 +22,9 @@ class SortElementsController(val pane: Pane) {
     val timeline = new Timeline {
       autoReverse = false
       keyFrames = Seq(
-        at (0.2 s) {
+        at (0.2.s) {
           group.opacity -> 1.0 },
-        at(1 s) {
+        at(1.s) {
           group.translateY -> (group.translateY() + moveDownByPixel)
         }
       )
