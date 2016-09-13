@@ -1,5 +1,8 @@
 package projektarbeit
 
+import javafx.collections.ObservableList
+import javafx.scene.Node
+
 import projektarbeit.Part.{EnumVal, Left, Right}
 
 import scala.collection.JavaConverters._
@@ -13,7 +16,6 @@ import scalafx.scene.layout.Pane
   */
 class SortElementsController(val pane: Pane) {
 
-  // TODO: Move this to a better location - a case class maybe
   private val moveDownByPixel = 130
 
   private val sequence: SequentialTransition = new SequentialTransition()
@@ -74,40 +76,55 @@ class SortElementsController(val pane: Pane) {
       pane.getChildren.add(right)
       relocateElementGroup(right, depth)
 
+      val mergeGroup = merge(left, right)
+      println(mergeGroup.getChildren.toList)
 
     }
+  }
+
+  def merge (leftGroup: Group, rightGroup: Group): Group = {
+    val leftList: List[SortElement] = leftGroup.getChildren.toList.asInstanceOf[List[SortElement]]
+    val rightList: List[SortElement] = rightGroup.getChildren.toList.asInstanceOf[List[SortElement]]
+
+    val leftSize: Int = leftList.size
+    val rightSize: Int = rightList.size
+    val totalSize: Int = leftSize + rightSize
+
+    var resultList: List[SortElement] = List.fill(totalSize)(null)
+    val group = new Group() {
+      translateY() = Math.max(leftGroup.translateY(), rightGroup.translateY()) + moveDownByPixel
+    }
+
+    var i = 0
+    var j = 0
+
+   for (k <- 0 until totalSize) {
+
+     if(i < leftSize && j < rightSize) {
+       if(leftList(i) < rightList(j)) {
+          resultList = resultList.updated(k, leftList(i))
+         i += 1
+       } else {
+         resultList = resultList.updated(k, rightList(j))
+         j += 1
+       }
+     } else if(i >= leftSize && j < rightSize){
+       resultList = resultList.updated(k, rightList(j))
+       j += 1
+     } else {
+       resultList = resultList.updated(k, leftList(i))
+       i += 1
+     }
+
+   }
+    group.getChildren.addAll(resultList.asJava)
+    return group
   }
 
   def getSequence : SequentialTransition = {
     this.sequence
   }
 
-  /*def sortOriginal(elements: List[SortElement]): SortElement = {
-
-    if (elements.size > 1 ){
-      var firstListLength = (elements.size/2)
-      var splitList = elements.splitAt(firstListLength)
-
-
-      var first = splitList._1
-      var second = splitList._2
-      println(s"All: ${elements.size} - Left: ${first.size} - Right: ${second.size}")
-
-      val newFirst: List[SortElement] = first.map(_.duplicate)
-      def changeYValue(e: SortElement): SortElement = {
-        e.yPos = 200;
-        e
-      }
-      val newFirst2: List[SortElement] = newFirst.map(changeYValue(_))
-
-      newFirst2.foreach(pane.getChildren.add(_))
-
-
-      sortOriginal(first)
-      sortOriginal(second)
-    //  merge(elements, first, second)
-    }
-  }*/
 /*
   def merge(resunlt:List[SortElement], first:List[SortElement], second:List[SortElement]) {
     var i = 0

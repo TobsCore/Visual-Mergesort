@@ -64,6 +64,10 @@ class SortElement(val number: Int, var _xPos: Double, var _yPos: Double) extends
     this.number > that.number
   }
 
+  override def toString(): String = {
+    this.number.toString
+  }
+
 }
 
 object SortElement{
