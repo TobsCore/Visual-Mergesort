@@ -33,7 +33,6 @@ class SortElementsController(val pane: Pane) {
     }
 
     sequence.children.add(timeline)
-    sort(group, depth + 1)
 
   }
 
@@ -61,25 +60,26 @@ class SortElementsController(val pane: Pane) {
     group
   }
 
-  def sort(parentGroup: Group, depth: Int): Unit = {
+  def sort(parentGroup: Group, depth: Int): Group = {
     val elements: List[SortElement] = parentGroup.getChildren.toList.asInstanceOf[List[SortElement]]
     if (elements.size > 1) {
 
       val firstListLength = (elements.size / 2.0).ceil.toInt
       val splitList = elements.splitAt(firstListLength)
 
-      val left = createGroup(parentGroup, splitList, Left, depth)
+      var left = createGroup(parentGroup, splitList, Left, depth)
       pane.getChildren.add(left)
       relocateElementGroup(left, depth)
+      left = sort(left, depth + 1)
 
-      val right = createGroup(parentGroup, splitList, Right, depth)
+      var right = createGroup(parentGroup, splitList, Right, depth)
       pane.getChildren.add(right)
       relocateElementGroup(right, depth)
+      right = sort(right, depth + 1)
 
-      val mergeGroup = merge(left, right)
-      println(mergeGroup.getChildren.toList)
-
+      return merge(left, right)
     }
+    parentGroup
   }
 
   def merge (leftGroup: Group, rightGroup: Group): Group = {
@@ -118,7 +118,7 @@ class SortElementsController(val pane: Pane) {
 
    }
     group.getChildren.addAll(resultList.asJava)
-    return group
+    group
   }
 
   def getSequence : SequentialTransition = {
