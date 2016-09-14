@@ -149,6 +149,7 @@ class MainController(
     pane.getChildren.clear()
     pane.getChildren.add(elementGroup)
     pane.setPrefWidth(elementGroup.getBoundsInParent.getWidth)
+    scrollPane.vvalue = 0.0
   }
 
   def openAboutDialog(): Unit = {
