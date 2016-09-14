@@ -29,8 +29,8 @@ class MainController(
                       private val amountOfThreadsSlider: Slider,
                       private val amountOfElementsLabel: Text,
                       private val amountOfThreadsLabel: Text,
-                      private val playButton: Button,
-                      private val pauseButton: Button,
+                      private val playPauseMenu: MenuItem,
+                      private val playPauseButton: Button,
                       private val playbackSpeed: Slider,
                       private val playbackSpeedLabel: Label,
                       private val borderPane: BorderPane,
@@ -43,13 +43,14 @@ class MainController(
   var aboutStage: Stage = _
   val originalPattern = "%.0f"
   var transition: SequentialTransition = _
+  var isPlaying = false
   amountOfElementsSlider.labelFormatter = new DoubleStringConverter
   amountOfElementsLabel.text <== amountOfElementsSlider.value.asString(originalPattern)
   amountOfThreadsSlider.labelFormatter = new DoubleStringConverter
   amountOfThreadsLabel.text <== amountOfThreadsSlider.value.asString(originalPattern)
 
   playbackSpeed.labelFormatter = new DoubleStringConverter
-  playbackSpeedLabel.text <== (MathBindings.pow(2.0, playbackSpeed.value)).asString("%.2f")
+  playbackSpeedLabel.text <== MathBindings.pow(2.0, playbackSpeed.value).asString("%.2f")
 
   runButton.defaultButton <== !generateButton.defaultButton
 
@@ -174,7 +175,8 @@ class MainController(
 
   def runSorting():Unit = {
     runButton.disable = true
-    pauseButton.disable = false
+    playPauseButton.disable = false
+    playPauseMenu.disable = false
     val elementGroup: javafx.scene.Group = pane.getChildren.get(0).asInstanceOf[javafx.scene.Group]
 //    val ele: List[SortElement] = elementGroup.getChildren().asInstanceOf[ObservableList[SortElement]].toList
 
@@ -182,21 +184,26 @@ class MainController(
     sorter.sort(elementGroup, 0)
     transition = sorter.getSequence
     transition.rate <== MathBindings.pow(2.0, playbackSpeed.value)
+
+    isPlaying = true
     transition.play()
 
   }
 
-  def playSequence(): Unit = {
-    playButton.disable = true
-    pauseButton.disable = false
-    transition.play()
+  def playPauseSequence(): Unit = {
+    if (this.isPlaying) {
+      transition.pause()
+      playPauseButton.text = "Play"
+      playPauseMenu.text = "Play"
+    } else {
+      transition.play()
+      playPauseButton.text = "Pause"
+      playPauseMenu.text = "Pause"
+    }
+
+    this.isPlaying = !this.isPlaying
   }
 
-  def pauseSequence(): Unit = {
-    playButton.disable = false
-    pauseButton.disable = true
-    transition.pause()
-  }
 }
 
 

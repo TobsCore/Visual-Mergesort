@@ -64,12 +64,19 @@
                         </MenuItem>
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" onAction="#runSorting" text="Run">
+                <Menu mnemonicParsing="false" text="Run">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Start Algorithm">
+                        <MenuItem mnemonicParsing="false" text="Start Algorithm" onAction="#runSorting" >
                             <accelerator>
                                 <KeyCodeCombination alt="UP" code="R" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                             </accelerator>
+                        </MenuItem>
+                        <MenuItem fx:id="playPauseMenu" mnemonicParsing="false" onAction="#playPauseSequence"
+                        text="Pause"
+                                  disable="true">
+                                <accelerator>
+                                    <KeyCodeCombination alt="UP" code="P" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                                </accelerator>
                         </MenuItem>
                     </items>
                 </Menu>
@@ -100,10 +107,8 @@
                         <Text fx:id="amountOfThreadsLabel" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="RIGHT" textOrigin="TOP" wrappingWidth="40.715087890625" AnchorPane.rightAnchor="35.0" />
                         <Button fx:id="generateButton" defaultButton="true" layoutX="48.0" layoutY="19.0" mnemonicParsing="false" onAction="#generateRandomNumbers" text="Generate" />
                         <Button fx:id="runButton" disable="true" layoutX="48.0" layoutY="62.0" mnemonicParsing="false" onAction="#runSorting" prefHeight="27.0" prefWidth="74.0" text="Run" />
-                        <Button fx:id="playButton" disable="true" layoutX="145.0" layoutY="62.0"
-                                mnemonicParsing="false" text="Play" onAction="#playSequence"/>
-                        <Button fx:id="pauseButton" disable="true" layoutX="229.0" layoutY="63.0"
-                                mnemonicParsing="false" text="Pause" onAction="#pauseSequence"/>
+                        <Button fx:id="playPauseButton" disable="true" layoutX="145.0" layoutY="62.0"
+                                mnemonicParsing="false" text="Pause" onAction="#playPauseSequence"/>
                         <Slider fx:id="playbackSpeed" blockIncrement="1.0" layoutX="313.0" layoutY="62.0"
                                 majorTickUnit="1.0" max="2.0" min="-2.0" minorTickCount="0" prefHeight="38.0"
                                 prefWidth="100.0" showTickMarks="true" value="0.0" />
