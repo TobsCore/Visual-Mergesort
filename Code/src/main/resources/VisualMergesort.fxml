@@ -28,30 +28,30 @@
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <Menu mnemonicParsing="false" text="Generate Random Data">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Randomly Shuffled" onAction="#generateRandomNumbers">
+                                <MenuItem mnemonicParsing="false" onAction="#generateRandomNumbers" text="Randomly Shuffled">
                                     <accelerator>
                                         <KeyCodeCombination alt="UP" code="B" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                                     </accelerator>
                                 </MenuItem>
-                                <MenuItem mnemonicParsing="false" text="Sorted Numbers" onAction="#generateOrderedNumbers">
+                                <MenuItem mnemonicParsing="false" onAction="#generateOrderedNumbers" text="Sorted Numbers">
                                     <accelerator>
                                         <KeyCodeCombination alt="UP" code="O" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                                     </accelerator>
                                 </MenuItem>
-                                <MenuItem mnemonicParsing="false" text="Reverse Sorted Numbers" onAction="#generateInverseNumbers">
+                                <MenuItem mnemonicParsing="false" onAction="#generateInverseNumbers" text="Reverse Sorted Numbers">
                                     <accelerator>
                                         <KeyCodeCombination alt="UP" code="I" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                                     </accelerator>
                                 </MenuItem>
                             </items>
                         </Menu>
-                        <MenuItem mnemonicParsing="false" text="Create Custom Elements" onAction="#createCustomElements">
+                        <MenuItem mnemonicParsing="false" onAction="#createCustomElements" text="Create Custom Elements">
                             <accelerator>
                                 <KeyCodeCombination alt="UP" code="U" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                             </accelerator>
                         </MenuItem>
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Quit" >
+                        <MenuItem mnemonicParsing="false" text="Quit">
                         </MenuItem>
                     </items>
                 </Menu>
@@ -64,7 +64,7 @@
                         </MenuItem>
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Run" onAction="#runSorting">
+                <Menu mnemonicParsing="false" onAction="#runSorting" text="Run">
                     <items>
                         <MenuItem mnemonicParsing="false" text="Start Algorithm">
                             <accelerator>
@@ -85,9 +85,7 @@
             <top>
                 <AnchorPane prefHeight="106.0" prefWidth="453.0" BorderPane.alignment="CENTER">
                     <children>
-                        <Slider fx:id="amountOfElementsSlider" blockIncrement="1.0" layoutX="326.0" layoutY="18.0"
-                                majorTickUnit="9.33" max="32.0" min="4.0" prefHeight="26.0" prefWidth="248.0"
-                                showTickMarks="true" snapToTicks="false" value="16.0" AnchorPane.rightAnchor="70.0" />
+                        <Slider fx:id="amountOfElementsSlider" blockIncrement="1.0" layoutX="326.0" layoutY="18.0" majorTickUnit="9.33" max="32.0" min="4.0" prefHeight="26.0" prefWidth="248.0" showTickMarks="true" snapToTicks="false" value="16.0" AnchorPane.rightAnchor="70.0" />
                         <Label layoutX="413.0" layoutY="17.0" text="Elements" AnchorPane.rightAnchor="315.0">
                             <padding>
                                 <Insets right="15.0" />
@@ -101,7 +99,9 @@
                         <Text fx:id="amountOfElementsLabel" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="16" textAlignment="RIGHT" wrappingWidth="40.71502685546875" AnchorPane.rightAnchor="35.0" />
                         <Text fx:id="amountOfThreadsLabel" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="RIGHT" textOrigin="TOP" wrappingWidth="40.715087890625" AnchorPane.rightAnchor="35.0" />
                         <Button fx:id="generateButton" defaultButton="true" layoutX="48.0" layoutY="19.0" mnemonicParsing="false" onAction="#generateRandomNumbers" text="Generate" />
-                        <Button fx:id="runButton" disable="true" layoutX="48.0" layoutY="62.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="74.0" onAction="#runSorting" text="Run" />
+                        <Button fx:id="runButton" disable="true" layoutX="48.0" layoutY="62.0" mnemonicParsing="false" onAction="#runSorting" prefHeight="27.0" prefWidth="74.0" text="Run" />
+                  <Button layoutX="145.0" layoutY="62.0" mnemonicParsing="false" text="Play" />
+                  <Button layoutX="229.0" layoutY="63.0" mnemonicParsing="false" text="Pause" />
                     </children>
                 </AnchorPane>
             </top>
