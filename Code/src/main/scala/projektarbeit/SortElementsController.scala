@@ -136,15 +136,29 @@ class SortElementsController(val pane: Pane) {
     val resultListDuplicate: List[SortElement] = resultList.map(_.duplicate())
     val group = createMergeGroup(resultListDuplicate, depth)
     group.translateY = newYValue
-    //group.translateX <== (leftGroup.translateX() + rightGroup.translateX())/2
+
+    //TODO: In eigene methode auslagern
+    val rightestPosition = rightGroup.translateX + rightGroup.getChildren.get(0).asInstanceOf[SortElement].xPos + rightGroup.getBoundsInParent.getWidth
+    val leftestPosition = leftGroup.translateX
+    val widthOfParentsGroups = rightestPosition - leftestPosition
+    val middleOfParentGroup = rightestPosition - widthOfParentsGroups / 2
+    val widthOfNewGroup = group.getChildren.size * SortElement.wholeElementWidth - SortElement.offsetToNextElement
+
+    val newXPosition = middleOfParentGroup - widthOfNewGroup / 2
+
+    group.translateX <== newXPosition
+
     //group.translateX() = leftGroup.translateX()
     pane.getChildren.add(group)
     showGroup(group)
-
     for ((element, i) <- resultListDuplicate.zipWithIndex) {
+      element.opacity() = 0
       relocateElement(element, i)
-      //element.xPos = i * SortElement.wholeElementWidth
+      element.xPos = i * SortElement.wholeElementWidth
     }
+
+
+
 
    // println(group.getChildren.toList)
     group
@@ -156,13 +170,18 @@ class SortElementsController(val pane: Pane) {
       autoReverse = false
 
       keyFrames = Seq(
+        at (0.2.s) {
+          element.opacityProperty -> 1.0
+        },
         at (1.0.s) {
           element.translateY -> (element.translateY() + moveDownByPixel)
-        },
+        }
+
+       /*,
         at (1.0.s) {
          element.translateX -> (i * SortElement.wholeElementWidth)
          // element.xPos -> (i * SortElement.wholeElementWidth)
-        }
+        }*/
       )
     }
 
