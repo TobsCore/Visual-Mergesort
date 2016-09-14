@@ -104,6 +104,10 @@
                                 mnemonicParsing="false" text="Play" onAction="#playSequence"/>
                         <Button fx:id="pauseButton" disable="true" layoutX="229.0" layoutY="63.0"
                                 mnemonicParsing="false" text="Pause" onAction="#pauseSequence"/>
+                        <Slider fx:id="playbackSpeed" blockIncrement="1.0" layoutX="313.0" layoutY="62.0"
+                                majorTickUnit="1.0" max="2.0" min="-2.0" minorTickCount="0" prefHeight="38.0"
+                                prefWidth="100.0" showTickMarks="true" value="0.0" />
+                        <Label fx:id="playbackSpeedLabel" layoutX="300.0" layoutY="62.0" />
                     </children>
                 </AnchorPane>
             </top>

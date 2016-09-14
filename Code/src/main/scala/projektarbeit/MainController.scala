@@ -2,6 +2,7 @@ package projektarbeit
 
 import java.io.IOException
 
+import eu.lestard.advanced_bindings.api.MathBindings
 import projektarbeit.ElementOrder.EnumVal
 
 import scala.concurrent.forkjoin.ThreadLocalRandom
@@ -30,6 +31,8 @@ class MainController(
                       private val amountOfThreadsLabel: Text,
                       private val playButton: Button,
                       private val pauseButton: Button,
+                      private val playbackSpeed: Slider,
+                      private val playbackSpeedLabel: Label,
                       private val borderPane: BorderPane,
                       private val scrollPane: ScrollPane,
                       private val pane: Pane) {
@@ -44,6 +47,9 @@ class MainController(
   amountOfElementsLabel.text <== amountOfElementsSlider.value.asString(originalPattern)
   amountOfThreadsSlider.labelFormatter = new DoubleStringConverter
   amountOfThreadsLabel.text <== amountOfThreadsSlider.value.asString(originalPattern)
+
+  playbackSpeed.labelFormatter = new DoubleStringConverter
+  playbackSpeedLabel.text <== (MathBindings.pow(2.0, playbackSpeed.value)).asString("%.2f")
 
   runButton.defaultButton <== !generateButton.defaultButton
 
@@ -175,6 +181,7 @@ class MainController(
     val sorter = new SortElementsController(pane)
     sorter.sort(elementGroup, 0)
     transition = sorter.getSequence
+    transition.rate <== MathBindings.pow(2.0, playbackSpeed.value)
     transition.play()
 
   }
