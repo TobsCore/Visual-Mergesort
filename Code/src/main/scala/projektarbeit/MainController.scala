@@ -1,7 +1,6 @@
 package projektarbeit
 
 import java.io.IOException
-import javafx.collections.ObservableList
 
 import projektarbeit.ElementOrder.EnumVal
 
@@ -28,6 +27,8 @@ class MainController(
                       private val amountOfThreadsSlider: Slider,
                       private val amountOfElementsLabel: Text,
                       private val amountOfThreadsLabel: Text,
+                      private val playButton: Button,
+                      private val pauseButton: Button,
                       private val borderPane: BorderPane,
                       private val scrollPane: ScrollPane,
                       private val pane: Pane) {
@@ -165,6 +166,7 @@ class MainController(
 
   def runSorting():Unit = {
 
+    pauseButton.disable = false
     val elementGroup: javafx.scene.Group = pane.getChildren.get(0).asInstanceOf[javafx.scene.Group]
 //    val ele: List[SortElement] = elementGroup.getChildren().asInstanceOf[ObservableList[SortElement]].toList
 
@@ -172,6 +174,18 @@ class MainController(
     sorter.sort(elementGroup, 0)
     sorter.getSequence.play()
 
+  }
+
+  def playSequence(): Unit = {
+    playButton.disable = true
+    pauseButton.disable = false
+    println("Play sequence")
+  }
+
+  def pauseSequence(): Unit = {
+    playButton.disable = false
+    pauseButton.disable = true
+    println("Pause sequence")
   }
 }
 

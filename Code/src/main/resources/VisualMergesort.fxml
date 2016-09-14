@@ -100,8 +100,10 @@
                         <Text fx:id="amountOfThreadsLabel" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="RIGHT" textOrigin="TOP" wrappingWidth="40.715087890625" AnchorPane.rightAnchor="35.0" />
                         <Button fx:id="generateButton" defaultButton="true" layoutX="48.0" layoutY="19.0" mnemonicParsing="false" onAction="#generateRandomNumbers" text="Generate" />
                         <Button fx:id="runButton" disable="true" layoutX="48.0" layoutY="62.0" mnemonicParsing="false" onAction="#runSorting" prefHeight="27.0" prefWidth="74.0" text="Run" />
-                  <Button layoutX="145.0" layoutY="62.0" mnemonicParsing="false" text="Play" />
-                  <Button layoutX="229.0" layoutY="63.0" mnemonicParsing="false" text="Pause" />
+                        <Button fx:id="playButton" disable="true" layoutX="145.0" layoutY="62.0"
+                                mnemonicParsing="false" text="Play" onAction="#playSequence"/>
+                        <Button fx:id="pauseButton" disable="true" layoutX="229.0" layoutY="63.0"
+                                mnemonicParsing="false" text="Pause" onAction="#pauseSequence"/>
                     </children>
                 </AnchorPane>
             </top>
