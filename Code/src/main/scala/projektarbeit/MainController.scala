@@ -8,6 +8,8 @@ import projektarbeit.ElementOrder.EnumVal
 import scala.concurrent.forkjoin.ThreadLocalRandom
 import scalafx.Includes._
 import scalafx.animation.SequentialTransition
+import scalafx.beans.property.BooleanProperty
+import scalafx.event.ActionEvent
 import scalafx.scene.control.Alert.AlertType
 import scalafx.scene.control._
 import scalafx.scene.layout.{BorderPane, Pane}
@@ -43,7 +45,7 @@ class MainController(
   var aboutStage: Stage = _
   val originalPattern = "%.0f"
   var transition: SequentialTransition = _
-  var isPlaying = false
+  var isPlaying: BooleanProperty = BooleanProperty(false)
   amountOfElementsSlider.labelFormatter = new DoubleStringConverter
   amountOfElementsLabel.text <== amountOfElementsSlider.value.asString(originalPattern)
   amountOfThreadsSlider.labelFormatter = new DoubleStringConverter
@@ -54,8 +56,9 @@ class MainController(
 
   runButton.defaultButton <== !generateButton.defaultButton
 
+
   def changeButtonActivationToRun(): Unit = {
-    runButton.disable = false
+    runButton.disable() = false
     generateButton.defaultButton() = false
   }
 
@@ -175,8 +178,9 @@ class MainController(
 
   def runSorting():Unit = {
     runButton.disable = true
-    playPauseButton.disable = false
+    isPlaying() = true
     playPauseMenu.disable = false
+    playPauseButton.disable = false
     val elementGroup: javafx.scene.Group = pane.getChildren.get(0).asInstanceOf[javafx.scene.Group]
 //    val ele: List[SortElement] = elementGroup.getChildren().asInstanceOf[ObservableList[SortElement]].toList
 
@@ -185,13 +189,18 @@ class MainController(
     transition = sorter.getSequence
     transition.rate <== MathBindings.pow(2.0, playbackSpeed.value)
 
-    isPlaying = true
     transition.play()
+    transition.onFinished = {
+      event: ActionEvent =>
+        isPlaying() = false
+        playPauseButton.disable = true
+        playPauseMenu.disable = true
+    }
 
   }
 
   def playPauseSequence(): Unit = {
-    if (this.isPlaying) {
+    if (this.isPlaying()) {
       transition.pause()
       playPauseButton.text = "Play"
       playPauseMenu.text = "Play"
@@ -201,7 +210,7 @@ class MainController(
       playPauseMenu.text = "Pause"
     }
 
-    this.isPlaying = !this.isPlaying
+    this.isPlaying() = !this.isPlaying()
   }
 
 }
