@@ -8,6 +8,8 @@ import projektarbeit.Part.{EnumVal, Left, Right}
 import scala.collection.JavaConverters._
 import scalafx.Includes._
 import scalafx.animation.{SequentialTransition, Timeline}
+import scalafx.beans.property.DoubleProperty
+import scalafx.event.ActionEvent
 import scalafx.scene.Group
 import scalafx.scene.layout.Pane
 
@@ -34,6 +36,15 @@ class SortElementsController(val pane: Pane) {
 
     sequence.children.add(timeline)
 
+  }
+
+  def createMergeGroup( mergeList: List[SortElement], depth: Int): Group = {
+    val group = new Group() {
+      opacity = 0.0
+      children.addAll(mergeList.asJava)
+      id = s"level-${depth + 1}"
+    }
+    group
   }
 
   def createGroup(parentGroup: Group, splitList: (List[SortElement], List[SortElement]), part: EnumVal, depth: Int): Group = {
@@ -67,33 +78,37 @@ class SortElementsController(val pane: Pane) {
       val firstListLength = (elements.size / 2.0).ceil.toInt
       val splitList = elements.splitAt(firstListLength)
 
-      var left = createGroup(parentGroup, splitList, Left, depth)
+      val left = createGroup(parentGroup, splitList, Left, depth)
       pane.getChildren.add(left)
       relocateElementGroup(left, depth)
-      left = sort(left, depth + 1)
+      val sortedLeft = sort(left, depth + 1)
 
-      var right = createGroup(parentGroup, splitList, Right, depth)
+      val right = createGroup(parentGroup, splitList, Right, depth)
       pane.getChildren.add(right)
       relocateElementGroup(right, depth)
-      right = sort(right, depth + 1)
+      val sortedRight = sort(right, depth + 1)
 
-      return merge(left, right)
+      return merge(sortedLeft, sortedRight, depth + 1)
+
     }
     parentGroup
   }
 
-  def merge (leftGroup: Group, rightGroup: Group): Group = {
+
+
+  def merge(leftGroup: Group, rightGroup: Group, depth: Int): Group = {
+
+
     val leftList: List[SortElement] = leftGroup.getChildren.toList.asInstanceOf[List[SortElement]]
     val rightList: List[SortElement] = rightGroup.getChildren.toList.asInstanceOf[List[SortElement]]
 
     val leftSize: Int = leftList.size
     val rightSize: Int = rightList.size
     val totalSize: Int = leftSize + rightSize
-
     var resultList: List[SortElement] = List.fill(totalSize)(null)
-    val group = new Group() {
-      translateY() = Math.max(leftGroup.translateY(), rightGroup.translateY()) + moveDownByPixel
-    }
+    val newYValue = Math.max(leftGroup.translateY(), rightGroup.translateY()) + moveDownByPixel
+
+
 
     var i = 0
     var j = 0
@@ -117,8 +132,61 @@ class SortElementsController(val pane: Pane) {
      }
 
    }
-    group.getChildren.addAll(resultList.asJava)
+
+    val resultListDuplicate: List[SortElement] = resultList.map(_.duplicate())
+    val group = createMergeGroup(resultListDuplicate, depth)
+    group.translateY = newYValue
+    //group.translateX <== (leftGroup.translateX() + rightGroup.translateX())/2
+    //group.translateX() = leftGroup.translateX()
+    pane.getChildren.add(group)
+    showGroup(group)
+
+    for ((element, i) <- resultListDuplicate.zipWithIndex) {
+      relocateElement(element, i)
+      //element.xPos = i * SortElement.wholeElementWidth
+    }
+
+   // println(group.getChildren.toList)
     group
+  }
+
+  def relocateElement(element: SortElement, i: Int) = {
+    println(i)
+    val timeline = new Timeline {
+      autoReverse = false
+
+      keyFrames = Seq(
+        at (1.0.s) {
+          element.translateY -> (element.translateY() + moveDownByPixel)
+        },
+        at (1.0.s) {
+         element.translateX -> (i * SortElement.wholeElementWidth)
+         // element.xPos -> (i * SortElement.wholeElementWidth)
+        }
+      )
+    }
+
+    timeline.onFinished = {
+      event: ActionEvent =>
+        println(element.localToScene(element.getBoundsInLocal()))
+    }
+    sequence.children.add(timeline)
+  }
+
+  def showGroup(group: Group) = {
+    val timeline = new Timeline {
+      autoReverse = false
+
+      keyFrames = Seq(
+        at (0.2.s) {
+          group.opacity -> 1.0 }
+
+        )
+
+    }
+
+    sequence.children.add(timeline)
+
   }
 
   def getSequence : SequentialTransition = {

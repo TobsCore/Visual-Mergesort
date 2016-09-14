@@ -2,6 +2,7 @@ package projektarbeit
 
 import javafx.scene.Group
 
+import scalafx.beans.property.DoubleProperty
 import scalafx.scene.shape.Rectangle
 import scalafx.scene.text.Text
 
