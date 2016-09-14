@@ -6,6 +6,7 @@ import projektarbeit.ElementOrder.EnumVal
 
 import scala.concurrent.forkjoin.ThreadLocalRandom
 import scalafx.Includes._
+import scalafx.animation.SequentialTransition
 import scalafx.scene.control.Alert.AlertType
 import scalafx.scene.control._
 import scalafx.scene.layout.{BorderPane, Pane}
@@ -38,6 +39,7 @@ class MainController(
   val defaultMaximumNumber = 99
   var aboutStage: Stage = _
   val originalPattern = "%.0f"
+  var transition: SequentialTransition = _
   amountOfElementsSlider.labelFormatter = new DoubleStringConverter
   amountOfElementsLabel.text <== amountOfElementsSlider.value.asString(originalPattern)
   amountOfThreadsSlider.labelFormatter = new DoubleStringConverter
@@ -165,27 +167,28 @@ class MainController(
   }
 
   def runSorting():Unit = {
-
+    runButton.disable = true
     pauseButton.disable = false
     val elementGroup: javafx.scene.Group = pane.getChildren.get(0).asInstanceOf[javafx.scene.Group]
 //    val ele: List[SortElement] = elementGroup.getChildren().asInstanceOf[ObservableList[SortElement]].toList
 
     val sorter = new SortElementsController(pane)
     sorter.sort(elementGroup, 0)
-    sorter.getSequence.play()
+    transition = sorter.getSequence
+    transition.play()
 
   }
 
   def playSequence(): Unit = {
     playButton.disable = true
     pauseButton.disable = false
-    println("Play sequence")
+    transition.play()
   }
 
   def pauseSequence(): Unit = {
     playButton.disable = false
     pauseButton.disable = true
-    println("Pause sequence")
+    transition.pause()
   }
 }
 
