@@ -130,7 +130,7 @@
                         <Button fx:id="generateButton" defaultButton="true" layoutX="48.0" layoutY="19.0"
                                 mnemonicParsing="false" onAction="#generateRandomNumbers" text="Generate"/>
                         <Button fx:id="runButton" disable="true" layoutX="48.0" layoutY="62.0" mnemonicParsing="false"
-                                onAction="#runSorting" prefHeight="27.0" prefWidth="74.0" text="Run"/>
+                                onAction="#runSorting" text="Run"/>
                         <Button fx:id="playPauseButton" disable="true" layoutX="145.0" layoutY="62.0"
                                 mnemonicParsing="false" text="Pause"
                                 onAction="#playPauseSequence"/>
