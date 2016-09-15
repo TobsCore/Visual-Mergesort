@@ -24,14 +24,14 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea) {
   var consoleText: String = ""
 
   def relocateElementGroup(group: Group, depth: Int): Timeline = {
-    val factor = 1.0/(maxDepth)
+    //val factor = 1.0/(maxDepth)
     val consoleTextLength: Int = consoleText.length
     val timeline = new Timeline {
       autoReverse = false
       keyFrames = Seq(
-        at (0.15.s) {
+        /*at (0.15.s) {
           group.getScene.lookup("#scrollPaneID").asInstanceOf[ScrollPane].vvalue -> (factor * (if(depth == 0){depth} else {depth + 1}))
-        },
+        },*/
         at (0.2.s) {
           group.opacity -> 1.0 },
         at(1.s) {
@@ -79,6 +79,20 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea) {
   }
 
 
+  def scroll(group: Group, depth: Int) = {
+    val factor = 1.0/(maxDepth)
+    val timeline = new Timeline {
+      autoReverse = false
+      keyFrames = Seq(
+        at (0.5.s) {
+          group.getScene.lookup("#scrollPaneID").asInstanceOf[ScrollPane].vvalue -> (factor * (if(depth == 0){depth} else {depth + 1}))
+        }
+      )
+    }
+
+    sequence.children.add(timeline)
+
+  }
 
   def sort(parentGroup: Group, depth: Int): Group = {
     val elements: List[SortElement] = parentGroup.children.toList.asInstanceOf[List[SortElement]]
@@ -89,16 +103,17 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea) {
 
       val left = createGroup(parentGroup, splitList, Left, depth)
       pane.children.add(left)
+      scroll(left, depth)
       val timelineLeft = relocateElementGroup(left, depth)
       consoleText += s"SPLIT $elements - ${elements.size} elements\n"
       timelineLeft.keyFrames.add(at(0.1.s) {consoleLog.text -> consoleText})
       timelineLeft.keyFrames.add(at(0.12.s) {consoleLog.scrollTop -> Double.MaxValue})
-
       val sortedLeft = sort(left, depth + 1)
 
 
       val right = createGroup(parentGroup, splitList, Right, depth)
       pane.children.add(right)
+      scroll(right, depth)
       val timelineRight = relocateElementGroup(right, depth)
       timelineRight.keyFrames.add(at(0.1.s) {consoleLog.text -> consoleText})
       val sortedRight = sort(right, depth + 1)
