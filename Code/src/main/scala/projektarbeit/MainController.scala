@@ -56,6 +56,7 @@ class MainController(
   playbackSpeedLabel.text <== MathBindings.pow(2.0, playbackSpeed.value).asString("%.2f")
 
   runButton.defaultButton <== !generateButton.defaultButton
+  playPauseMenu.text <==> playPauseButton.text
 
 
   def changeButtonActivationToRun(): Unit = {
@@ -129,6 +130,7 @@ class MainController(
 
   def placeElementsOnPane(elements: List[Int]): Unit = {
 
+    cleanEverythingUp
     // Stop the running transition, and then place the new elements on the pane
     if (transition != null) transition.stop()
     // Setting up the canvas
@@ -198,23 +200,26 @@ class MainController(
     transition.play()
     transition.onFinished = {
       event: ActionEvent =>
-        isPlaying() = false
-        playPauseButton.disable = true
-        playPauseMenu.disable = true
-        consoleLog.text() += "Transition Finished\n"
+        cleanEverythingUp
     }
 
+  }
+
+  def cleanEverythingUp: Unit = {
+    isPlaying() = false
+    playPauseButton.text = "Pause"
+    playPauseButton.disable = true
+    playPauseMenu.disable = true
+    consoleLog.text() += "Transition Finished\n"
   }
 
   def playPauseSequence(): Unit = {
     if (this.isPlaying()) {
       transition.pause()
       playPauseButton.text = "Play"
-      playPauseMenu.text = "Play"
     } else {
       transition.play()
       playPauseButton.text = "Pause"
-      playPauseMenu.text = "Pause"
     }
 
     this.isPlaying() = !this.isPlaying()
