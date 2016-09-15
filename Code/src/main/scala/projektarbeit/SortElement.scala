@@ -23,7 +23,7 @@ class SortElement(val number: Int, var _xPos: Double, var _yPos: Double) extends
   rectangle.setFill(Color.DARKBLUE)
   this.getChildren.addAll(rectangle,text)
 
-  
+
 
   def changeColor(color: Color): Unit = {
     this.rectangle.setFill(color)

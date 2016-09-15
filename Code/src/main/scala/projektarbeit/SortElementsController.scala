@@ -5,6 +5,7 @@ import projektarbeit.Part.{EnumVal, Left, Right}
 import scala.collection.JavaConverters._
 import scalafx.Includes._
 import scalafx.animation.{SequentialTransition, Timeline}
+import scalafx.event.ActionEvent
 import scalafx.scene.Group
 import scalafx.scene.control.TextArea
 import scalafx.scene.layout.Pane
@@ -17,8 +18,9 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea) {
   private val moveDownByPixel = 130
 
   private val sequence: SequentialTransition = new SequentialTransition()
+  var consoleText: String = ""
 
-  def relocateElementGroup(group: Group, depth: Int) = {
+  def relocateElementGroup(group: Group, depth: Int): Timeline = {
     val timeline = new Timeline {
       autoReverse = false
       keyFrames = Seq(
@@ -31,6 +33,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea) {
     }
 
     sequence.children.add(timeline)
+    timeline
 
   }
 
@@ -74,19 +77,30 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea) {
       val firstListLength = (elements.size / 2.0).ceil.toInt
       val splitList = elements.splitAt(firstListLength)
 
-      consoleLog.text() += s"""Splitting $elements - ${elements.size} elements
+      /*consoleLog.text() += s"""Splitting $elements - ${elements.size} elements
                            | Left ${splitList._1} - ${splitList._1.size} elements
                            | Right ${splitList._2} - ${splitList._2.size} elements
-                           |""".stripMargin
+                           |""".stripMargin*/
 
       val left = createGroup(parentGroup, splitList, Left, depth)
       pane.children.add(left)
-      relocateElementGroup(left, depth)
+      val timelineLeft = relocateElementGroup(left, depth)
+      consoleText +=
+        s"""Splitting $elements - ${elements.size} elements
+            | Left ${splitList._1} - ${splitList._1.size} elements
+            |""".stripMargin
+      timelineLeft.keyFrames.add(at(0.1.s) {consoleLog.text -> consoleText})
+
       val sortedLeft = sort(left, depth + 1)
+
 
       val right = createGroup(parentGroup, splitList, Right, depth)
       pane.children.add(right)
-      relocateElementGroup(right, depth)
+      val timelineRight = relocateElementGroup(right, depth)
+      consoleText +=
+        s""" Right ${splitList._2} - ${splitList._2.size} elements
+           |""".stripMargin
+      timelineRight.keyFrames.add(at(0.1.s) {consoleLog.text -> consoleText})
       val sortedRight = sort(right, depth + 1)
 
       return merge(sortedLeft, sortedRight, depth + 1)
