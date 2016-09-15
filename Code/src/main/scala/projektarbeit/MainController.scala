@@ -35,6 +35,7 @@ class MainController(
                       private val playPauseButton: Button,
                       private val playbackSpeed: Slider,
                       private val playbackSpeedLabel: Label,
+                      private val consoleLog: TextArea,
                       private val borderPane: BorderPane,
                       private val scrollPane: ScrollPane,
                       private val pane: Pane) {
@@ -146,6 +147,7 @@ class MainController(
 
     elementGroup.id = "level-0"
 
+    consoleLog.text() = ""
     pane.children.clear()
     pane.children.add(elementGroup)
     pane.setPrefWidth(elementGroup.getBoundsInParent.getWidth)
@@ -188,7 +190,7 @@ class MainController(
     playPauseButton.disable = false
     val elementGroup: javafx.scene.Group = pane.children.get(0).asInstanceOf[javafx.scene.Group]
 
-    val sorter = new SortElementsController(pane)
+    val sorter = new SortElementsController(pane, consoleLog)
     sorter.sort(elementGroup, 0)
     transition = sorter.getSequence
     transition.rate <== MathBindings.pow(2.0, playbackSpeed.value)
@@ -199,6 +201,7 @@ class MainController(
         isPlaying() = false
         playPauseButton.disable = true
         playPauseMenu.disable = true
+        consoleLog.text() += "Transition Finished\n"
     }
 
   }

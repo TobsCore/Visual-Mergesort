@@ -5,14 +5,14 @@ import projektarbeit.Part.{EnumVal, Left, Right}
 import scala.collection.JavaConverters._
 import scalafx.Includes._
 import scalafx.animation.{SequentialTransition, Timeline}
-import scalafx.event.ActionEvent
 import scalafx.scene.Group
+import scalafx.scene.control.TextArea
 import scalafx.scene.layout.Pane
 
 /**
   * Created by Patrick König on 08.09.16.
   */
-class SortElementsController(val pane: Pane) {
+class SortElementsController(val pane: Pane, val consoleLog: TextArea) {
 
   private val moveDownByPixel = 130
 
@@ -73,6 +73,11 @@ class SortElementsController(val pane: Pane) {
 
       val firstListLength = (elements.size / 2.0).ceil.toInt
       val splitList = elements.splitAt(firstListLength)
+
+      consoleLog.text() += s"""Splitting $elements - ${elements.size} elements
+                           | Left ${splitList._1} - ${splitList._1.size} elements
+                           | Right ${splitList._2} - ${splitList._2.size} elements
+                           |""".stripMargin
 
       val left = createGroup(parentGroup, splitList, Left, depth)
       pane.children.add(left)
