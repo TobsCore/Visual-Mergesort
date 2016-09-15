@@ -192,6 +192,8 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea) {
     //group.translateX() = leftGroup.translateX()
     pane.children.add(group)
     showGroup(group)
+    val realdepth: Int = maxDepth.toInt - depth 
+    scroll(group, realdepth)
     for ((element, i) <- resultListDuplicate.zipWithIndex) {
       element.opacity() = 0
       relocateElement(element, i, depth)
@@ -206,9 +208,9 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea) {
     val timeline = new Timeline {
       autoReverse = false
       keyFrames = Seq(
-        at (0.15.s) {
+        /*at (0.15.s) {
           element.getScene.lookup("#scrollPaneID").asInstanceOf[ScrollPane].vvalue -> (factor*(maxDepth-depth + 1))
-        },
+        },*/
         at (0.2.s) {
           element.opacityProperty -> 1.0
         },
