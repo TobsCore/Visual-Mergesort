@@ -15,6 +15,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <VBox minHeight="600" minWidth="600" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65"
@@ -76,15 +77,14 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Run">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Start Algorithm" onAction="#runSorting">
+                        <MenuItem mnemonicParsing="false" onAction="#runSorting" text="Start Algorithm">
                             <accelerator>
                                 <KeyCodeCombination alt="UP" code="R" control="UP" meta="UP" shift="UP"
                                                     shortcut="DOWN"/>
                             </accelerator>
                         </MenuItem>
-                        <MenuItem fx:id="playPauseMenu" mnemonicParsing="false" onAction="#playPauseSequence"
-                                  text="Pause"
-                                  disable="true">
+                        <MenuItem fx:id="playPauseMenu" disable="true" mnemonicParsing="false"
+                                  onAction="#playPauseSequence" text="Pause">
                             <accelerator>
                                 <KeyCodeCombination alt="UP" code="P" control="UP" meta="UP" shift="UP"
                                                     shortcut="DOWN"/>
@@ -127,24 +127,32 @@
                         <Text fx:id="amountOfThreadsLabel" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0"
                               text="1" textAlignment="RIGHT" textOrigin="TOP" wrappingWidth="40.715087890625"
                               AnchorPane.rightAnchor="35.0"/>
-                        <Button fx:id="generateButton" defaultButton="true" layoutX="48.0" layoutY="19.0"
-                                mnemonicParsing="false" onAction="#generateRandomNumbers" text="Generate"/>
-                        <Button fx:id="runButton" disable="true" layoutX="48.0" layoutY="62.0" mnemonicParsing="false"
-                                onAction="#runSorting" text="Run"/>
-                        <Button fx:id="playPauseButton" disable="true" layoutX="145.0" layoutY="62.0"
-                                mnemonicParsing="false" text="Pause"
-                                onAction="#playPauseSequence"/>
-                        <Slider fx:id="playbackSpeed" blockIncrement="1.0" layoutX="313.0" layoutY="62.0"
+                        <Button fx:id="generateButton" defaultButton="true" layoutX="48.0" layoutY="18.0"
+                                mnemonicParsing="false" onAction="#generateRandomNumbers" text="Generate"
+                                AnchorPane.leftAnchor="45.0"/>
+                        <Button fx:id="runButton" disable="true" layoutX="161.0" layoutY="18.0" mnemonicParsing="false"
+                                onAction="#runSorting" text="Run" AnchorPane.leftAnchor="160.0"/>
+                        <Button fx:id="playPauseButton" disable="true" layoutX="161.0" layoutY="58.0"
+                                mnemonicParsing="false" onAction="#playPauseSequence" text="Pause"
+                                AnchorPane.leftAnchor="160.0"/>
+                        <Label fx:id="playbackSpeedLabel" alignment="TOP_CENTER" layoutX="56.0" layoutY="87.0"
+                               prefHeight="11.0" prefWidth="60.0" text="1.00" AnchorPane.leftAnchor="53.0">
+                            <font>
+                                <Font size="9.0"/>
+                            </font>
+                        </Label>
+                        <Slider fx:id="playbackSpeed" blockIncrement="1.0" layoutX="36.0" layoutY="53.0"
                                 majorTickUnit="1.0" max="2.0" min="-2.0" minorTickCount="0" prefHeight="38.0"
-                                prefWidth="100.0" showTickMarks="true" value="0.0"/>
-                        <Label fx:id="playbackSpeedLabel" layoutX="300.0" layoutY="62.0"/>
+                                prefWidth="100.0" showTickMarks="true" value="0.0" AnchorPane.leftAnchor="33.0"/>
                     </children>
                 </AnchorPane>
             </top>
             <center>
                 <ScrollPane fx:id="scrollPane" prefHeight="492.0" prefWidth="800.0" BorderPane.alignment="CENTER">
                     <content>
-                        <Pane fx:id="pane" prefHeight="1500" prefWidth="797.0"/>
+                        <Pane fx:id="pane" prefHeight="1000" prefWidth="797.0">
+
+                        </Pane>
                     </content>
                 </ScrollPane>
             </center>
