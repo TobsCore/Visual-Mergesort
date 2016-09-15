@@ -128,6 +128,8 @@ class MainController(
 
   def placeElementsOnPane(elements: List[Int]): Unit = {
 
+    // Stop the running transition, and then place the new elements on the pane
+    if (transition != null) transition.stop()
     // Setting up the canvas
     val elementGroup = new Group()
     elementGroup.id() = "level-1"
