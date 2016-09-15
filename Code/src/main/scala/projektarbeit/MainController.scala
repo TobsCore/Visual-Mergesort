@@ -138,18 +138,20 @@ class MainController(
       val sortElement = new SortElement(value, xPos, yPos)
       sortElement.id() = s"sortElement-$position"
       elementGroup.getChildren.add(sortElement)
-
     }
 
     elementGroup.translateX <== scrollPane.getScene.getWindow.width/2 - elementGroup.getBoundsInParent.getWidth/2
 
     elementGroup.id = "level-0"
-    println(elementGroup.translateX())
 
     pane.getChildren.clear()
     pane.getChildren.add(elementGroup)
     pane.setPrefWidth(elementGroup.getBoundsInParent.getWidth)
     scrollPane.vvalue = 0.0
+
+    val depth = Math.ceil(Math.log(elementGroup.children.size) / Math.log(2)) * 2 + 1
+    //TODO: Die 130 auslagern, denn diese ist eigentlich SortElementsController.moveDownByPixel
+    pane.setPrefHeight(depth * 130)
   }
 
   def openAboutDialog(): Unit = {

@@ -157,15 +157,10 @@ class SortElementsController(val pane: Pane) {
       element.xPos = i * SortElement.wholeElementWidth
     }
 
-
-
-
-   // println(group.getChildren.toList)
     group
   }
 
   def relocateElement(element: SortElement, i: Int) = {
-    println(i)
     val timeline = new Timeline {
       autoReverse = false
 
