@@ -59,17 +59,10 @@ class MainController(
   runButton.defaultButton <== !generateButton.defaultButton
   playPauseMenu.text <==> playPauseButton.text
 
-  /*consoleLog {
-    //consoleLog.positionCaret(100)
-    consoleLog.scrollTop() = Double.MaxValue
-  }
+  consoleLog.scrollTop.onChange (
+    (observable,oldValue,newValue) => println(s"$oldValue => $newValue")
+  )
 
-  consoleLog.scrollTop.onChange {
-    if (consoleLog.scrollTop() == 0.0) {
-      println("Moving from zero to hero")
-      consoleLog.scrollTop() = Double.MaxValue
-    }
-  }*/
   def toggleActionBar(): Unit = {
     if (borderPane.top() != null) {
       borderPane.top() = null
