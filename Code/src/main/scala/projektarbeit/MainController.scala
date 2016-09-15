@@ -133,7 +133,7 @@ class MainController(
   def generateNumbers(elementOrder: EnumVal): Unit = {
 
     // Get the selected amount of elements
-    val amountOfElements: Integer = amountOfElementsSlider.value.toInt
+    val amountOfElements: Integer = amountOfElementsLabel.text().toInt
 
     val randomNumberList = List.tabulate(amountOfElements)(_ => ThreadLocalRandom.current.nextInt(defaultMinimumNumber, defaultMaximumNumber + 1))
     val elements = elementOrder match {
