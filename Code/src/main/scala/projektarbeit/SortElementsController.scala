@@ -1,5 +1,7 @@
 package projektarbeit
 
+import javafx.scene.control.ScrollPane
+
 import projektarbeit.Part.{EnumVal, Left, Right}
 
 import scala.collection.JavaConverters._
@@ -16,14 +18,20 @@ import scalafx.scene.layout.Pane
 class SortElementsController(val pane: Pane, val consoleLog: TextArea) {
 
   private val moveDownByPixel = 130
+  var maxDepth: Double = _
 
   private val sequence: SequentialTransition = new SequentialTransition()
   var consoleText: String = ""
 
   def relocateElementGroup(group: Group, depth: Int): Timeline = {
+    val factor = 1.0/(maxDepth)
+    val consoleTextLength: Int = consoleText.length
     val timeline = new Timeline {
       autoReverse = false
       keyFrames = Seq(
+        at (0.15.s) {
+          group.getScene.lookup("#scrollPaneID").asInstanceOf[ScrollPane].vvalue -> (factor * (if(depth == 0){depth} else {depth + 1}))
+        },
         at (0.2.s) {
           group.opacity -> 1.0 },
         at(1.s) {
@@ -69,6 +77,8 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea) {
       }
     group
   }
+
+
 
   def sort(parentGroup: Group, depth: Int): Group = {
     val elements: List[SortElement] = parentGroup.children.toList.asInstanceOf[List[SortElement]]
@@ -168,18 +178,21 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea) {
     showGroup(group)
     for ((element, i) <- resultListDuplicate.zipWithIndex) {
       element.opacity() = 0
-      relocateElement(element, i)
+      relocateElement(element, i, depth)
       element.xPos = i * SortElement.wholeElementWidth
     }
 
     group
   }
 
-  def relocateElement(element: SortElement, i: Int) = {
+  def relocateElement(element: SortElement, i: Int, depth: Int) = {
+    val factor = 1.0/(maxDepth)
     val timeline = new Timeline {
       autoReverse = false
-
       keyFrames = Seq(
+        at (0.15.s) {
+          element.getScene.lookup("#scrollPaneID").asInstanceOf[ScrollPane].vvalue -> (factor*(maxDepth-depth + 1))
+        },
         at (0.2.s) {
           element.opacityProperty -> 1.0
         },

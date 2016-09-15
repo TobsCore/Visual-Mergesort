@@ -219,6 +219,7 @@ class MainController(
     val elementGroup: javafx.scene.Group = pane.children.get(0).asInstanceOf[javafx.scene.Group]
 
     val sorter = new SortElementsController(pane, consoleLog)
+    sorter.maxDepth =  Math.ceil(Math.log(elementGroup.children.size) / Math.log(2)) * 2 + 1
     sorter.sort(elementGroup, 0)
     transition = sorter.getSequence
     transition.rate <== MathBindings.pow(2.0, playbackSpeed.value)
