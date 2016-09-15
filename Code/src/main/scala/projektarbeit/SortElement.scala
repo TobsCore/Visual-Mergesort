@@ -3,7 +3,6 @@ package projektarbeit
 import javafx.scene.Group
 import javafx.scene.paint.Color
 
-import scalafx.beans.property.DoubleProperty
 import scalafx.scene.shape.Rectangle
 import scalafx.scene.text.Text
 

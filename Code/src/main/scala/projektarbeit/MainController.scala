@@ -137,15 +137,15 @@ class MainController(
       val yPos: Double = (SortElement.maxHeight - value).toDouble
       val sortElement = new SortElement(value, xPos, yPos)
       sortElement.id() = s"sortElement-$position"
-      elementGroup.getChildren.add(sortElement)
+      elementGroup.children.add(sortElement)
     }
 
     elementGroup.translateX <== scrollPane.getScene.getWindow.width/2 - elementGroup.getBoundsInParent.getWidth/2
 
     elementGroup.id = "level-0"
 
-    pane.getChildren.clear()
-    pane.getChildren.add(elementGroup)
+    pane.children.clear()
+    pane.children.add(elementGroup)
     pane.setPrefWidth(elementGroup.getBoundsInParent.getWidth)
     scrollPane.vvalue = 0.0
 
@@ -184,8 +184,7 @@ class MainController(
     isPlaying() = true
     playPauseMenu.disable = false
     playPauseButton.disable = false
-    val elementGroup: javafx.scene.Group = pane.getChildren.get(0).asInstanceOf[javafx.scene.Group]
-//    val ele: List[SortElement] = elementGroup.getChildren().asInstanceOf[ObservableList[SortElement]].toList
+    val elementGroup: javafx.scene.Group = pane.children.get(0).asInstanceOf[javafx.scene.Group]
 
     val sorter = new SortElementsController(pane)
     sorter.sort(elementGroup, 0)

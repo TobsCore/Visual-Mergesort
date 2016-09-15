@@ -1,14 +1,10 @@
 package projektarbeit
 
-import javafx.collections.ObservableList
-import javafx.scene.Node
-
 import projektarbeit.Part.{EnumVal, Left, Right}
 
 import scala.collection.JavaConverters._
 import scalafx.Includes._
 import scalafx.animation.{SequentialTransition, Timeline}
-import scalafx.beans.property.DoubleProperty
 import scalafx.event.ActionEvent
 import scalafx.scene.Group
 import scalafx.scene.layout.Pane
@@ -72,19 +68,19 @@ class SortElementsController(val pane: Pane) {
   }
 
   def sort(parentGroup: Group, depth: Int): Group = {
-    val elements: List[SortElement] = parentGroup.getChildren.toList.asInstanceOf[List[SortElement]]
+    val elements: List[SortElement] = parentGroup.children.toList.asInstanceOf[List[SortElement]]
     if (elements.size > 1) {
 
       val firstListLength = (elements.size / 2.0).ceil.toInt
       val splitList = elements.splitAt(firstListLength)
 
       val left = createGroup(parentGroup, splitList, Left, depth)
-      pane.getChildren.add(left)
+      pane.children.add(left)
       relocateElementGroup(left, depth)
       val sortedLeft = sort(left, depth + 1)
 
       val right = createGroup(parentGroup, splitList, Right, depth)
-      pane.getChildren.add(right)
+      pane.children.add(right)
       relocateElementGroup(right, depth)
       val sortedRight = sort(right, depth + 1)
 
@@ -100,7 +96,7 @@ class SortElementsController(val pane: Pane) {
 
 
     val leftList: List[SortElement] = leftGroup.getChildren.toList.asInstanceOf[List[SortElement]]
-    val rightList: List[SortElement] = rightGroup.getChildren.toList.asInstanceOf[List[SortElement]]
+    val rightList: List[SortElement] = rightGroup.children.toList.asInstanceOf[List[SortElement]]
 
     val leftSize: Int = leftList.size
     val rightSize: Int = rightList.size
@@ -138,18 +134,18 @@ class SortElementsController(val pane: Pane) {
     group.translateY = newYValue
 
     //TODO: In eigene methode auslagern
-    val rightestPosition = rightGroup.translateX + rightGroup.getChildren.get(0).asInstanceOf[SortElement].xPos + rightGroup.getBoundsInParent.getWidth
+    val rightestPosition = rightGroup.translateX + rightGroup.children.get(0).asInstanceOf[SortElement].xPos + rightGroup.getBoundsInParent.getWidth
     val leftestPosition = leftGroup.translateX
     val widthOfParentsGroups = rightestPosition - leftestPosition
     val middleOfParentGroup = rightestPosition - widthOfParentsGroups / 2
-    val widthOfNewGroup = group.getChildren.size * SortElement.wholeElementWidth - SortElement.offsetToNextElement
+    val widthOfNewGroup = group.children.size * SortElement.wholeElementWidth - SortElement.offsetToNextElement
 
     val newXPosition = middleOfParentGroup - widthOfNewGroup / 2
 
     group.translateX <== newXPosition
 
     //group.translateX() = leftGroup.translateX()
-    pane.getChildren.add(group)
+    pane.children.add(group)
     showGroup(group)
     for ((element, i) <- resultListDuplicate.zipWithIndex) {
       element.opacity() = 0
@@ -179,12 +175,8 @@ class SortElementsController(val pane: Pane) {
         }*/
       )
     }
-
-    timeline.onFinished = {
-      event: ActionEvent =>
-        println(element.localToScene(element.getBoundsInLocal()))
-    }
     sequence.children.add(timeline)
+
   }
 
   def showGroup(group: Group) = {
