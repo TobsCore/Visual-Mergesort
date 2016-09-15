@@ -90,12 +90,9 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea) {
       val left = createGroup(parentGroup, splitList, Left, depth)
       pane.children.add(left)
       val timelineLeft = relocateElementGroup(left, depth)
-      consoleText +=
-        s"""Splitting $elements - ${elements.size} elements
-            |     Left ${splitList._1} - ${splitList._1.size} elements
-            |""".stripMargin
+      consoleText += s"SPLIT $elements - ${elements.size} elements\n"
       timelineLeft.keyFrames.add(at(0.1.s) {consoleLog.text -> consoleText})
-      timelineLeft.keyFrames.add(at(0.15.s) {consoleLog.scrollTop -> Double.MaxValue})
+      timelineLeft.keyFrames.add(at(0.12.s) {consoleLog.scrollTop -> Double.MaxValue})
 
       val sortedLeft = sort(left, depth + 1)
 
@@ -103,11 +100,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea) {
       val right = createGroup(parentGroup, splitList, Right, depth)
       pane.children.add(right)
       val timelineRight = relocateElementGroup(right, depth)
-      consoleText +=
-        s"""     Right ${splitList._2} - ${splitList._2.size} elements
-           |""".stripMargin
       timelineRight.keyFrames.add(at(0.1.s) {consoleLog.text -> consoleText})
-      timelineRight.keyFrames.add(at(0.15.s) {consoleLog.scrollTop -> Double.MaxValue})
       val sortedRight = sort(right, depth + 1)
 
       return merge(sortedLeft, sortedRight, depth + 1)
@@ -130,14 +123,14 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea) {
     var resultList: List[SortElement] = List.fill(totalSize)(null)
     val newYValue = Math.max(leftGroup.translateY(), rightGroup.translateY()) + moveDownByPixel
 
-    consoleText += s"MERGE - $leftList and $rightList\n"
+    consoleText += s"MERGE $leftList and $rightList\n"
     val timeline = new Timeline {
       autoReverse = false
       keyFrames = Seq(
-        at (0.1.s) {
+        at (0.05.s) {
           consoleLog.text -> consoleText
         },
-        at (0.2.s) {
+        at (0.09.s) {
           consoleLog.scrollTop -> Double.MaxValue
         }
       )
