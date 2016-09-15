@@ -65,6 +65,18 @@
                                 <KeyCodeCombination alt="UP" code="H" control="UP" meta="UP" shift="DOWN" shortcut="DOWN" />
                             </accelerator>
                         </MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem disable="false" mnemonicParsing="false" text="Toggle Log Console" onAction="#toggleLogging">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="L" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                            </accelerator>
+                        </MenuItem>
+
+                        <MenuItem disable="false" mnemonicParsing="false" text="Toggle Action Bar" onAction="#toggleActionBar">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="K" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                            </accelerator>
+                        </MenuItem>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Run">
@@ -91,7 +103,7 @@
         </MenuBar>
         <BorderPane fx:id="borderPane" prefHeight="1000.0" prefWidth="800.0">
             <top>
-                <AnchorPane prefHeight="106.0" prefWidth="453.0" BorderPane.alignment="CENTER">
+                <AnchorPane fx:id="actionBar" prefHeight="106.0" prefWidth="453.0" BorderPane.alignment="CENTER">
                     <children>
                         <Slider fx:id="amountOfElementsSlider" blockIncrement="1.0" layoutX="326.0" layoutY="18.0" majorTickUnit="9.33" max="32.0" min="4.0" prefHeight="26.0" prefWidth="248.0" showTickMarks="true" snapToTicks="false" value="16.0" AnchorPane.rightAnchor="70.0" />
                         <Label layoutX="413.0" layoutY="17.0" text="Elements" AnchorPane.rightAnchor="315.0">

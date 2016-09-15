@@ -12,7 +12,7 @@ import scalafx.beans.property.BooleanProperty
 import scalafx.event.ActionEvent
 import scalafx.scene.control.Alert.AlertType
 import scalafx.scene.control._
-import scalafx.scene.layout.{BorderPane, Pane}
+import scalafx.scene.layout.{AnchorPane, BorderPane, Pane}
 import scalafx.scene.text.Text
 import scalafx.scene.{Group, Node, Scene}
 import scalafx.stage.Stage
@@ -38,7 +38,8 @@ class MainController(
                       private val consoleLog: TextArea,
                       private val borderPane: BorderPane,
                       private val scrollPane: ScrollPane,
-                      private val pane: Pane) {
+                      private val pane: Pane,
+                      private val actionBar: AnchorPane) {
 
 
   val defaultMinimumNumber = 1
@@ -58,6 +59,20 @@ class MainController(
   runButton.defaultButton <== !generateButton.defaultButton
   playPauseMenu.text <==> playPauseButton.text
 
+  def toggleActionBar(): Unit = {
+    if (borderPane.top() != null) {
+      borderPane.top() = null
+    } else {
+      borderPane.top() = actionBar
+    }
+  }
+  def toggleLogging(): Unit = {
+    if (borderPane.bottom() != null) {
+      borderPane.bottom() = null
+    } else {
+      borderPane.bottom() = consoleLog
+    }
+  }
 
   def changeButtonActivationToRun(): Unit = {
     runButton.disable() = false
