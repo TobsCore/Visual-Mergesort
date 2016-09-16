@@ -203,7 +203,6 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea) {
     scroll(group, realdepth)
     for ((element, i) <- resultListDuplicate.zipWithIndex) {
       element.opacity() = 0
-      relocateElement(element, i, depth)
       element.xPos = i * SortElement.wholeElementWidth
       val finalXPosition = element.localToScene(element.getBoundsInLocal).getMinX
 
@@ -211,6 +210,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea) {
       val filteredRightList = rightGroup.children.toList.asInstanceOf[List[SortElement]].filter(_.number == element.number)
 
       var minXLeft: Double = -1.0
+
       if(filteredLeftList.size >= 1){
           minXLeft = filteredLeftList(0).localToScene(filteredLeftList(0).getBoundsInLocal).getMinX
       } else if (filteredRightList.size >= 1) {
@@ -219,7 +219,14 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea) {
       if (minXLeft != -1) {
         val differenceBetweenPositions = finalXPosition - minXLeft
         element.xPos -= differenceBetweenPositions
+      } else {
+        println("ERRRRRORRRRRR!")
       }
+
+      relocateElement(element, i, depth)
+
+
+
     }
 
     group
@@ -230,22 +237,22 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea) {
     val timeline = new Timeline {
       autoReverse = false
       keyFrames = Seq(
-        /*at (0.15.s) {
-          element.getScene.lookup("#scrollPaneID").asInstanceOf[ScrollPane].vvalue -> (factor*(maxDepth-depth + 1))
-        },*/
         at (0.2.s) {
           element.opacityProperty -> 1.0
         },
         at (1.0.s) {
           element.translateY -> (element.translateY() + moveDownByPixel)
-        }
-
-       /*,
+        },
         at (1.0.s) {
-         element.translateX -> (i * SortElement.wholeElementWidth)
-         // element.xPos -> (i * SortElement.wholeElementWidth)
-        }*/
+         element.rectangle.x -> (i * SortElement.wholeElementWidth)
+        },
+        at (1.0.s) {
+           element.text.translateX -> (i * SortElement.wholeElementWidth + element.offset)
+
+          }
       )
+
+
     }
     sequence.children.add(timeline)
 
