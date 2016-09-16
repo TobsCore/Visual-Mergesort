@@ -205,6 +205,21 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea) {
       element.opacity() = 0
       relocateElement(element, i, depth)
       element.xPos = i * SortElement.wholeElementWidth
+      val finalXPosition = element.localToScene(element.getBoundsInLocal).getMinX
+
+      val filteredLeftList = leftGroup.children.toList.asInstanceOf[List[SortElement]].filter(_.number == element.number)
+      val filteredRightList = rightGroup.children.toList.asInstanceOf[List[SortElement]].filter(_.number == element.number)
+
+      var minXLeft: Double = -1.0
+      if(filteredLeftList.size >= 1){
+          minXLeft = filteredLeftList(0).localToScene(filteredLeftList(0).getBoundsInLocal).getMinX
+      } else if (filteredRightList.size >= 1) {
+          minXLeft = filteredRightList(0).localToScene(filteredRightList(0).getBoundsInLocal).getMinX
+      }
+      if (minXLeft != -1) {
+        val differenceBetweenPositions = finalXPosition - minXLeft
+        element.xPos -= differenceBetweenPositions
+      }
     }
 
     group
