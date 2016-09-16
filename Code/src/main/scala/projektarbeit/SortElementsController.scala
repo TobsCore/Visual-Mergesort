@@ -22,6 +22,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea) {
 
   private val sequence: SequentialTransition = new SequentialTransition()
   var consoleText: String = ""
+  var hackedValue = 0
 
   def relocateElementGroup(group: Group, depth: Int): Timeline = {
     //val factor = 1.0/(maxDepth)
@@ -187,7 +188,13 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea) {
 
     val newXPosition = middleOfParentGroup - widthOfNewGroup / 2
 
-    group.translateX <== newXPosition
+    if (resultList.size == 2) {
+      val hackedValueBySuspicion: Int = 20
+      group.translateX <== newXPosition + (hackedValue * hackedValueBySuspicion)
+      hackedValue += 1
+    } else {
+      group.translateX <== newXPosition
+    }
 
     //group.translateX() = leftGroup.translateX()
     pane.children.add(group)
