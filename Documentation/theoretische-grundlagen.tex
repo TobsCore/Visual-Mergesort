@@ -1,1 +1,67 @@
 \chapter{Theoretische Grundlgen}\label{chap:theoretische-grundlagen}
+
+\section{Merge--Sort}
+Der erstmals 1945 durch John von Neumann vorgestellte Mergesort ist ein Sortieralgotithmus, der nach dem Paradigma divide-and-conquer arbeitet. Bei diesem Prinzip wird das eigentliche, große Problem so lange rekursiv in kleinere Probleme unterteilt, bis diese lösbar sind. Im Anschluss wird aus allen Teillösungen die Endlösung rekonstruiert. Die genaue Funktionsweise des Mergesort erfolgt in zwei Schritten: Im ersten Schritt wird die ursprüngliche Liste in zwei Hälften zerlegt, die jeweils wieder in einer Liste gespeichert werden. Dieser Schritt wird, zusammen mit dem nachfolgenden Schritt, so lange rekursiv fortgesetzt, bis sich nur noch ein Element in jeder Liste befindet. Im zweiten Schritt werden die Hälften sortiert und zu einer Menge zusammengefügt, bis sich irgendwann wieder die Gesamtmenge mit allen enthaltenen Ursprungselementen ergibt. Hierbei werden immer die ersten Elemente der beiden Hälften verglichen, wobei das jeweils kleinere in die zusammengefügte Menge wandert.
+
+
+\subsection{Laufzeit}
+
+Da sich die Größe der Liste bei jedem Merge verdoppelt, werden $log(n)$ ($n$ = Anzahl der zu sortierenden Elemente) Mergeschritte benötigt, um das Ergebnis vollständig zusammenzusetzen. Bei beispielsweise 8 Elementen ergeben sich insgesamt $log_2 (8) = 3$ Schritte.
+
+Jeder Mergeschritt benötigt wiederum $n$ Schritte, um die Elemente der beiden Listen zu sortieren, da hierzu jedes einzelne Elemente betrachtet und eingeordnet werden muss
+
+Die gesamte Laufzeit beträgt also O($n log (n) $). Im Vergleich zu anderen Sortieralgorithmen wie Bubblesort (Worst-Case-Laufzeit: O($n^2$)) und Quicksort (Worst-Case-Laufzeit: O($n^2$)) ist der Mergesort bei größeren Datenmengen sehr effizient, da dessen Laufzeiten im Best-Case- und im Worst-Case-Szenario kaum Unterschiede aufweisen.
+
+\subsection{Allgemeine Implementierung in Scala}
+\subsubsection{Sortieren}
+
+\begin{lstlisting}[language=Scala]
+def sort(list: List[SortElement]) {
+    if (list.size > 1 ){
+
+      val firstListLength = (list.size / 2.0).ceil.toInt
+      val splitList = list.splitAt(firstListLength)
+      val left = splitList._1
+      val right = splitList._2
+      sort(left)
+      sort(right)
+      merge(list, left, right)
+    }
+  }
+\end{lstlisting}
+
+Die Methode \texttt{sort} nimmt eine Liste von Elementen entgegen und teilt diese in der Mitte in zwei weitere Listen auf. Durch \texttt{list.splitAt} wird ein Tupel erzeugt, welches in der Value splitList gespeichert wird. Mit Hilfe eines Unterstrichs kann entweder auf das erste Feld oder auf das zweite Feld des Tupels zugegriffen werden. Nachdem die ursprüngliche Liste gesplittet wurde, wird auf dem linken Teil rekursiv die Methode \texttt{sort} aufgerufen. Dies sorgt zunächst dafür, dass die linke Liste so lange in zwei Teile aufgeteilt wird, bis sich nur noch ein einziges Element in dieser Liste befindet und die Abbruchbedingung der Rekursion greift. Zu diesem Zeitpunkt befindet sich im rechten Teil der Liste auch nur ein Element und es kommt zur ersten Zusammensetzung zweier sortierter Listen. Diese Methodik wird nun rekursiv für alle Teile der Liste durchgeführt, bis die zwei zu Anfang aufgeteilten Listen sortiert sind und es zum letzten Merge kommt.
+
+\subsubsection{Mergen}
+\begin{lstlisting}[language=Scala]
+def merge(resultList:List[SortElement], leftList:List[SortElement], rightList:List[SortElement]) {
+
+  val leftSize: Int = leftList.size
+  val rightSize: Int = rightList.size
+  val totalSize: Int  = leftSize + rightSize
+  var i = 0
+  var j = 0
+
+  for (k <- 0 until totalSize) {
+
+    if(i < leftSize && j < rightSize){
+
+      if (leftList(i) < rightList(j)){
+        resultList = resultList.updated(k, leftList(i))
+        i = i + 1
+      } else {
+        resultList = resultList.updated(k, rightList(j))
+        j = j + 1
+      }
+    } else if (i >= leftSize && j < rightSize){
+      resultList = resultList.updated(k, rightList(j))
+      j = j + 1
+    } else {
+      resultList = resultList.updated(k, leftList(i))
+      i = i + 1
+    }
+  }
+}
+\end{lstlisting}
+
+Diese Methode nimmt zwei vorsortierte Listen an und setzt alle Elemente dieser Teillisten zu einer einzigen, sortierten Liste zusammen. Hierzu wird für jeden Index $k$ der Ergebnisliste bestimmt, welches Element aus den beiden Listen an dieser Stelle einsortiert wird. Vorausgesetzt, die Ergebnisliste enthält noch nicht alle Elemente mindestens einer Teilliste, werden bei jedem Schritt die jeweils kleinsten Elemente der beiden Teillisten miteinander verglichen, die sich noch nicht in der Ergebnisliste befinden. Das kleinere wird an den aktuellen Index $k$ der Ergebnisliste gesetzt und der Zeiger $i$ bzw. $j$ der Teilliste wird inkrementiert, um auf das nächstgrößere Element zu zeigen. An dieser Stelle macht man es sich zu Nutze, dass die beiden Teillisten vorsortiert sind, da das nächstgrößere Element mit dem Hochzählen des Indexes $i$ bzw. $j$ der Teillisten automatisch ausgewählt wird. In diesem Codebeispiel existiert also eine einzige Liste, die fortlaufend aktualisiert wird, bis sie das Ergebnis beinhaltet. Zur Visualisierung des Algorithmus in unserer Applikation werden wir später für jedes Zwischenergebnis, welches gesplittet oder zusammengesetzt wurde, eine eigene Gruppe anlegen.
