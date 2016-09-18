@@ -208,3 +208,43 @@ Wir werden die Methode \texttt{isLarge} im Weiteren Verlauf noch weiter benutzen
 \subsection{Strings}
 
 Das Arbeiten mit Strings in Scala ist sehr einfach und es gibt einige sehr nützliche Funktionen, die dafür sorgen, dass der Code nicht nur lesbarer, sondern auch leichter zu warten ist.
+
+Das Konkatenieren von Strings und Variablen in Java ist sehr praktisch und einfach, man fügt diese einfach durch ein \texttt{+} Zeichen aneinander.
+
+\begin{lstlisting}[language=Java,numbers=none]
+System.out.println("Is the number " + number + " a large number: " isLarge(number));
+\end{lstlisting}
+
+In Scala muss man sich keine Gedanken mehr um das Konkatenieren an sich machen, der gleiche Code wie oben sieht so aus:
+
+\begin{lstlisting}[language=Scala,numbers=none]
+println(s"Is the number $number a large number: ${isLarge(number)}")
+\end{lstlisting}
+
+Das Weglassen von \texttt{System.out} ist kein Fehler, sondern ein Scala nicht nötig. Durch das Voransetzen von \texttt{s} an den String, kann man Variablen durch \texttt{\$} ganz einfach einsetzen. Ausdrücke werden durch \texttt{\$\{\}} eingefügt, müssen also geklammert werden.
+
+\subsubsection{Mehrzeilige Strings mit Sonderzeichen}
+Ein weiteres tolles Feature ist, dass man mehrzeilige Strings nicht manuell umbrechen muss. Durch das Setzen von 3 Anführungszeichen zu Beginn des Strings, kann man den String einfach umbrechen:
+
+\begin{lstlisting}[language=Scala]
+val multiLineString = """This
+     |is
+     |an
+     |example""".stripMargin
+println(multiLineString)
+\end{lstlisting}
+
+Dies ergibt die Ausgabe:
+
+\begin{verbatim}
+This
+is
+an
+example
+\end{verbatim}
+
+Eine tolle Beschreibung für diese Funktionalität gibt es in \cite{ScalaCookbook} unter Section 1.2.
+
+Eine weitere syntaktische Neuerung ist, dass die Methode \texttt{stripMargin()} ohne die Klammern aufgerufen wird. Dies ist in Scala möglich, wenn eine Methode keine Argumente erwartet.
+
+Tatsächlich ist es möglich, dass man sogar den Punkt zwischen dem String (also dem Objekt) und der Methode weglässt. Dies bezeichnet man als \textit{Postfix Operator Notation}, ein Feature, was Code teilweise sehr lesbar und schön macht, aber auch zu unerwartetem Verhalten führen kann \footnote{Diese Stackoverflow Diskussion klärt einige dieser Fragen, setzt jedoch voraus, dass man sich mit der Scala Syntax auskennt: \url{http://stackoverflow.com/questions/13011204/scalas-postfix-ops}}
