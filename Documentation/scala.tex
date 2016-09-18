@@ -249,7 +249,7 @@ Eine weitere syntaktische Neuerung ist, dass die Methode \texttt{stripMargin()} 
 
 Tatsächlich ist es möglich, dass man sogar den Punkt zwischen dem String (also dem Objekt) und der Methode weglässt. Dies bezeichnet man als \textit{Postfix Operator Notation}, ein Feature, was Code teilweise sehr lesbar und schön macht, aber auch zu unerwartetem Verhalten führen kann \footnote{Diese Stackoverflow Diskussion klärt einige dieser Fragen, setzt jedoch voraus, dass man sich mit der Scala Syntax auskennt: \url{http://stackoverflow.com/questions/13011204/scalas-postfix-ops}}
 
-\subsection{Getter \& Setter}
+\subsection{Getter \& Setter}\label{sec:getter-and-setter}
 Die Nutzung von Getter-- und Setter--Methoden Zugriff auf die Attribute eines Objekts ist gang und gäbe in Java. In Scala wird auf die Felder wie zugegriffen, als wären diese public, obwohl dies nicht der Fall ist. Scala generiert beim Kompilieren die Methoden, die den Zugriff auf die Variablen erlauben. Ein Beispiel\footnote{Das Beispiel stammt von \url{http://dustinmartin.net/getters-and-setters-in-scala/}} soll dies veranschaulichen:
 
 \begin{lstlisting}[language=Scala, caption=Beispiel Klasse Person]
