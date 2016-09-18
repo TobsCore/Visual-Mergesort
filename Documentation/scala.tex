@@ -174,7 +174,7 @@ def isLarge(value: Int): Boolean = {
 
 Die Methode mit dem Namen \texttt{isLarge} nimmt also als Parameter einen \texttt{Integer}, den man mit dem Namen \texttt{value} anspricht. Die Methode hat Rückgabetyp \texttt{Boolean}.
 
-Die Methode zeigt auch schon einige Besonderheiten an Scala. Man erkennt, dass das Schlüsselwort \texttt{return} nicht angegeben werden muss. In Java würde man \texttt{return true} und \texttt{return false} schreiben müssen (\cite{ScalaCookbook}, Section 3.6). Dies hat den Hintergrund, dass \textbf{jeder Ausdruck ausgewertet wird} und somit etwas zurück gegeben wird. Wenn man nichts zurückgeben möchte, so gibt man \texttt{Unit} an. Unit gibt an, dass man mit dem Ergebnis, das zurückgegeben wird, nichts anfangen kann und kommt dem \texttt{void} in Java nahe. Beispielsweise die \texttt{println()} Methode hat den Rückgabetyp \texttt{Unit}.
+Die Methode zeigt auch schon einige Besonderheiten an Scala. Man erkennt, dass das Schlüsselwort \texttt{return} nicht angegeben werden muss. In Java würde man \texttt{return true} und \texttt{return false} schreiben müssen \footnote{Man kann if Statements wie einen ternären Operator nutzen, siehe: \cite{ScalaCookbook} Section 3.6} \footnote{Return Statements sollten vermieden werden, wie in \cite{ScalaInDepth} Section 2.2.1 --- \textit{Don't use return} beschrieben}. Dies hat den Hintergrund, dass \textbf{jeder Ausdruck ausgewertet wird} und somit etwas zurück gegeben wird. Wenn man nichts zurückgeben möchte, so gibt man \texttt{Unit} an. Unit gibt an, dass man mit dem Ergebnis, das zurückgegeben wird, nichts anfangen kann und kommt dem \texttt{void} in Java nahe. Beispielsweise die \texttt{println()} Methode hat den Rückgabetyp \texttt{Unit}.
 
 Um das obige Beispiel noch klarer zu machen, speichern wir den von dem If-Statement zurückgegebenen Wert in einem Value, den wir dann zurück geben werden:
 
@@ -388,10 +388,25 @@ SortElement exSortElement = (SortElement) group.getChildren().get(0)
 \end{lstlisting}
 
 In Scala würde der selbe Code wie folgt aussehen:
-\begin{lstlisting}[language=Scala, number=none, caption=Casting in Scala: Von Node zu SortElement]
+\begin{lstlisting}[language=Scala,numbers=none,caption=Casting in Scala: Von Node zu SortElement]
 val exSortElement: SortElement = group.getChildren(0).asInstanceOf[SortElement]
 \end{lstlisting}
 
-Die Angabe des Typs von \texttt{exSortElement} kann man sich aufgrund der \textit{Typinferenz} sparen, ist hier jedoch angegeben, um explizit zu sagen, welchen Typ das Objekt haben wird (\texttt{SortElement}). 
+Die Angabe des Typs von \texttt{exSortElement} kann man sich aufgrund der \textit{Typinferenz} sparen, ist hier jedoch angegeben, um explizit zu sagen, welchen Typ das Objekt haben wird (\texttt{SortElement}).
+
 \subsection{Pattern Matching}
+Pattern Matching kann man als aufgebohrte Switch Statements verstehen, die extrem vielfältig einsetzbar und dennoch gut lesbar sind. Als in Java 7 eingeführt wurde, dass man \texttt{switch}-Statements auf Strings anwenden konnte, war dies ein echter Meilenstein, da man vorher mühselig \texttt{if-else-if} Konstrukte bauen musste. Pattern Matching ist die Evolution dieser Switch Statements.
+
+Ein einfaches Beispiel ist die Überprüfung, welche Funktion ausgeführt werden soll, nachdem ein Programm mit gewissen Parametern gestartet wurde:
+
+\begin{lstlisting}[language=Scala, caption=Pattern Matching mit Strings]
+def parseArgument(arg: String): Unit = arg match {
+  case "-h" | "--help" => displayHelp
+  case "-v" | "--version" => displayVersion
+  case _ => throw new IllegalArgumentException()
+}
+\end{lstlisting}
+
+Einige weitere Beispiel findet man auf der Seite \url{https://kerflyn.wordpress.com/2011/02/14/playing-with-scalas-pattern-matching/}.
+
 \subsection{Exception Handling \& Optional}
