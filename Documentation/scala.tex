@@ -174,7 +174,7 @@ def isLarge(value: Int): Boolean = {
 
 Die Methode mit dem Namen \texttt{isLarge} nimmt also als Parameter einen \texttt{Integer}, den man mit dem Namen \texttt{value} anspricht. Die Methode hat Rückgabetyp \texttt{Boolean}.
 
-Die Methode zeigt auch schon einige Besonderheiten an Scala. Man erkennt, dass das Schlüsselwort \texttt{return} nicht angegeben werden muss. In Java würde man \texttt{return true} und \texttt{return false} schreiben müssen. Dies hat den Hintergrund, dass \textbf{jeder Ausdruck ausgewertet wird} und somit etwas zurück gegeben wird. Wenn man nichts zurückgeben möchte, so gibt man \texttt{Unit} an. Unit gibt an, dass man mit dem Ergebnis, das zurückgegeben wird, nichts anfangen kann und kommt dem \texttt{void} in Java nahe. Beispielsweise die \texttt{println()} Methode hat den Rückgabetyp \texttt{Unit}.
+Die Methode zeigt auch schon einige Besonderheiten an Scala. Man erkennt, dass das Schlüsselwort \texttt{return} nicht angegeben werden muss. In Java würde man \texttt{return true} und \texttt{return false} schreiben müssen (\cite{ScalaCookbook}, Section 3.6). Dies hat den Hintergrund, dass \textbf{jeder Ausdruck ausgewertet wird} und somit etwas zurück gegeben wird. Wenn man nichts zurückgeben möchte, so gibt man \texttt{Unit} an. Unit gibt an, dass man mit dem Ergebnis, das zurückgegeben wird, nichts anfangen kann und kommt dem \texttt{void} in Java nahe. Beispielsweise die \texttt{println()} Methode hat den Rückgabetyp \texttt{Unit}.
 
 Um das obige Beispiel noch klarer zu machen, speichern wir den von dem If-Statement zurückgegebenen Wert in einem Value, den wir dann zurück geben werden:
 
@@ -270,7 +270,7 @@ println(person.name)
 
 Man kann die Getter und Setter auch überschreiben, siehe hierzu \cite{ScalaCookbook} Section 4.6 und die Quelle dieses Beispiels.
 
-\subsection{For--Schleifen}
+\subsection{For--Schleifen}\label{sec:for-loops}
 
 Schleifen sind ein elementares Konstrukt aus der Programmierung. Bei den For--Schleifen wird dabei meistens eine Zählvariable benutzt, die bis zu einem gewissen Wert zählt und mit der man dann Sachen machen kann. Ein klassisches Beispiel ist das Befüllen eines Arrays mit Werten.
 
@@ -378,7 +378,20 @@ println(exampleTuple._1) // Gibt 12 zurück
 println(exampleTuple._2) // Gibt Hello World zurück.
 \end{lstlisting}
 
-\subsection{Map, Filter etc.}
 \subsection{Casting}
+Auch in Scala war es teilweise notwendig, dass wir Objekte von einem Typ in den anderen \texttt{casten} mussten. Dies war beispielsweise dann notwendig, wenn wir Polyphormie nutzten, aber dann eine bestimmte Methode auf dem abgeleiteten Objekt aufrufen wollten.
+
+\paragraph{Beispiel} Unsere Klasse \texttt{SortElement} erbt von \texttt{Node}. Wenn man auf einem \texttt{Group}--Objekt die Methode \texttt{getChildren} aufruft, so bekommt man eine Liste von \texttt{Node}s zurück geliefert, auch wenn in der Liste eigentlich \texttt{SortElement}s enthalten sind. Wenn man sich sicher ist, so kann man die Objekte casten, und zwar über den Aufruf der Methode \texttt{asInstanceOf[SortElement]}. Wir möchten hier wieder exemplarisch Java--Code mit Scala--Code vergleichen:
+
+\begin{lstlisting}[language=Java,numbers=none,caption=Casting in Java: Von Node zu SortElement]
+SortElement exSortElement = (SortElement) group.getChildren().get(0)
+\end{lstlisting}
+
+In Scala würde der selbe Code wie folgt aussehen:
+\begin{lstlisting}[language=Scala, number=none, caption=Casting in Scala: Von Node zu SortElement]
+val exSortElement: SortElement = group.getChildren(0).asInstanceOf[SortElement]
+\end{lstlisting}
+
+Die Angabe des Typs von \texttt{exSortElement} kann man sich aufgrund der \textit{Typinferenz} sparen, ist hier jedoch angegeben, um explizit zu sagen, welchen Typ das Objekt haben wird (\texttt{SortElement}). 
 \subsection{Pattern Matching}
 \subsection{Exception Handling \& Optional}
