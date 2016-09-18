@@ -271,6 +271,34 @@ println(person.name)
 Man kann die Getter und Setter auch überschreiben, siehe hierzu \cite{ScalaCookbook} Section 4.6 und die Quelle dieses Beispiels.
 
 \subsection{For--Schleifen}
+
+Schleifen sind ein elementares Konstrukt aus der Programmierung. Bei den For--Schleifen wird dabei meistens eine Zählvariable benutzt, die bis zu einem gewissen Wert zählt und mit der man dann Sachen machen kann. Ein klassisches Beispiel ist das Befüllen eines Arrays mit Werten.
+
+\begin{lstlisting}[language=Java,caption=Typische For--Schleife aus der Java Programmierung]
+for (int i = 0; i <= array.length; i++) {
+  array[i] = i * i;
+}
+\end{lstlisting}
+
+Bei dem obigen Beispiel wird das Quadrat der Zählvariablen gespeichert. Da man hierbei manuell prüfen muss, wie lang das Array-Objekt ist \texttt{array.length}. Um typische Fehler zu vermeiden (beispielsweise \texttt{ArrayIndexOutOfBoundsException}), wurden Iteratoren eingeführt und man durchläuft Listen etc. durch For-Each Schleifen. Wenn man jedoch einen Index-Zugriff ermöglichen will, so benötigt man wieder eine Zählvariable.
+
+\begin{lstlisting}[language=Java]
+int i = 0;
+for (int element : array) {
+  System.out.println(i + ": " + element); // Gibt Index und enthaltenes Element aus
+  i++;
+}
+\end{lstlisting}
+
+Da die Zählvariable \texttt{i} somit \textit{varriabel} sein müsste, gibt es in Scala einen anderen Ansatz. Man kann durch ein Schleifenkonstrukt wie folgt, die obige Ausgabe erreichen:
+
+%TODO: Include this
+\begin{lstlisting}[language=Scala]
+
+\end{lstlisting}
+
+
+
 \subsection{Map, Filter etc.}
 \subsection{Casting}
 \subsection{Pattern Matching}
