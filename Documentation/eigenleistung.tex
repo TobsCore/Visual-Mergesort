@@ -84,3 +84,234 @@ def yPos_= (y: Double) {
 Der Name dieser Methoden ist \texttt{xPos\_} und \texttt{yPos\_}. Der Unterstrich dient in Scala als spezielles Zeichen und ist in diesem Fall als Platzhalter zu verstehen, der beim Aufrufen der Methoden durch ein Leerzeichen ersetzt werden kann. Somit können diese Methoden im folgenden Code sowohl mit \texttt{xPos =}  bzw. \texttt{yPos =} als auch mit \texttt{xPos\_=} bzw. \texttt{yPos\_=} aufgerufen werden. Siehe \ref{sec:getter-and-setter}
 
 Um die Objekte beim Sortieren durch den Mergesort miteinander vergleichen zu können, werden die Methoden des Trait \texttt{Ordered} implementiert. Dieser Trait entspricht dem Interface \texttt{Comparable} in Java. Zusätzlich zu der Methode \texttt{compare} werden verschiedene Vergleichsoperatoren für das Objekt SortElement neu definiert:
+
+\begin{lstlisting}[language=Scala,caption=Überschriebene Methoden]
+override def compare(that: SortElement): Int = {
+  this.number - that.number
+}
+
+override def <(that: SortElement): Boolean = {
+  this.number < that.number
+}
+
+override def <=(that: SortElement): Boolean = {
+  this.number <= that.number
+}
+
+override def >(that: SortElement): Boolean = {
+  this.number > that.number
+}
+
+override def >=(that: SortElement): Boolean = {
+  this.number > that.number
+}
+
+override def toString(): String = {
+  this.number.toString
+}
+\end{lstlisting}
+
+Zusätzlich zu der Klasse SortElement wird noch ein \texttt{Singleton-Object} \texttt{SortElement} angelegt, welches alle vordefinierten Werte beinhaltet, die von der Klasse SortElement benötigt werden. Die Klasse SortElement kann auf alle Felder des Objektes zugreifen und diese für Erstellung neuer Objekte benutzen.
+
+\begin{lstlisting}[language=Scala,caption=Das Singleton--Object SortElement]
+object SortElement{
+  // To place small numbers (numbers < 10) centered under the rectangle, this offset is needed.
+  val smallNumberOffset = 3
+  // This is the rectangles width
+  val width = 12
+  // This is the space between two rectangles
+  val offsetToNextElement = 8
+
+  val wholeElementWidth = width + offsetToNextElement
+
+  val maxHeight = 99
+  val minHeight = 1
+}
+\end{lstlisting}
+
+\section{Die Klasse MainController}
+
+Die Klasse MainController ist, wie der Name schon hergibt, der Controller unserer Applikation. Hier werden alle Interaktionen des Benutzers mit der GUI entgegengenommen und verarbeitet. Um dies zu implementieren, werden alle im FXML-Layout vordefinierten Buttons, Slider und andere Eingabemöglichkeiten in diese Klasse importiert und deren Methoden definiert. Hierzu dient die über der Klasse stehende Annotation \texttt{@sfxml} . Die Objekte lassen sich über eine im FXML-Code festgelegte ID vom Controller ansprechen. Diese ID’s müssen für die Klasse übernommen und am Anfang festgelegt werden:
+
+\begin{lstlisting}[language=Scala,caption=Erzeugen der Elemente und Initialisierung der Anwendung durch den Benutzer]
+@sfxml
+class MainController(
+                      private val generateButton: Button,
+                      private val runButton: Button,
+                      private val amountOfElementsSlider: Slider,
+                      private val amountOfThreadsSlider: Slider,
+                      private val amountOfElementsLabel: Text,
+                      private val amountOfThreadsLabel: Text,
+                      private val playPauseMenu: MenuItem,
+                      private val playPauseButton: Button,
+                      private val playbackSpeed: Slider,
+                      private val playbackSpeedLabel: Label,
+                      private val consoleLog: TextArea,
+                      private val borderPane: BorderPane,
+                      private val scrollPane: ScrollPane,
+                      private val pane: Pane,
+                      private val actionBar: AnchorPane) {
+\end{lstlisting}
+
+Erzeugen der Elemente und Initialisierung der Anwendung durch den Benutzer
+
+Um den Visual-Mergesort betriebsbereit zu machen, hat der Benutzer die Möglichkeit, aus drei verschiedenen Möglichkeiten auszuwählen, um die zu sortierenden Elemente auf der Zeichenfläche zu platzieren. Im Menü lässt sich über die vorhandenen Schaltflächen auswählen, ob die Elemente vom System zufällig verteilt, vorsortiert oder invertiert erzeugt werden sollen. Hierzu dient ein Enum, das je nach betätigtem Button mit dem entsprechenden Wert an die Methode \texttt{generateNumbers} übergeben wird.
+
+\begin{lstlisting}[language=Scala]
+def generateRandomNumbers(): Unit = {
+  generateNumbers(ElementOrder.Random)
+  changeButtonActivationToRun()
+}
+
+def generateOrderedNumbers(): Unit = {
+  generateNumbers(ElementOrder.Ordered)
+  changeButtonActivationToRun()
+}
+
+def generateInverseNumbers(): Unit = {
+  generateNumbers(ElementOrder.Inverse)
+  changeButtonActivationToRun()
+}
+\end{lstlisting}
+
+Nachdem die Elemente erzeugt wurden, ist die Anwendung betriebsbereit und der Run-Button wird aktiviert.
+
+In der Methode \texttt{generateNumbers} wird eine Liste mit Zufallszahlen zwischen dem Minimalwert {texttt{defaultMinimumNumber} und dem Maximalwert \texttt{defaultMaximumNumber} generiert, die so viele Elemente enthält, wie über den Slider in der Applikation eingestellt wurde. Der Unterstrich dient in diesem Fall als Platzhalter für jedes Element in der Liste. Je nachdem, welcher Button zuvor betätigt wurde, wird die Liste  anschließend optional noch sortiert oder invertiert.
+
+\begin{lstlisting}[language=Scala]
+def generateNumbers(elementOrder: EnumVal): Unit = {
+
+  // Get the selected amount of elements
+  val amountOfElements: Integer = amountOfElementsLabel.text().toInt
+
+  val randomNumberList = List.tabulate(amountOfElements)(_ => ThreadLocalRandom.current.nextInt(defaultMinimumNumber, defaultMaximumNumber + 1))
+  val elements = elementOrder match {
+    case ElementOrder.Random => randomNumberList
+    case ElementOrder.Ordered => randomNumberList.sorted
+    case ElementOrder.Inverse => randomNumberList.sorted.reverse
+    case _ => throw new IllegalArgumentException(s"$elementOrder is not supported")
+  }
+
+  placeElementsOnPane(elements)
+}
+\end{lstlisting}
+
+Zum Schluss wird die fertige Liste and die Methode \texttt{placeElementsOnPane} übergeben.
+
+Die Methode \texttt{placeElementsOnPane} erzeugt für jeden Wert in der übergebenen Liste ein \texttt{SortElement} und fasst alle generierten Objekte in einer Gruppe zusammen. Ist die Applikation bei Aufruf der Methode am Laufen, wird sie gestoppt.
+
+\begin{lstlisting}[language=Scala]
+  def placeElementsOnPane(elements: List[Int]): Unit = {
+
+    cleanEverythingUp
+    // Stop the running transition, and then place the new elements on the pane
+    if (transition != null) transition.stop()
+    // Setting up the canvas
+    val elementGroup = new Group()
+    elementGroup.id() = "level-1"
+    // Place the elements on the pane
+    for ((value, position) <- elements.zipWithIndex) {
+      val xPos: Double = (position * SortElement.wholeElementWidth).toDouble
+      val yPos: Double = (SortElement.maxHeight - value).toDouble
+      val sortElement = new SortElement(value, xPos, yPos)
+      sortElement.id() = s"sortElement-$position"
+      elementGroup.children.add(sortElement)
+    }
+
+    elementGroup.translateX <== scrollPane.getScene.getWindow.width/2 - elementGroup.getBoundsInParent.getWidth/2
+\end{lstlisting}
+
+Anschließend wird die Zeichenfläche von allen darin befindlichen Objekten gesäubert und die neu generierte Gruppe wird hinzugefügt:\\
+Basierend auf der Anzahl der neu erzeugten Elemente, wird die Größe der Zeichenfläche angepasst. Dazu wird vorerst die maximale Tiefe der Gruppen definiert. Bei jedem Split und bei jedem Merge, wandern die gesplitteten oder zusammengesetzten Gruppen eine Ebene nach unten. Da sich eine Gruppe bei jedem Split so lange in zwei Teile teilt, bis sich nur noch ein einziges Element in der Gruppe befindet und genauso viele Merges wie Splits durchgeführt werden, lautet die Formel für die Anzahl an Splits und Merges:
+$$log_2 n \times 2$$
+
+Allerdings befindet sich von Anfang an schon die vom System generierte Gruppe auf der Zeichenfläche. Diese muss noch hinzugerechnet werden. Somit ergibt sich für die maximale Tiefe
+
+$$log_2 n \times 2 + 1$$
+
+\begin{lstlisting}[language=Scala]
+pane.children.clear()
+pane.children.add(elementGroup)
+pane.setPrefWidth(elementGroup.getBoundsInParent.getWidth)
+scrollPane.vvalue = 0.0
+
+val depth = Math.ceil(Math.log(elementGroup.children.size) / Math.log(2)) * 2 + 1
+pane.setPrefHeight(depth * 130)
+\end{lstlisting}
+
+Wurde die zu sortierende Menge auf der Zeichenfläche platziert, kann der Benutzer auf „Run“ klicken, um den Algorithmus zu starten. Dadurch wird die Methode \texttt{runSorting} ausgeführt.
+
+\begin{lstlisting}[language=Scala]
+def runSorting():Unit = {
+  runButton.disable = true
+  isPlaying() = true
+  playPauseMenu.disable = false
+  playPauseButton.disable = false
+  val elementGroup: javafx.scene.Group = pane.children.get(0).asInstanceOf[javafx.scene.Group]
+
+  val sorter = new SortElementsController(pane, consoleLog)
+  sorter.maxDepth =  Math.ceil(Math.log(elementGroup.children.size) / Math.log(2)) * 2 + 1
+  sorter.sort(elementGroup, 0)
+  transition = sorter.getSequence
+  transition.rate <== MathBindings.pow(2.0, playbackSpeed.value)
+
+  transition.play()
+  transition.onFinished = {
+    event: ActionEvent =>
+      cleanEverythingUp
+  }
+}
+\end{lstlisting}
+
+Durch die Methode \texttt{runSorting} wird der Run-Button deaktiviert und der Algorithmus zum Sortieren der Elemente durchgeführt, welcher die vorher generierte Gruppe als Eingangsmenge übernimmt. Anschließend wird die Animation, die den Algorithmus visualisiert, gestartet.
+
+Die Implementierung der Logik für den Algorithmus befindet sich in der Klasse SortElementsController.
+
+Wie schon erwähnt, wird bei unserer Implementierung des Mergesort-Algorithmus nicht mit einer einzigen Gruppe gearbeitet, sondern mit vielen Listen, die nicht überschrieben werden. Das dient dazu, die schon gesplitteten und gemergten Elemente auf der Zeichenfläche unangetastet zu lassen. Um dies zu realisieren, müssen Duplikate der Eingangslisten erstellt werden, mit denen weitergearbeitet werden kann, ohne die schon gezeichneten Objekte zu beeinflussen. Man braucht also eine zweite Liste, welche Objekte mit äquivalenten Werten enthält. Für diese Aufgabe existiert die Methode \texttt{createGroup}, welche in unserer \texttt{sort} - Methode aufgerufen wird.
+
+\begin{lstlisting}[language=Scala]
+def createGroup(parentGroup: Group, splitList: (List[SortElement], List[SortElement]), part: EnumVal, depth: Int): Group = {
+
+  val duplicateList = (part match {
+    case Part.Left => splitList._1
+    case Part.Right => splitList._2
+    case _ => throw new IllegalArgumentException(s"$part is not a valid argument")
+  }).map(_.duplicate())
+
+  val group = new Group() {
+      opacity = 0.0
+      children.addAll(duplicateList.asJava)
+      translateY = parentGroup.translateY() + (if (depth > 0) moveDownByPixel else 0)
+      id = s"level-${depth + 1}"
+    }
+    part match {
+      case Part.Left =>
+        group.translateX <== parentGroup.translateX - group.getBoundsInParent.getWidth / 2 + SortElement.width / 2
+      case Part.Right =>
+        group.translateX <== parentGroup.translateX + parentGroup.getBoundsInParent.getWidth / 2 - group.getBoundsInParent.getWidth/2 - SortElement.width/2
+
+    }
+  group
+}
+\end{lstlisting}
+
+Die Methode createGroup erzeugt gleich zu Beginn ein Duplikat der eingegangenen splitList und zwar, abhängig vom mitgegebenem Enum, entweder von der linken oder der rechten Hälfte und speichert dieses in der Value \texttt{duplicateList}. Die \texttt{map}--Methode, die hier verwendet wird, erzeugt für jedes SortElement-Objekt in einer SplitList ein Objekt mit gleichen Werten und gibt dieses an die neue Liste weiter. Der Unterstrich steht in diesem Fall also für jedes Element. Nachdem alle Elemente der „duplicateList“ zu einer Gruppe hinzugefügt wurden, wird diese Gruppe, relativ zu der Gruppe, aus der sie entstanden ist, ausgerichtet. Durch das verwendete Binding \texttt{<==} wird die Positionierung stets angepasst, falls sich die Position der Elterngruppe ändern sollte.
+
+\section{Implementierung des Autoscrolls}
+Um dem Benutzer den Fokus auf den Algorithmus zu erleichtern, haben wir es für sinnvoll erachtet, einen automatischen Scrollmechanismus zu implementieren, welcher stets das Geschehen zum Mittelpunkt der Szene macht. Hierbei machen wir uns noch einmal die zuvor für die Größe der Zeichenfläche genutzte Tiefe der Gruppenstruktur zu Nutze.
+
+\begin{lstlisting}[language=Scala]
+def scroll(group: Group, depth: Int) = {
+  val factor = 1.0/(maxDepth)
+  val timeline = new Timeline {
+    autoReverse = false
+    keyFrames = Seq(
+      at (0.5.s) {
+        group.getScene.lookup("#scrollPaneID").asInstanceOf[ScrollPane].vvalue -> (factor * (if(depth == 0){depth} else {depth + 1}))
+      }
+    )
+  }
+
+  sequence.children.add(timeline)
+}
+\end{lstlisting}
