@@ -1,0 +1,33 @@
+\chapter{Bedienungsanleitung}\label{chap:bedienungsanleitung}
+
+Im Normalfall liegt der Visual-Megesort als Datei mit der Endung \texttt{.jar} vor. Wir haben den Namen \texttt{Visual-Mergesort.jar} gewählt. Die Dateiendung JAR kennzeichnet Archive, die mehrere Java-Dateien und deren Metainformationen enthalten. Um die Datei ausführen zu können, muss die \texttt{Java Runtime Environment} installiert sein. Die Laufzeitumgebung kann gegebenenfalls kostenlos im Internet heruntergeladen werden.
+
+Die Anwendung kann man durch einen Doppelklick, oder aus der Konsole durch den folgenden Aufruf starten.
+
+\begin{verbatim}
+java -jar Visual-Mergesort.jar
+\end{verbatim}
+
+Startet man die Applikation, so öffnet sich folgendes Fenster:
+
+%TODO: Bild einfügen
+
+Über \texttt{ENTER} oder das Klicken auf \texttt{Generate} können direkt die über den Slider voreingestellten 16 Zufallselemente in willkürlicher Reihenfolge generiert werden. Alternativ kann über die Menüleiste \texttt{File} $\rightarrow$ \texttt{Generate Random Data} eine andere Reihenfolge ausgewählt werden. Um einen schnellen Start mit der gewünschten Menge zu ermöglichen, existieren folgende Shortcuts, welche optional verwendet werden können:
+
+\begin{description}
+\item[STRG + b] Generiert eine Menge von Zufallszahlen in willkürlicher Reihenfolge (default)
+
+\item[STRG + o] Generiert eine Menge von Zufallszahlen in vorsortierter, aufsteigender Reihenfolge
+
+\item[STRG + i] Generiert eine Menge von Zufallszahlen, welche absteigend sortiert ist.
+
+\item[STRG + u] Sowohl die Menge der Zahlen als auch die Reihenfolge kann über den Benutzer manuell eingegeben werden.
+\end{description}
+
+Wurde eine dieser Optionen und die Anzahl der Elemente über den Slider ausgewählt, werden diese auf der Zeichenfläche platziert:
+
+%TODO: Bild einfügen
+
+
+Mit \texttt{ENTER}, einem Klick auf \textbf{Run} oder dem optionalen Shortcut \texttt{STRG + r} wird der Sortieralgorithmus gestartet. Über den Slider mit der Signatur \textit{Threads} kann die Anzahl der für den Algorithmus verwendeten Threads eingestellt werden.\\
+Wurde die Animation gestartet, kann diese jederzeit in ihrer Geschwindigkeit über den Regler unter dem Generate-Button variiert oder über den Button \textit{Pause} bzw. \textit{Play} komplett pausiert bzw. fortgesetzt werden.
