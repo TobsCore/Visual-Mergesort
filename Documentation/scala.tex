@@ -1,0 +1,111 @@
+\chapter{Scala}
+Wir haben uns entschieden, das Programm in Scala zu schreiben, einer Sprache, die bereits schon im Jahr 2001 von Martin Odersky entwickelt wurde, jedoch erst seit kurzem einen großen Bekanntheitsgrad erlangt hat. Grund dafür ist der Hype um die sogenannte \textit{funktionale Programmierung} und das Bedürfnis, Anwendungen nebenläufig zu entwickeln.
+Wir möchten nun zu Beginn die Gründe nennen, warum Scala sich als moderne Programmiersprache anbietet, die sogar von Javas Hauptentwickler James Gosling als bevorzugte Java-Alternative betitelt wurde \footnote{James Gosling wurde auf einer Konferenz gefragt, welche Programmiersprache er heutzutage anstelle von Java auf der JVM nutzen würde, worauf er entschieden mit ``Scala'' antwortete --- \url{http://www.adam-bien.com/roller/abien/entry/java_net_javaone_which_programming}}.
+
+\section{Laufzeit-Umgebung}
+Scala ist wie Java eine Programmiersprache, die zu Bytecode kompiliert wird. Dieser Bytecode wird dann von der \textit{Java Virtual Machine} (\texttt{JVM}) benutzt um daraus Maschinencode zu erstellen. Die JVM ist mittlerweile auf sehr vielen Rechnern installiert und sogar das Android Betriebssystem setzt auf eine Variante der JVM (\texttt{Dalvik}).
+
+Die JVM hat den großen Vorteil, dass sie mittlerweile seit 20 Jahren aktiv entwickelt wird und die gesamte Java-Umgebung besonders im Enterprise Bereich eingesetzt wird. Das Resultat ist ein sehr stabiles und vor allem perfomantes System, das aus dem heutigen IT-Markt nicht mehr wegzudenken ist.
+
+\section{Bibliotheken}
+Scala wird also nicht zu irgendeinem Bytecode kompiliert, sondern zu Java-Bytecode, um genau zu sein. Dies hat den großen Vorteil, dass man neben der JVM-Unterstützung auch auf etablierte Java Bibliotheken zugreifen kann. Beispielsweise ist der Einsatz von Google GSON\footnote{Link zu der Projektseite von Google GSON: \url{https://github.com/google/gson}}, das das Serialisieren von Objekten in JSON und zurück ermöglicht, über Scala so möglich, wie auch über Java.
+
+So ist es dann auch kaum überraschend, dass der Einsatz von den üblichen Java Bibliotheken in Scala möglich ist. Ein Beispiel ist \texttt{JavaFX}, welches seit Java 8 Teil des \textit{Java Development Kit} (\texttt{JDK}) ist.
+
+\section{JavaFX und ScalaFX}
+Um die Oberfläche (User Interface) zu gestalten, nutzt man heute Bibliotheken, die meistens so komplex sind, dass ihnen ganze Werke gewidmet werden. Wir haben uns für JavaFX entschieden, welches durch den Wrapper ScalaFX angesprochen wird. Was diese Bibliotheken machen und auszeichnet, wird in den folgenden Abschnitten erklärt.
+
+\subsection{JavaFX}
+JavaFX 8 ist der offzielle Nachfolger von Swing. Zu Beginn sollte es eine Scriptssprache werden, jedoch wurde dieser Fokus mit Version 2 aufgegeben und JavaFX wurde zu der GUI Bibliothek, wie man sie heute nutzt. In der aktuellen Version 8 (welcher der direkte Nachfolger von Version 2 ist und wegen der Einbindung in das JDK 8 diesen Versionssprung vollzogen hat), wurde die Bibliothek um wichtige Komponenten erweitert und bietet die folgendenden Vorteile:
+
+\begin{description}
+\item[Scene Graph]\hfill\\
+JavaFX ist besonders leicht zu entwickeln, da es auf den \texttt{Scene Graph} setzt. Der Scene Graph ist eine Baumstruktur, bei der die Elemente hierachisch angeordnet werden. Elemente im Scene Graph sind vom Type \texttt{Node} ~\cite{ProJavaFX8}. Wenn man also beispielsweise einen Button auf der Bildfläche platzieren möchte, dann hat man ein Button Objekt, welches von \texttt{Node} erbt
+
+\begin{figure}[!htb]
+    \centering
+      \includegraphics[width=0.75\linewidth]{scene-graph}
+    \caption{Darstellung der Baumstruktur im Scene Graph}
+    \label{fig:scene-graph}
+\end{figure}
+
+Ein Vorteil ist, dass man so Objekte gruppieren kann und dadurch Operationen auf der Gruppe ausführen kann. So wird bei einer Verschiebe-Operation (auch \textit{Translation} genannt) jedes Element in der Gruppe verschoben, was den Code lesbarer und wartbarer macht.\\
+Außerdem ist somit eine zum Eltern Element relative Positionierung möglich.
+
+\item[Klares MVC]\hfill\\
+Bei JavaFX wird das Konzept für das Design in einer separaten Datei, einer \textbf{FXML} Datei geführt. So muss man das Layout nicht im Code generieren. Im Abschnitt zu FXML~\ref{sec:fxml} wird dies ausführlicher beschrieben.
+
+\item[Styling über CSS]\hfill\\
+Neben der Trennung von Ablauf, Logik und Gestaltung nach dem \textit{MVC}-Prinzip, lässt sich das Styling durch eine CSS-ähnliche Syntax durchführen, was das Gestalten von Oberflächen durch Designer ermöglicht. Es wird jedoch eine leicht abgewandelte Syntax verwendet. Das Setzen der Textfarbe auf rot (\texttt{\#ff0000} im RGB-Farbraum) wird durch die CSS-Syntax
+\begin{verbatim}
+.button: {
+  -fx-color: #f00;
+}
+\end{verbatim}
+ermöglicht. Man erkennt, dass das Präfix \texttt{-fx-} vor dem CSS-Befehl steht.
+
+\item[Properties und Bindings]\hfill\\
+Das Koppeln von von Eigenschaften einer Klasse an eine andere Klasse ist ein tolles Feature, welches das Entwickeln von komplexen Anwendungen noch weiter vereinfacht. Intern wird das \texttt{Observable}-Interface benutzt, die Komponenten zu aneinander zu binden.
+
+Um Bindings und die dazu benutzten Properties besser zu verstehen, verweisen wir auf die sehr gute Zusammenfassung auf \cite{JavaBeginner-Binding}
+\end{description}
+
+\subsection{ScalaFX}
+ScalaFX ist eine \textit{Domain Specifig Language}\footnote{Bei einer \texttt{DSL} handelt es sich um eine formale Sprache, die ein bestimmtes Problemfeld abdeckt. In dem Fall von ScalaFX handelt es sich um eine \textit{UI DSL}, die als Wrapper um JavaFX gelegt wird.} (\texttt{DSL}) für JavaFX. Als \texttt{DSL} bietet ScalaFX syntaktischen Zucker für die JavaFX--Bibliothek, und die folgenden Vorteile:
+
+\begin{description}
+\item[Lesbare Bind-Ausdrücke]\hfill\\
+Binding und Properties gehören zu den tollen Funktionen, die JavaFX bietet, jedoch ist die Syntax teilweise sehr umständlich.
+\paragraph{Beispiel:} Wenn man 3 Rechtecke hat (\texttt{rect1}, \texttt{rect2} und \texttt{reckt3}) und man möchte, dass das Rechteck \texttt{rect1} so hoch ist, wie \texttt{rect2} und \texttt{rect3}, dann bindet man die Höhe von \texttt{rect1} an die summierte Höhe von \texttt{rect2} und \texttt{rect3}.
+
+\underline{Scala}:
+\begin{lstlisting}[language=scala,caption=Scala Beispiel Code für natürliche Bindings,numbers=none]
+rect1.height <== rect2.height + rect3.height
+\end{lstlisting}
+
+\underline{Java}:
+\begin{lstlisting}[language=Java,caption=Das selbe Beispiel in Java,numbers=none]
+rect1.heightProperty().bind(rect2.heightProperty().add(rect3.heightProperty()))
+\end{lstlisting}
+
+Der Scala Code ist wesentlich intuitiver und lesbarer, was genau der Sinn dieser \texttt{DSL} ist. Das Beispiel stammt aus \cite{ProJavaFX8} (Seite 574f.).
+
+\item[Angepasste Animations Syntax]\hfill\\
+Da Animationen ein wichtiger Bestandteil von JavaFX sind, wurde die Syntax wesentlich verbessert. Auch hier möchten wir uns an \cite{ProJavaFX8} halten und Scala Code mit Java Code vergleichen.
+
+\underline{Scala}:
+\begin{lstlisting}[language=scala,caption=Scala Beispiel für eine einface Animation,numbers=none]
+Timeline(at (3 s) {radius -> 0}).play()
+\end{lstlisting}
+
+\underline{Java}:
+\begin{lstlisting}[language=Java,caption=Das selbe Beispiel in Java,numbers=none]
+KeyValue collapse = new KeyValue(circle.radiusProperty(),0);
+new Timeline(new KeyFrame(Duration.seconds(3), collapse))
+  .play();
+\end{lstlisting}
+
+\item[Typsichere APIs]\hfill\\
+Ein Vorteil von Scala, wie wir noch kennen lernen werden, ist dass die Sprache \textit{statisch typisiert} ist. ScalaFX ist garantiert \textit{typsicher}, was zur Folge hat, dass Fehler bereits beim Kompilieren auftreten und nicht erst zur Laufzeit zu Fehlern führen wird. ~\cite{TypesAndProgrammingLanguages}
+
+\item[Interoperabilität zwischen ScalaFX und JavaFX]\hfill\\
+ScalaFX liegt wie ein Wrapper um JavaFX und bietet Funktionen an, die die Arbeit mit JavaFX erleichtern. Dies wird dadurch vereinfacht, dass man ganz einfach zwischen JavaFX und ScalaFX wechseln kann. Ein besonders hilfreiches Konzept sind hierbei \textit{Implizite Konvertierungen}. So kann man beispielsweise eine \texttt{javafx.scene.Shape.button} an eine Methode übergeben, die ein \texttt{scalafx.scene.Shape.button} als Argument erwartet.
+\end{description}
+
+Da es sich bei ScalaFX primär um syntaktische Verbesserungen handelt, kann man argumentieren, dass die Benutzung obsolet ist. Wir haben uns bewusst für die Integration entschieden, da wir näher an der Scala Syntax bleiben wollten und die Lesbarkeit von Source-Code für uns ein wichtiger Aspekt ist\footnote{Eine Interessante Diskussion zu diesem Thema findet man auch hier \url{http://stackoverflow.com/a/22744881}}.
+
+
+\subsection{FXML}\label{sec:fxml}
+Wenn man sich mit den Entwicklung von Swing auskennt, dann weiß man, dass man alle darstellbaren Objekte im Code selber generiert und gestaltet. Möchte man diese dann später ändern, so muss man sich mit dem Programmcode auseinander setzen und hier die Syntax nachvollziehen und Änderungen über die Programmiersprache vornehmen.
+
+Dieser Ansatz ist in JavaFX auch möglich, jedoch hat dies den Nachteil, dass die Oberfläche durch den teilweise umständlichen Programmierstil beschrieben wird. Außerdem müssen sich Oberflächen-Gestalter in die Programmiersprache einarbeiten.\\
+FXML ist eine auf \texttt{XML} basierende Sprache, dass die Struktur des Layouts beschreibt. Man kann das FXML Layout ganz einfach auslagern, also in einer separaten Datei speichern, sodass Anwendungs-Logik und die Präsentationsschicht getrennt sind, so wie im \texttt{Model-View-Control} Pattern gefordert.
+
+Dadurch, dass das Layout über den Scene\textbf{graph} organisiert wird, bietet sich XML durch seine verschachtelten Tags an, diese Knotenstruktur abzubilden. Somit wird diese Struktur auch gleichzeitig \textbf{transparent}.\\
+FXML wird nicht kompiliert, somit können Änderungen ohne vorheriges Rekompilieren direkt getestet werden.\\
+Ein großer Vorteil ist, dass man einzelnen Knoten \texttt{ID}s und \texttt{Class}es zuteilen kann, wie in HTML. Diese lassen sich dann über CSS stylen. Hierbei wird eine leicht veränderte CSS-Syntax verwendet, aber jeder der sich in der Webgestaltung auskennt, wird sich hier schnell zurecht finden. Neben dem Stylen von Elementen ist die \textbf{Lokalisierung} des Inhalts heutzutage auch extrem wichtig, da der Softwaremarkt mittlerweile kaum mehr auf einen Sprachraum beschränkt ist. Hier bietet FXML eingebaute Features, die diese Lokalisierung sehr einfach ermöglichen.\\
+Und da JavaFX das Laden und verarbeiten von FXML Dateien erlaubt, kann man auch mit anderen JVM--Sprachen, wie in unserem Fall Scala, FXML nutzen. Wir haben jedoch eine zusätzliche Library genutzt, die das Benutzen und Arbeiten mit FXML Dateien erleichtert: ScalaFXML~\cite{ScalaFXML}.
+
+Zuletzt muss man in Verbindung mit FXML noch den Scene Builder\footnote{Der Scene Builder ist mittlerweile Open Source und kann hier herunter geladen werden \url{http://gluonhq.com/labs/scene-builder/}. Weitere Informationen findet man noch auf der mittlerweile archivierten Oracle Seite unter \url{http://www.oracle.com/technetwork/java/javase/downloads/javafxscenebuilder-info-2157684.html}} nennen. Dieses Tool erleichtert die Gestaltung von einfachen User Interfaces, indem Elemente per Drag \& Drop platziert werden können und man somit eine Oberfläche gestalten kann, ohne sich genauer mit dem FXML Code auseinander setzen zu müssen. Das Programm hat uns am Anfang geholfen, die Syntax besser zu verstehen und die Elemente besser zu platzieren. Da wir in unserer Arbeit jedoch immer öfter Kleinigkeiten im Layout anpassen mussten, haben wir im Verlauf immer mehr auf den Scene Builder verzichtet, da die Anpassung einer ID, oder Größe oder das Einfügen eine Buttons händisch tatsächlich schnell geht und der Scene Builder nicht fehlerfrei funktionierte. Bei unser wurde die Menüzeile des Scene-Builders (von wo aus man das Layout beispielsweise als native Anwendung ohne Logik testen kann) durch das Menü unserer Anwendung überschrieben \footnote{Der Fehler wird hier beschrieben: \url{https://bugs.openjdk.java.net/browse/JDK-8089659}. Wir haben das Tag \texttt{useSystemMenuBar} genutzt, um auf OSX die native Menüzeile zu nutzen, was das Layout natürlicher macht.}.
+
+\section{Grundlegendes und Syntax}
