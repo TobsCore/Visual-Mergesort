@@ -20,4 +20,4 @@ mainClass in Compile := Some("projektarbeit.VisualMergesort")
 mainClass in assembly := Some("projektarbeit.VisualMergesort")
 
 // Sets the output name of the jar file
-assemblyJarName in assembly := "Visual Mergesort.jar"
+assemblyJarName in assembly := "Visual-Mergesort.jar"
