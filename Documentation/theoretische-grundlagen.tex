@@ -1,4 +1,52 @@
 \chapter{Theoretische Grundlgen}\label{chap:theoretische-grundlagen}
+\section{Rekurstion}
+Um den Mergesort-Algorithmus in seiner eleganten Form zu verstehen, ist es unausweichbar, sich zuerst mit dem
+Konzept der Rekursion zu befassen. Generell bedeutet Rekursion, dass ein Regelwerk erneut auf die Dinge angewendet werden kann,
+welche mit diesem Regelwerk erzeugt wurden, was potenziell zu einer endlosen Produktionsschleife, wie beispielsweise bei einer Rückköpplung
+führen kann. In der Informatik dient Rekursion dazu, sonst sehr komplexe Sachverhalte elegant zu formulieren. Vereinfachterweise ist eine rekursive Methode
+eine Methode, die sich selbst aufruft und somit der Gegenspieler zu einer iterativen Methode. Hierbei spielt die korrekt formulierte Abbruchbedingung der Methode eine zentrale Rolle, da man sonst Gefahr läuft,
+eine Endlosschleife zu produzieren. Prinzipiell lässt sich sagen, dass iterative und rekursive Programmierung gleich mächtig sind, da sich jedes rekursiv lösbare Problem
+unter mehr oder weniger Umständen auch iterativ ausformulieren lässt und umgekehrt.
+
+Ein Beispiel hierfür wäre die einfache Berechnung der Fakultät einer Zahl in Java. Die erste Lösung erfolgt rekursiv:
+
+\begin{lstlisting}[language=Java]
+  public static berechne_fakultaet_rekursiv(int n){
+
+    if(n <= 1){
+    return 1;
+    }
+    else{
+    return ( n * berechne_fakultaet_rekursiv(n-1));
+    }
+
+  }
+\end{lstlisting}
+
+Der rekursive Methodenaufruf befindet sich direkt hinter dem zweiten \texttt{return} Ausdruck. Hier wird die gleich Methode immer wieder
+mit einer um eins dekrementierten Zahl aufgerufen, bis die vordefinierte Abbruchbedingung \texttt{n <= 1} eintritt.
+
+Alternativ lässt sich die gleiche Funktion auch iterativ implementieren, wobei die Methode nur ein einziges Mal aufgerufen wird,
+und das Problem linear löst:
+
+\begin{lstlisting}[language=Java]
+  public static berechne_fakultaet_iterariv(int n){
+
+  int fakultaet = 1;
+  int faktor = 2;
+  while (faktor <= n){
+
+      fakultaet = fakultaet * faktor;
+      faktor ++;
+
+  }
+  return fakultaet;
+
+  }
+\end{lstlisting}
+
+Wie man sieht wurde der rekursive Methodenaufruf in diesem Fall durch eine while-Schleife ersetzt.
+
 
 \section{Merge--Sort}
 Der erstmals 1945 durch John von Neumann vorgestellte Mergesort ist ein Sortieralgotithmus, der nach dem Paradigma divide-and-conquer arbeitet. Bei diesem Prinzip wird das eigentliche, große Problem so lange rekursiv in kleinere Probleme unterteilt, bis diese lösbar sind. Im Anschluss wird aus allen Teillösungen die Endlösung rekonstruiert. Die genaue Funktionsweise des Mergesort erfolgt in zwei Schritten: Im ersten Schritt wird die ursprüngliche Liste in zwei Hälften zerlegt, die jeweils wieder in einer Liste gespeichert werden. Dieser Schritt wird, zusammen mit dem nachfolgenden Schritt, so lange rekursiv fortgesetzt, bis sich nur noch ein Element in jeder Liste befindet. Im zweiten Schritt werden die Hälften sortiert und zu einer Menge zusammengefügt, bis sich irgendwann wieder die Gesamtmenge mit allen enthaltenen Ursprungselementen ergibt. Hierbei werden immer die ersten Elemente der beiden Hälften verglichen, wobei das jeweils kleinere in die zusammengefügte Menge wandert.

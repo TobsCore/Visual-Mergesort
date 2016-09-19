@@ -1,6 +1,28 @@
 \externaldocument{scala}
 \chapter{Eigenleistung}\label{chap:eigenleistung}
 
+\section{Aufbau der GUI}
+Um die benötigten Zeichen- Kontroll- und Schaltflächen zu unserem Interface hinzuzufügen, haben wir uns für die Sprache
+FXML entschieden. Dabei hat unsere Applikation folgenden Aufbau:
+Auf der untersten Ebene befinden sich eine \texttt{MenuBar}, welche das Menü in der oberen Leiste
+einer Standardandwendung darstellt und eine \texttt{BorderPane}, die es erlaubt, das eigentliche
+Fenster zur Visualisierung des Mergesort in verschiedene Bereiche zu unterteilen. Im oberen Bereich der \texttt{BorderPane}
+befindet sich eine \texttt{AnchorPane}, die dazu dient, das Anordnen der Schalt- und Kontrollflächen zu erleichtern, da diese dort
+relativ zu den Rändern und anderen Elementen ausgerichtet werden können.
+
+BILD1
+
+Im Zentrum der \texttt{BorderPane} befindet sich eine \texttt{ScrollPane}, die alle weiteren Elemente beinhaltet,
+die zur Darstellung der eigentlichen Zeichenfläche dienen. In diesem Teil finden ausschließlich die Animationen statt - somit sind keine Interaktionen mit der
+Benutzeroberfläche möglich.
+
+BILD2
+
+Zuletzt befindet sich im unteren Teil der \texttt{BorderPane} eine \texttt{TextArea}, die für alle textuellen Ausgaben in der Konsole
+verantwortlich ist. Hier kann der Benutzer optionalalerweise das Geschehen, welches im Zentrum animiert wird,
+auf leserische Art mitverfolgen.
+
+BILD3
 \section{Das Objekt VisualMergesort}
 Das Objekt VisualMergesort ist ein Singleton-Objekt der anonymen Klasse VisualMergesort, welches garantiert einzigartig ist. Das bedeutet, dass keine weiteren Objekte gleicher Art erzeugt werden können. „VisualMergesort“ erbt von JFXApp und definiert somit den Startpunkt unserer Applikation.
 
