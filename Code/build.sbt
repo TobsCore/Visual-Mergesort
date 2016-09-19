@@ -8,6 +8,11 @@ libraryDependencies += "org.scalafx" %% "scalafxml-core-sfx8" % "0.2.2"
 
 libraryDependencies += "eu.lestard" % "advanced-bindings" % "0.4.0"
 
+libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.4-SNAPSHOT"
+
+// Add the Snapshot repository, which is used for snapshots of akka actors
+resolvers += "Akka Snapshot Repository" at "http://repo.akka.io/snapshots/"
+
 addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
 
 // Includes the JavaFX Stylesheet, when SBT is run from the terminal

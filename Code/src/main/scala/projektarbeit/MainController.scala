@@ -60,6 +60,7 @@ class MainController(
   playPauseMenu.text <==> playPauseButton.text
 
 
+
   def toggleActionBar(): Unit = {
     if (borderPane.top() != null) {
       borderPane.top() = null
@@ -210,17 +211,15 @@ class MainController(
     val amountOfThreads = amountOfThreadsLabel.text().toInt
 
     val sorter = new SortElementsController(pane, consoleLog, elementGroup, amountOfThreads)
-    sorter.maxDepth = Math.ceil(Math.log(elementGroup.children.size) / Math.log(2)) * 2 + 1
     sorter.run
 
-    transition = sorter.getSequence
-    transition.rate <== MathBindings.pow(2.0, playbackSpeed.value)
+/*    transition = sorter.getSequence
 
     transition.play()
     transition.onFinished = {
       event: ActionEvent =>
         cleanEverythingUp
-    }
+    }*/
 
   }
 
