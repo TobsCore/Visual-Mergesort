@@ -21,7 +21,7 @@ import scalafxml.core.macros.sfxml
 import scalafxml.core.{FXMLView, NoDependencyResolver}
 
 /**
-  * Created by Patrick König on 19.08.16.
+  * Created by only Patrick König on 19.08.16.
   */
 @sfxml
 class MainController(
@@ -59,9 +59,6 @@ class MainController(
   runButton.defaultButton <== !generateButton.defaultButton
   playPauseMenu.text <==> playPauseButton.text
 
-  consoleLog.scrollTop.onChange (
-    (observable,oldValue,newValue) => println(s"$oldValue => $newValue")
-  )
 
   def toggleActionBar(): Unit = {
     if (borderPane.top() != null) {
@@ -174,7 +171,7 @@ class MainController(
     pane.setPrefWidth(elementGroup.getBoundsInParent.getWidth)
     scrollPane.vvalue = 0.0
 
-    val depth = Math.ceil(Math.log(elementGroup.children.size) / Math.log(2)) * 2 + 1
+    val depth = Math.ceil(Math.log(elementGroup.children.size) / Math.log(2)) * 2 + 2
     //TODO: Die 130 auslagern, denn diese ist eigentlich SortElementsController.moveDownByPixel
     pane.setPrefHeight(depth * 130)
   }
@@ -210,10 +207,12 @@ class MainController(
     playPauseMenu.disable = false
     playPauseButton.disable = false
     val elementGroup: javafx.scene.Group = pane.children.get(0).asInstanceOf[javafx.scene.Group]
+    val amountOfThreads = amountOfThreadsLabel.text().toInt
 
-    val sorter = new SortElementsController(pane, consoleLog)
-    sorter.maxDepth =  Math.ceil(Math.log(elementGroup.children.size) / Math.log(2)) * 2 + 1
-    sorter.sort(elementGroup, 0)
+    val sorter = new SortElementsController(pane, consoleLog, elementGroup, amountOfThreads)
+    sorter.maxDepth = Math.ceil(Math.log(elementGroup.children.size) / Math.log(2)) * 2 + 1
+    sorter.run
+
     transition = sorter.getSequence
     transition.rate <== MathBindings.pow(2.0, playbackSpeed.value)
 

@@ -12,6 +12,7 @@ import scalafx.scene.text.Text
 class SortElement(val number: Int, var _xPos: Double, var _yPos: Double) extends Group with Ordered[SortElement]  {
   require(number >= 1 && number <= 99 , "the number must be between 1 and 99 (inclusive)")
 
+
   var text = new Text(number.toString)
   text.style = "-fx-font-size: 10px; -fx-background: #f00"
 
@@ -19,13 +20,15 @@ class SortElement(val number: Int, var _xPos: Double, var _yPos: Double) extends
   text.translateX() = xPos + offset
   text.translateY() = _yPos + number + SortElement.width
 
+  var color = Color.DARKBLUE
   var rectangle = new Rectangle(new javafx.scene.shape.Rectangle(_xPos, _yPos, SortElement.width, number))
-  rectangle.setFill(Color.DARKBLUE)
+  rectangle.setFill(color)
   this.getChildren.addAll(rectangle,text)
 
 
 
   def changeColor(color: Color): Unit = {
+    this.color = color
     this.rectangle.setFill(color)
   }
 
@@ -47,7 +50,9 @@ class SortElement(val number: Int, var _xPos: Double, var _yPos: Double) extends
 
 
   def duplicate(): SortElement = {
-    new SortElement(number, _xPos, _yPos)
+    val duplicate = new SortElement(number, _xPos, _yPos)
+    duplicate.changeColor(this.color)
+    return duplicate
   }
 
   override def compare(that: SortElement): Int = {
