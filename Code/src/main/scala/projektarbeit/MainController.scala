@@ -8,6 +8,7 @@ import projektarbeit.ElementOrder.EnumVal
 import scala.concurrent.forkjoin.ThreadLocalRandom
 import scalafx.Includes._
 import scalafx.animation.SequentialTransition
+import scalafx.application.Platform
 import scalafx.beans.property.BooleanProperty
 import scalafx.event.ActionEvent
 import scalafx.scene.control.Alert.AlertType
@@ -99,6 +100,11 @@ class MainController(
   def createCustomElements(): Unit = {
     createCustomElements(None)
     changeButtonActivationToRun()
+  }
+
+  def quitApplication(): Unit = {
+    Platform.exit();
+    System.exit(0)
   }
 
   def createCustomElements(preselectedValue: Option[String]): Unit = {

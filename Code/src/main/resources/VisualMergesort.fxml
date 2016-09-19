@@ -49,8 +49,11 @@
                                                     shortcut="DOWN"/>
                             </accelerator>
                         </MenuItem>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem mnemonicParsing="false" text="Quit">
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Quit" onAction="#quitApplication">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="Q" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                            </accelerator>
                         </MenuItem>
                     </items>
                 </Menu>
