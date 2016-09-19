@@ -1,13 +1,15 @@
 package projektarbeit
 
 import java.io.IOException
+import java.util
 
 import eu.lestard.advanced_bindings.api.MathBindings
 import projektarbeit.ElementOrder.EnumVal
 
+import scala.collection.mutable.{ArrayBuffer, ListBuffer}
 import scala.concurrent.forkjoin.ThreadLocalRandom
 import scalafx.Includes._
-import scalafx.animation.SequentialTransition
+import scalafx.animation.{ParallelTransition, SequentialTransition}
 import scalafx.beans.property.BooleanProperty
 import scalafx.event.ActionEvent
 import scalafx.scene.control.Alert.AlertType
@@ -46,7 +48,7 @@ class MainController(
   val defaultMaximumNumber = 99
   var aboutStage: Stage = _
   val originalPattern = "%.0f"
-  var transition: SequentialTransition = _
+  var transition: List[SequentialTransition] = _
   var isPlaying: BooleanProperty = BooleanProperty(false)
   amountOfElementsSlider.labelFormatter = new DoubleStringConverter
   amountOfElementsLabel.text <== amountOfElementsSlider.value.asString(originalPattern)
@@ -148,7 +150,7 @@ class MainController(
 
     cleanEverythingUp
     // Stop the running transition, and then place the new elements on the pane
-    if (transition != null) transition.stop()
+    if (transition != null) transition.foreach(_.stop)
     // Setting up the canvas
     val elementGroup = new Group()
     elementGroup.id() = "level-1"
@@ -213,14 +215,15 @@ class MainController(
     sorter.maxDepth = Math.ceil(Math.log(elementGroup.children.size) / Math.log(2)) * 2 + 1
     sorter.run
 
-    transition = sorter.getSequence
-    transition.rate <== MathBindings.pow(2.0, playbackSpeed.value)
+    transition = sorter.getSequences()
+    transition.foreach(_.rate <== MathBindings.pow(2.0, playbackSpeed.value))
 
-    transition.play()
+    sorter.play()
+    /*
     transition.onFinished = {
       event: ActionEvent =>
         cleanEverythingUp
-    }
+    }*/
 
   }
 
@@ -233,10 +236,10 @@ class MainController(
 
   def playPauseSequence(): Unit = {
     if (this.isPlaying()) {
-      transition.pause()
+      transition.foreach(_.pause)
       playPauseButton.text = "Play"
     } else {
-      transition.play()
+      transition.foreach(_.play)
       playPauseButton.text = "Pause"
     }
 
