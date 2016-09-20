@@ -5,12 +5,9 @@ import javafx.scene.control.ScrollPane
 import projektarbeit.Part.{EnumVal, Left, Right}
 
 import scala.collection.JavaConverters._
-import scala.collection.mutable.ListBuffer
 import scalafx.Includes._
-import scalafx.animation.{ParallelTransition, SequentialTransition, Timeline}
+import scalafx.animation.{SequentialTransition, Timeline}
 import scalafx.beans.binding.NumberBinding
-import scalafx.beans.property.DoubleProperty
-import scalafx.event.ActionEvent
 import scalafx.scene.Group
 import scalafx.scene.control.TextArea
 import scalafx.scene.layout.Pane

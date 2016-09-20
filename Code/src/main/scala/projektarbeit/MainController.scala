@@ -1,22 +1,20 @@
 package projektarbeit
 
 import java.io.IOException
-import java.util
 
 import eu.lestard.advanced_bindings.api.MathBindings
 import projektarbeit.ElementOrder.EnumVal
 
-import scala.collection.mutable.{ArrayBuffer, ListBuffer}
 import scala.concurrent.forkjoin.ThreadLocalRandom
 import scalafx.Includes._
-import scalafx.animation.{ParallelTransition, SequentialTransition}
+import scalafx.animation.SequentialTransition
 import scalafx.beans.property.BooleanProperty
 import scalafx.event.ActionEvent
 import scalafx.scene.control.Alert.AlertType
 import scalafx.scene.control._
 import scalafx.scene.layout.{AnchorPane, BorderPane, Pane}
 import scalafx.scene.text.Text
-import scalafx.scene.{Group, Node, Scene}
+import scalafx.scene.{Group, Scene}
 import scalafx.stage.Stage
 import scalafx.util.converter.DoubleStringConverter
 import scalafxml.core.macros.sfxml
