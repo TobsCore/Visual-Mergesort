@@ -140,7 +140,7 @@
                             </font>
                         </Label>
                         <Slider fx:id="playbackSpeed" blockIncrement="1.0" layoutX="36.0" layoutY="53.0"
-                                majorTickUnit="1.0" max="4.0" min="-3.0" minorTickCount="0" prefHeight="38.0"
+                                majorTickUnit="1.0" max="3.0" min="-2.0" minorTickCount="0" prefHeight="38.0"
                                 prefWidth="100.0" showTickMarks="true" value="0.0" AnchorPane.leftAnchor="33.0"/>
                     </children>
                 </AnchorPane>
