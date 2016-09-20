@@ -28,10 +28,11 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
   val groupSeq = new SequentialTransition()
   var consoleText: String = ""
   var hackedValue = 0
-  val autoScrollActivated = amountOfThreads == 1
+  val autoScrollActivated = !(amountOfThreads > 1 && initialGroupElements.size % 2 != 0)
   var finalGroups: Array[Group] = new Array[Group](2)
 
   def run(): Unit = {
+
     val threadElements = initialGroupElements.grouped(amountOfElementsPerThread)
     for ((list, index) <- threadElements.zipWithIndex) {
       finalGroups(index) = createThread(index, list.map(_.duplicate()))
@@ -100,7 +101,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
       val left = createGroup(parentGroup, splitList, Left, depth)
       pane.children.add(left)
       val realDepth = if (amountOfThreads == 1) depth else depth + 1
-      scroll(left, realDepth, threadNumber)
+      if(autoScrollActivated) {scroll(left, realDepth, threadNumber)}
       val timelineLeft = relocateElementGroup(left, depth, threadNumber)
       consoleText += s"SPLIT $elements - ${elements.size} elements\n"
       timelineLeft.keyFrames.add(at(0.1.s) {
@@ -114,7 +115,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
 
       val right = createGroup(parentGroup, splitList, Right, depth)
       pane.children.add(right)
-      scroll(right, realDepth, threadNumber)
+      if(autoScrollActivated) {scroll(right, realDepth, threadNumber)}
       val timelineRight = relocateElementGroup(right, depth, threadNumber)
       timelineRight.keyFrames.add(at(0.1.s) {
         consoleLog.text -> consoleText
@@ -199,7 +200,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
     pane.children.add(group)
     showGroup(group, threadNumber)
     val realdepth: Int = if(amountOfThreads == 1) maxDepth - depth else  maxDepth - depth - 1
-    scroll(group, realdepth, threadNumber)
+    if(autoScrollActivated){scroll(group, realdepth, threadNumber)}
     for ((element, i) <- resultListDuplicate.zipWithIndex) {
       element.opacity() = 0
       relocateElement(element, i, depth, threadNumber)
