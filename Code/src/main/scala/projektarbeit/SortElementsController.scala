@@ -12,6 +12,7 @@ import scalafx.scene.Group
 import scalafx.scene.control.TextArea
 import scalafx.scene.layout.Pane
 import scalafx.scene.paint.Color
+import scalafx.scene.text.Text
 
 /**
   * Created by Patrick König & Tobias Kerst on 08.09.16.
@@ -61,7 +62,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
       opacity = 1.0
     }
 
-    consoleText += s"Create Thread $index with elements $list \n"
+    consoleText += s"Create Thread ${index + 1} with elements $list \n"
     val timeline = new Timeline {
       autoReverse = false
       keyFrames = Seq(
@@ -75,8 +76,17 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
     }
     addToSequence(index, timeline)
     group.translateX <== calculatedXPosition(index, group)
-    group.translateY() = initialGroup.translateY() + moveDownByPixel
+    group.translateY() = initialGroup.translateY() + moveDownByPixel + 50
     pane.children.add(group)
+
+
+    val threadText = new Text(s"Thread ${index + 1}") {
+      x <== group.translateX + group.getBoundsInParent.getWidth / 2 - 20 + (index * (2 * amountOfElementsPerThread *
+        10))
+      y <== group.translateY - 20
+    }
+    println(s"Index: $index: Text: ${threadText.translateX()} | Group: ${group.translateX()}")
+    pane.children.add(threadText)
     sort(group, 0, index)
   }
 
