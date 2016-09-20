@@ -198,7 +198,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
 
     pane.children.add(group)
     showGroup(group, threadNumber)
-    val realdepth: Int = maxDepth.toInt - depth
+    val realdepth: Int = if(amountOfThreads == 1) maxDepth.toInt - depth else  maxDepth.toInt - depth - 1
     scroll(group, realdepth, threadNumber)
     for ((element, i) <- resultListDuplicate.zipWithIndex) {
       element.opacity() = 0
