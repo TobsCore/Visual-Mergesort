@@ -50,7 +50,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
     if (amountOfThreads > 1) {
       val color =
       index match {
-        case 0 => Color.RoyalBlue
+        case 0 => Color.DarkBlue
         case 1 => Color.SlateBlue
         case _ => throw new IllegalArgumentException(s"Index $index is not supported")
       }

@@ -1,7 +1,7 @@
 package projektarbeit
 
 import javafx.scene.Group
-import javafx.scene.paint.Color
+import scalafx.scene.paint.Color
 
 import scalafx.scene.shape.Rectangle
 import scalafx.scene.text.Text
@@ -24,7 +24,7 @@ class SortElement(val number: Int, var _xPos: Double, var _yPos: Double) extends
   text.translateX() = xPos + offset
   text.translateY() = _yPos + number + SortElement.width
 
-  var color = Color.DARKBLUE
+  var color = Color.RoyalBlue
   var rectangle = new Rectangle(new javafx.scene.shape.Rectangle(_xPos, _yPos, SortElement.width, number))
   rectangle.setFill(color)
   this.getChildren.addAll(rectangle, text)
