@@ -21,12 +21,16 @@ import scalafx.scene.paint.Color
   */
 class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initialGroup: Group, val amountOfThreads: Int) {
   def getSequences(): List[SequentialTransition] = {
-    List(seq1, seq2)
+    List(seq1, seq2, groupSeq)
   }
 
   def play(): Unit = {
     seq1.play()
     seq2.play()
+  }
+
+  def playFinalMerge(): Unit = {
+    groupSeq.play()
   }
 
 
@@ -37,23 +41,26 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
   val amountOfElementsPerThread: Int = Math.ceil(initialGroupElements.size / amountOfThreads.toDouble).toInt
   val seq1 = new SequentialTransition()
   val seq2 = new SequentialTransition()
+  val groupSeq = new SequentialTransition()
   var consoleText: String = ""
   var hackedValue = 0
+  var autoScrollActivated = true
+  var finalGroups: Array[Group] = new Array[Group](2)
 
   def calculatedXPosition(index: Int, group: Group): NumberBinding = {
     amountOfThreads match {
-      case 1 => initialGroup.translateX + 0
-      case 2 => {
+      case 1 => autoScrollActivated = true; initialGroup.translateX + 0
+      case 2 => autoScrollActivated = false;{
         index match {
-          case 0 => group.children.toList.asInstanceOf[List[SortElement]].foreach(_.changeColor(Color.Cyan));initialGroup.translateX - group.getBoundsInParent.getWidth / 2 + SortElement.width / 2
-          case 1 => group.children.toList.asInstanceOf[List[SortElement]].foreach(_.changeColor(Color.Red));initialGroup.translateX + initialGroup.getBoundsInParent.getWidth / 2 - group.getBoundsInParent.getWidth / 2 - SortElement.width / 2
+          case 0 => group.children.toList.asInstanceOf[List[SortElement]].foreach(_.changeColor(Color.DarkGreen));initialGroup.translateX - group.getBoundsInParent.getWidth / 2 + SortElement.width / 2
+          case 1 => group.children.toList.asInstanceOf[List[SortElement]].foreach(_.changeColor(Color.DarkRed));initialGroup.translateX + initialGroup.getBoundsInParent.getWidth / 2 - group.getBoundsInParent.getWidth / 2 - SortElement.width / 2
         }
       }
       case number => throw new IllegalArgumentException(s"Cannot run on more than 2 Threads! You tried to run it on $number threads")
     }
   }
 
-  def createThread(index: Int, list: List[SortElement]): Unit = {
+  def createThread(index: Int, list: List[SortElement]): Group = {
     val group = new Group() {
       children.addAll(list.asJava)
       id = s"thread-${index}"
@@ -69,7 +76,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
   def run(): Unit = {
     val threadElements = initialGroupElements.grouped(amountOfElementsPerThread)
     for ((list, index) <- threadElements.zipWithIndex) {
-      createThread(index, list.map(_.duplicate))
+      finalGroups(index) = createThread(index, list.map(_.duplicate))
     }
   }
 
@@ -131,17 +138,19 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
 
 
   def scroll(group: Group, depth: Int) = {
-    val factor = 1.0/(maxDepth)
-    val timeline = new Timeline {
-      autoReverse = false
-      keyFrames = Seq(
-        at (0.5.s) {
-          group.getScene.lookup("#scrollPaneID").asInstanceOf[ScrollPane].vvalue -> (factor * (depth + 1))
-        }
-      )
-    }
+    if(autoScrollActivated) {
+      val factor = 1.0 / (maxDepth)
+      val timeline = new Timeline {
+        autoReverse = false
+        keyFrames = Seq(
+          at(0.5.s) {
+            group.getScene.lookup("#scrollPaneID").asInstanceOf[ScrollPane].vvalue -> (factor * (depth + 1))
+          }
+        )
+      }
 
-    seq1.children.add(timeline)
+      seq1.children.add(timeline)
+    }
 
   }
 
@@ -203,7 +212,8 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
     }
 
     if (threadNumber == 0) seq1.children.add(timeline)
-    else seq2.children.add(timeline)
+    else if (threadNumber == 1) seq2.children.add(timeline)
+    else groupSeq.children.add(timeline)
     var i = 0
     var j = 0
 
@@ -276,15 +286,11 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
           element.translateY -> (element.translateY() + moveDownByPixel)
         }
 
-       /*,
-        at (1.0.s) {
-         element.translateX -> (i * SortElement.wholeElementWidth)
-         // element.xPos -> (i * SortElement.wholeElementWidth)
-        }*/
       )
     }
     if (threadNumber == 0) seq1.children.add(timeline)
-    else seq2.children.add(timeline)
+    else if (threadNumber == 1) seq2.children.add(timeline)
+    else groupSeq.children.add(timeline)
 
   }
 
@@ -300,34 +306,11 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
 
     }
     if (threadNumber == 0) seq1.children.add(timeline)
-    else seq2.children.add(timeline)
+    else if (threadNumber == 1 )seq2.children.add(timeline)
+    else groupSeq.children.add(timeline)
+
   }
 
-/*
-  def merge(resunlt:List[SortElement], first:List[SortElement], second:List[SortElement]) {
-    var i = 0
-    var j = 0
-
-    for (k <- 0 until result.length) {
-
-      if(i < first.length && j < second.length){
-
-        if (first(i) < second(j)){
-          result(k) = first(i)
-          i=i+1
-        } else {
-          result(k) = second(j)
-          j=j+1
-        }
-      }else if(i>=first.length && j<second.length){
-        result(k) = second(j)
-        j=j+1
-      } else {
-        result(k) = first(i)
-        i=i+1
-      }
-    }
-  }*/
 }
 
 

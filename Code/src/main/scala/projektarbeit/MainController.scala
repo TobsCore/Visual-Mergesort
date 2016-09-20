@@ -219,11 +219,18 @@ class MainController(
     transition.foreach(_.rate <== MathBindings.pow(2.0, playbackSpeed.value))
 
     sorter.play()
-    /*
-    transition.onFinished = {
+
+
+
+    transition(1).onFinished = {
       event: ActionEvent =>
+        if(amountOfThreads > 1){
+        sorter.merge(sorter.finalGroups(0), sorter.finalGroups(1), (sorter.maxDepth - 1).toInt, 3)
+        }
+        sorter.playFinalMerge()
         cleanEverythingUp
-    }*/
+
+    }
 
   }
 
