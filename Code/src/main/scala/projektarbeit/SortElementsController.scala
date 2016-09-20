@@ -19,8 +19,6 @@ import scalafx.scene.text.Text
   */
 class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initialGroup: Group, val amountOfThreads: Int) {
 
-
-  private val moveDownByPixel = 130
   var maxDepth: Double = _
 
   val initialGroupElements: List[SortElement] = initialGroup.children.toList.asInstanceOf[List[SortElement]]
@@ -76,7 +74,8 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
     }
     addToSequence(index, timeline)
     group.translateX <== calculatedXPosition(index, group)
-    group.translateY() = initialGroup.translateY() + moveDownByPixel + 50
+    group.translateY() = initialGroup.translateY() + SortElementsController.moveDownByPixel + SortElementsController
+      .textOffset
     pane.children.add(group)
 
 
@@ -136,7 +135,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
     val rightSize: Int = rightList.size
     val totalSize: Int = leftSize + rightSize
     var resultList: List[SortElement] = List.fill(totalSize)(null)
-    val newYValue = Math.max(leftGroup.translateY(), rightGroup.translateY()) + moveDownByPixel
+    val newYValue = Math.max(leftGroup.translateY(), rightGroup.translateY()) + SortElementsController.moveDownByPixel
 
     consoleText += s"MERGE $leftList and $rightList\n"
     val timeline = new Timeline {
@@ -236,7 +235,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
           group.opacity -> 1.0
         },
         at(1.s) {
-          group.translateY -> (group.translateY() + moveDownByPixel)
+          group.translateY -> (group.translateY() + SortElementsController.moveDownByPixel)
         }
       )
     }
@@ -274,7 +273,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
     val group = new Group() {
       opacity = 0.0
       children.addAll(duplicateList.asJava)
-      translateY = parentGroup.translateY() + (if (depth > 0) moveDownByPixel else 0)
+      translateY = parentGroup.translateY() + (if (depth > 0) SortElementsController.moveDownByPixel else 0)
       id = s"level-${depth + 1}"
     }
     part match {
@@ -315,7 +314,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
           element.opacityProperty -> 1.0
         },
         at(1.0.s) {
-          element.translateY -> (element.translateY() + moveDownByPixel)
+          element.translateY -> (element.translateY() + SortElementsController.moveDownByPixel)
         }
 
       )
@@ -342,6 +341,12 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
 
   }
 
+}
+
+object SortElementsController {
+  val moveDownByPixel = 130
+
+  val textOffset = 50
 }
 
 
