@@ -116,6 +116,9 @@ class MainController(
     try {
       if (!result.equals("")) {
         val elementList: List[Int] = resultMap.map(_.toInt).toList
+        if (elementList.filter(number => (number > 99 || number <= 0)).size > 0) {
+          throw new IllegalArgumentException
+        }
         placeElementsOnPane(elementList)
       }
     } catch {
@@ -123,6 +126,12 @@ class MainController(
         title = "Input error"
         headerText = "Input error!"
         contentText = "Cannot convert this to a list of elements"
+      }.showAndWait
+        createCustomElements(Some(result))
+      case ex: IllegalArgumentException => new Alert(AlertType.Error) {
+        title = "Input error"
+        headerText = "Input error!"
+        contentText = "Numbers must be between 1 and 99"
       }.showAndWait
         createCustomElements(Some(result))
     }
