@@ -61,7 +61,6 @@ class MainController(
 
   runButton.defaultButton <== !generateButton.defaultButton
   playPauseMenu.text <==> playPauseButton.text
-  //pane.minWidth <== pane.getScene.getWindow.width
 
 
   def toggleActionBar(): Unit = {
@@ -186,6 +185,7 @@ class MainController(
       elementGroup.children.add(sortElement)
     }
 
+    pane.minWidth <== pane.getScene.getWindow.width - 35
     pane.setPrefWidth(elementGroup.getBoundsInParent.getWidth * 2)
     elementGroup.translateX <== pane.width/2 - elementGroup.getBoundsInParent.getWidth/2
 

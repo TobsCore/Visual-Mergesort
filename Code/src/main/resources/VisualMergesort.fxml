@@ -149,7 +149,7 @@
                 <ScrollPane id="scrollPaneID" fx:id="scrollPane" prefHeight="492.0" prefWidth="800.0"
                             BorderPane.alignment="CENTER">
                     <content>
-                        <Pane fx:id="pane" prefHeight="1000" prefWidth="797.0">
+                        <Pane fx:id="pane" prefHeight="100" prefWidth="797.0">
 
                         </Pane>
                     </content>
