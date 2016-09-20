@@ -17,7 +17,7 @@ import scalafx.scene.layout.Pane
 import scalafx.scene.paint.Color
 
 /**
-  * Created by Patrick König on 08.09.16.
+  * Created by Patrick König & Tobias Kerst on 08.09.16.
   */
 class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initialGroup: Group, val amountOfThreads: Int) {
   def getSequences(): List[SequentialTransition] = {
@@ -44,13 +44,13 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
   val groupSeq = new SequentialTransition()
   var consoleText: String = ""
   var hackedValue = 0
-  var autoScrollActivated = true
+  val autoScrollActivated = amountOfThreads == 1
   var finalGroups: Array[Group] = new Array[Group](2)
 
   def calculatedXPosition(index: Int, group: Group): NumberBinding = {
     amountOfThreads match {
-      case 1 => autoScrollActivated = true; initialGroup.translateX + 0
-      case 2 => autoScrollActivated = false;{
+      case 1 => initialGroup.translateX + 0
+      case 2 => {
         index match {
           case 0 => group.children.toList.asInstanceOf[List[SortElement]].foreach(_.changeColor(Color.DarkGreen));initialGroup.translateX - group.getBoundsInParent.getWidth / 2 + SortElement.width / 2
           case 1 => group.children.toList.asInstanceOf[List[SortElement]].foreach(_.changeColor(Color.DarkRed));initialGroup.translateX + initialGroup.getBoundsInParent.getWidth / 2 - group.getBoundsInParent.getWidth / 2 - SortElement.width / 2
@@ -67,6 +67,19 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
       opacity = 1.0
     }
 
+    consoleText += s"Create Thread $index with elements $list \n"
+    val timeline = new Timeline {
+      autoReverse = false
+        keyFrames = Seq(
+          at (0.05.s) {
+            consoleLog.text -> consoleText
+          },
+          at (0.1.s) {
+            consoleLog.scrollTop -> Double.MaxValue
+          }
+      )
+    }
+    addToSequence(index, timeline)
     group.translateX <== calculatedXPosition(index, group)
     group.translateY() = initialGroup.translateY() + moveDownByPixel
     pane.children.add(group)
@@ -96,14 +109,18 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
         }
       )
     }
-    if (threadNumber == 0) seq1.children.add(timeline)
-    else seq2.children.add(timeline)
+    addToSequence(threadNumber, timeline)
 
     timeline
-
   }
 
-  def createMergeGroup( mergeList: List[SortElement], depth: Int): Group = {
+  def addToSequence(threadNumber: Int, timeline: Timeline): Boolean = {
+    if (threadNumber == 0) seq1.children.add(timeline)
+    else if (threadNumber == 1 )seq2.children.add(timeline)
+    else groupSeq.children.add(timeline)
+  }
+
+  def createMergeGroup(mergeList: List[SortElement], depth: Int): Group = {
     val group = new Group() {
       opacity = 0.0
       children.addAll(mergeList.asJava)
@@ -211,9 +228,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
       )
     }
 
-    if (threadNumber == 0) seq1.children.add(timeline)
-    else if (threadNumber == 1) seq2.children.add(timeline)
-    else groupSeq.children.add(timeline)
+    addToSequence(threadNumber, timeline)
     var i = 0
     var j = 0
 
@@ -288,10 +303,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
 
       )
     }
-    if (threadNumber == 0) seq1.children.add(timeline)
-    else if (threadNumber == 1) seq2.children.add(timeline)
-    else groupSeq.children.add(timeline)
-
+    addToSequence(threadNumber, timeline)
   }
 
   def showGroup(group: Group, threadNumber: Int) = {

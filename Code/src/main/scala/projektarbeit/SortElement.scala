@@ -7,7 +7,7 @@ import scalafx.scene.shape.Rectangle
 import scalafx.scene.text.Text
 
 /**
-  * Created by Patrick König on 06.09.16.
+  * Created by Patrick König & Tobias Kerst on 06.09.16.
   */
 class SortElement(val number: Int, var _xPos: Double, var _yPos: Double) extends Group with Ordered[SortElement]  {
   require(number >= 1 && number <= 99 , "the number must be between 1 and 99 (inclusive)")

@@ -23,7 +23,7 @@ import scalafxml.core.macros.sfxml
 import scalafxml.core.{FXMLView, NoDependencyResolver}
 
 /**
-  * Created by only Patrick König on 19.08.16.
+  * Created by Patrick König & Tobias Kerst on 19.08.16.
   */
 @sfxml
 class MainController(
