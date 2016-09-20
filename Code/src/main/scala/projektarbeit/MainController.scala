@@ -61,6 +61,7 @@ class MainController(
 
   runButton.defaultButton <== !generateButton.defaultButton
   playPauseMenu.text <==> playPauseButton.text
+  playPauseMenu.disable <==> playPauseButton.disable
 
 
   def toggleActionBar(): Unit = {
@@ -227,10 +228,9 @@ class MainController(
   }
 
   def runSorting(): Unit = {
-    runButton.disable = true
+    runButton.disable() = true
     isPlaying() = true
-    playPauseMenu.disable = false
-    playPauseButton.disable = false
+    playPauseButton.disable() = false
     val elementGroup: javafx.scene.Group = pane.children.get(0).asInstanceOf[javafx.scene.Group]
     val amountOfThreads = amountOfThreadsLabel.text().toInt
 
@@ -252,7 +252,6 @@ class MainController(
         }
         sorter.playFinalMerge()
         cleanEverythingUp
-
     }
 
   }
@@ -260,17 +259,18 @@ class MainController(
   def cleanEverythingUp: Unit = {
     isPlaying() = false
     playPauseButton.text = "Pause"
-    playPauseButton.disable = true
-    playPauseMenu.disable = true
+    playPauseButton.disable() = true
   }
 
   def playPauseSequence(): Unit = {
     if (this.isPlaying()) {
       transition.foreach(_.pause)
       playPauseButton.text = "Play"
+      playPauseButton.disable() = false
     } else {
       transition.foreach(_.play)
       playPauseButton.text = "Pause"
+      playPauseButton.disable() = false
     }
 
     this.isPlaying() = !this.isPlaying()
