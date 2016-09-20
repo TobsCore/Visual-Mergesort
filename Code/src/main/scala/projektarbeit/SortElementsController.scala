@@ -100,7 +100,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
 
       val left = createGroup(parentGroup, splitList, Left, depth)
       pane.children.add(left)
-      scroll(left, depth)
+      scroll(left, depth, threadNumber)
       val timelineLeft = relocateElementGroup(left, depth, threadNumber)
       consoleText += s"SPLIT $elements - ${elements.size} elements\n"
       timelineLeft.keyFrames.add(at(0.1.s) {
@@ -114,7 +114,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
 
       val right = createGroup(parentGroup, splitList, Right, depth)
       pane.children.add(right)
-      scroll(right, depth)
+      scroll(right, depth, threadNumber)
       val timelineRight = relocateElementGroup(right, depth, threadNumber)
       timelineRight.keyFrames.add(at(0.1.s) {
         consoleLog.text -> consoleText
@@ -199,7 +199,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
     pane.children.add(group)
     showGroup(group, threadNumber)
     val realdepth: Int = maxDepth.toInt - depth
-    scroll(group, realdepth)
+    scroll(group, realdepth, threadNumber)
     for ((element, i) <- resultListDuplicate.zipWithIndex) {
       element.opacity() = 0
       relocateElement(element, i, depth, threadNumber)
@@ -249,7 +249,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
 
     if (threadNumber == 0) seq1.children.add(timeline)
     else if (threadNumber == 1) seq2.children.add(timeline)
-    else groupSeq.children.add(timeline)
+    else {println("Adds transition to last group"); groupSeq.children.add(timeline)}
   }
 
 
@@ -288,9 +288,8 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
   }
 
 
-  def scroll(group: Group, depth: Int) = {
+  def scroll(group: Group, depth: Int, threadNumber: Int) = {
 
-    if (autoScrollActivated) {
       val factor = 1.0 / maxDepth
       val timeline = new Timeline {
         autoReverse = false
@@ -301,8 +300,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
         )
       }
 
-      seq1.children.add(timeline)
-    }
+    addToSequence(threadNumber, timeline)
   }
 
   def relocateElement(element: SortElement, i: Int, depth: Int, threadNumber: Int) = {
