@@ -235,7 +235,6 @@ class MainController(
     val amountOfThreads = amountOfThreadsLabel.text().toInt
 
     val sorter = new SortElementsController(pane, consoleLog, elementGroup, amountOfThreads)
-    sorter.maxDepth = Math.ceil(Math.log(elementGroup.children.size) / Math.log(2)) * 2 + 1
     sorter.run()
 
     transition = sorter.sequences

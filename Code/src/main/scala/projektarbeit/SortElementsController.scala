@@ -19,10 +19,10 @@ import scalafx.scene.text.Text
   */
 class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initialGroup: Group, val amountOfThreads: Int) {
 
-  var maxDepth: Double = _
 
   val initialGroupElements: List[SortElement] = initialGroup.children.toList.asInstanceOf[List[SortElement]]
   val amountOfElementsPerThread: Int = Math.ceil(initialGroupElements.size / amountOfThreads.toDouble).toInt
+  val maxDepth = Math.ceil(Math.log(initialGroupElements.size) / Math.log(2)) * 2 + 1
   val seq1 = new SequentialTransition()
   val seq2 = new SequentialTransition()
   val groupSeq = new SequentialTransition()
@@ -294,7 +294,8 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
         autoReverse = false
         keyFrames = Seq(
           at(0.5.s) {
-            group.getScene.lookup("#scrollPaneID").asInstanceOf[ScrollPane].vvalue -> (factor * (depth + 1))
+            group.getScene.lookup("#scrollPaneID").asInstanceOf[ScrollPane].vvalue -> (factor * (depth + 1) +
+              (SortElementsController.textOffset / pane.getHeight))
           }
         )
       }
