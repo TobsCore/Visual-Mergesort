@@ -7,40 +7,49 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?import java.net.URL?>
-<VBox minHeight="600" minWidth="600" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projektarbeit.MainController">
+<VBox minHeight="600" minWidth="600" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="projektarbeit.MainController">
     <children>
         <MenuBar useSystemMenuBar="true" VBox.vgrow="NEVER">
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem disable="true" mnemonicParsing="false" text="Import" />
-                        <MenuItem disable="true" mnemonicParsing="false" text="Export" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem disable="true" mnemonicParsing="false" text="Import"/>
+                        <MenuItem disable="true" mnemonicParsing="false" text="Export"/>
+                        <SeparatorMenuItem mnemonicParsing="false"/>
                         <Menu mnemonicParsing="false" text="Generate Random Data">
                             <items>
-                                <MenuItem mnemonicParsing="false" onAction="#generateRandomNumbers" text="Randomly Shuffled">
+                                <MenuItem mnemonicParsing="false" onAction="#generateRandomNumbers"
+                                          text="Randomly Shuffled">
                                     <accelerator>
-                                        <KeyCodeCombination alt="UP" code="B" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                                        <KeyCodeCombination alt="UP" code="B" control="UP" meta="UP" shift="UP"
+                                                            shortcut="DOWN"/>
                                     </accelerator>
                                 </MenuItem>
-                                <MenuItem mnemonicParsing="false" onAction="#generateOrderedNumbers" text="Sorted Numbers">
+                                <MenuItem mnemonicParsing="false" onAction="#generateOrderedNumbers"
+                                          text="Sorted Numbers">
                                     <accelerator>
-                                        <KeyCodeCombination alt="UP" code="O" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                                        <KeyCodeCombination alt="UP" code="O" control="UP" meta="UP" shift="UP"
+                                                            shortcut="DOWN"/>
                                     </accelerator>
                                 </MenuItem>
-                                <MenuItem mnemonicParsing="false" onAction="#generateInverseNumbers" text="Reverse Sorted Numbers">
+                                <MenuItem mnemonicParsing="false" onAction="#generateInverseNumbers"
+                                          text="Reverse Sorted Numbers">
                                     <accelerator>
-                                        <KeyCodeCombination alt="UP" code="I" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                                        <KeyCodeCombination alt="UP" code="I" control="UP" meta="UP" shift="UP"
+                                                            shortcut="DOWN"/>
                                     </accelerator>
                                 </MenuItem>
                             </items>
                         </Menu>
-                        <MenuItem mnemonicParsing="false" onAction="#createCustomElements" text="Create Custom Elements">
+                        <MenuItem mnemonicParsing="false" onAction="#createCustomElements"
+                                  text="Create Custom Elements">
                             <accelerator>
-                                <KeyCodeCombination alt="UP" code="U" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                                <KeyCodeCombination alt="UP" code="U" control="UP" meta="UP" shift="UP"
+                                                    shortcut="DOWN"/>
                             </accelerator>
                         </MenuItem>
-                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <SeparatorMenuItem mnemonicParsing="false"/>
                         <MenuItem mnemonicParsing="false" text="Quit">
                         </MenuItem>
                     </items>
@@ -49,19 +58,24 @@
                     <items>
                         <MenuItem disable="true" mnemonicParsing="false" text="Show Statistic">
                             <accelerator>
-                                <KeyCodeCombination alt="UP" code="H" control="UP" meta="UP" shift="DOWN" shortcut="DOWN" />
+                                <KeyCodeCombination alt="UP" code="H" control="UP" meta="UP" shift="DOWN"
+                                                    shortcut="DOWN"/>
                             </accelerator>
                         </MenuItem>
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem disable="false" mnemonicParsing="false" onAction="#toggleLogging" text="Toggle Log Console">
+                        <SeparatorMenuItem mnemonicParsing="false"/>
+                        <MenuItem disable="false" mnemonicParsing="false" onAction="#toggleLogging"
+                                  text="Toggle Log Console">
                             <accelerator>
-                                <KeyCodeCombination alt="UP" code="L" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                                <KeyCodeCombination alt="UP" code="L" control="UP" meta="UP" shift="UP"
+                                                    shortcut="DOWN"/>
                             </accelerator>
                         </MenuItem>
 
-                        <MenuItem disable="false" mnemonicParsing="false" onAction="#toggleActionBar" text="Toggle Action Bar">
+                        <MenuItem disable="false" mnemonicParsing="false" onAction="#toggleActionBar"
+                                  text="Toggle Action Bar">
                             <accelerator>
-                                <KeyCodeCombination alt="UP" code="K" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                                <KeyCodeCombination alt="UP" code="K" control="UP" meta="UP" shift="UP"
+                                                    shortcut="DOWN"/>
                             </accelerator>
                         </MenuItem>
                     </items>
@@ -70,56 +84,78 @@
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#runSorting" text="Start Algorithm">
                             <accelerator>
-                                <KeyCodeCombination alt="UP" code="R" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                                <KeyCodeCombination alt="UP" code="R" control="UP" meta="UP" shift="UP"
+                                                    shortcut="DOWN"/>
                             </accelerator>
                         </MenuItem>
-                        <MenuItem fx:id="playPauseMenu" disable="true" mnemonicParsing="false" onAction="#playPauseSequence" text="Pause">
+                        <MenuItem fx:id="playPauseMenu" disable="true" mnemonicParsing="false"
+                                  onAction="#playPauseSequence" text="Pause">
                             <accelerator>
-                                <KeyCodeCombination alt="UP" code="P" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                                <KeyCodeCombination alt="UP" code="P" control="UP" meta="UP" shift="UP"
+                                                    shortcut="DOWN"/>
                             </accelerator>
                         </MenuItem>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#openAboutDialog" text="About" />
-                        <MenuItem disable="true" mnemonicParsing="false" text="Help" />
+                        <MenuItem mnemonicParsing="false" onAction="#openAboutDialog" text="About"/>
+                        <MenuItem disable="true" mnemonicParsing="false" text="Help"/>
                     </items>
                 </Menu>
             </menus>
         </MenuBar>
         <BorderPane fx:id="borderPane" prefHeight="1000.0" prefWidth="800.0">
             <top>
-                <AnchorPane id="autoscroll" fx:id="actionBar" prefHeight="106.0" prefWidth="453.0" BorderPane.alignment="CENTER">
+                <AnchorPane id="autoscroll" fx:id="actionBar" prefHeight="106.0" prefWidth="453.0"
+                            BorderPane.alignment="CENTER">
                     <children>
-                        <Slider fx:id="amountOfElementsSlider" blockIncrement="1.0" layoutX="326.0" layoutY="18.0" majorTickUnit="9.33" max="32.0" min="4.0" prefHeight="26.0" prefWidth="248.0" showTickMarks="true" snapToTicks="false" value="16.0" AnchorPane.rightAnchor="70.0" />
+                        <Slider fx:id="amountOfElementsSlider" blockIncrement="1.0" layoutX="326.0" layoutY="18.0"
+                                majorTickUnit="9.33" max="32.0" min="4.0" prefHeight="26.0" prefWidth="248.0"
+                                showTickMarks="true" snapToTicks="false" value="16.0" AnchorPane.rightAnchor="70.0"/>
                         <Label layoutX="413.0" layoutY="17.0" text="Elements" AnchorPane.rightAnchor="315.0">
                             <padding>
-                                <Insets right="15.0" />
+                                <Insets right="15.0"/>
                             </padding>
                         </Label>
-                        <Slider fx:id="amountOfThreadsSlider" blockIncrement="1.0" layoutX="313.0" layoutY="53.0" majorTickUnit="1.0" max="2.0" min="1.0" minorTickCount="0" prefHeight="38.0" prefWidth="246.0" showTickMarks="true" snapToTicks="true" value="1.0" AnchorPane.rightAnchor="70.0" />
+                        <Slider fx:id="amountOfThreadsSlider" blockIncrement="1.0" layoutX="313.0" layoutY="53.0"
+                                majorTickUnit="1.0" max="2.0" min="1.0" minorTickCount="0" prefHeight="38.0"
+                                prefWidth="246.0" showTickMarks="true" snapToTicks="true" value="1.0"
+                                AnchorPane.rightAnchor="70.0"/>
                         <Label layoutX="419.0" layoutY="58.0" text="Threads" AnchorPane.rightAnchor="315.0">
                             <padding>
-                                <Insets right="15.0" />
+                                <Insets right="15.0"/>
                             </padding>
                         </Label>
-                        <Text fx:id="amountOfElementsLabel" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="16" textAlignment="RIGHT" wrappingWidth="40.71502685546875" AnchorPane.rightAnchor="35.0" />
-                        <Text fx:id="amountOfThreadsLabel" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="RIGHT" textOrigin="TOP" wrappingWidth="40.715087890625" AnchorPane.rightAnchor="35.0" />
-                        <Button fx:id="generateButton" defaultButton="true" layoutX="48.0" layoutY="18.0" mnemonicParsing="false" onAction="#generateRandomNumbers" text="Generate" AnchorPane.leftAnchor="45.0" />
-                        <Button fx:id="runButton" disable="true" layoutX="161.0" layoutY="18.0" mnemonicParsing="false" onAction="#runSorting" text="Run" AnchorPane.leftAnchor="160.0" />
-                        <Button fx:id="playPauseButton" disable="true" layoutX="161.0" layoutY="58.0" mnemonicParsing="false" onAction="#playPauseSequence" text="Pause" AnchorPane.leftAnchor="160.0" />
-                        <Label fx:id="playbackSpeedLabel" alignment="TOP_CENTER" layoutX="56.0" layoutY="87.0" prefHeight="11.0" prefWidth="60.0" text="1.00" AnchorPane.leftAnchor="53.0">
+                        <Text fx:id="amountOfElementsLabel" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="16" textAlignment="RIGHT" wrappingWidth="40.71502685546875"
+                              AnchorPane.rightAnchor="35.0"/>
+                        <Text fx:id="amountOfThreadsLabel" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="1" textAlignment="RIGHT" textOrigin="TOP" wrappingWidth="40.715087890625"
+                              AnchorPane.rightAnchor="35.0"/>
+                        <Button fx:id="generateButton" defaultButton="true" layoutX="48.0" layoutY="18.0"
+                                mnemonicParsing="false" onAction="#generateRandomNumbers" text="Generate"
+                                AnchorPane.leftAnchor="45.0"/>
+                        <Button fx:id="runButton" disable="true" layoutX="161.0" layoutY="18.0" mnemonicParsing="false"
+                                onAction="#runSorting" text="Run" AnchorPane.leftAnchor="160.0"/>
+                        <Button fx:id="playPauseButton" disable="true" layoutX="161.0" layoutY="58.0"
+                                mnemonicParsing="false" onAction="#playPauseSequence" text="Pause"
+                                AnchorPane.leftAnchor="160.0"/>
+                        <Label fx:id="playbackSpeedLabel" alignment="TOP_CENTER" layoutX="56.0" layoutY="87.0"
+                               prefHeight="11.0" prefWidth="60.0" text="1.00" AnchorPane.leftAnchor="53.0">
                             <font>
-                                <Font size="9.0" />
+                                <Font size="9.0"/>
                             </font>
                         </Label>
-                        <Slider fx:id="playbackSpeed" blockIncrement="1.0" layoutX="36.0" layoutY="53.0" majorTickUnit="1.0" max="4.0" min="-3.0" minorTickCount="0" prefHeight="38.0" prefWidth="100.0" showTickMarks="true" value="0.0" AnchorPane.leftAnchor="33.0" />
+                        <Slider fx:id="playbackSpeed" blockIncrement="1.0" layoutX="36.0" layoutY="53.0"
+                                majorTickUnit="1.0" max="4.0" min="-3.0" minorTickCount="0" prefHeight="38.0"
+                                prefWidth="100.0" showTickMarks="true" value="0.0" AnchorPane.leftAnchor="33.0"/>
                     </children>
                 </AnchorPane>
             </top>
             <center>
-                <ScrollPane id="scrollPaneID" fx:id="scrollPane" prefHeight="492.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+                <ScrollPane id="scrollPaneID" fx:id="scrollPane" prefHeight="492.0" prefWidth="800.0"
+                            BorderPane.alignment="CENTER">
                     <content>
                         <Pane fx:id="pane" prefHeight="1000" prefWidth="797.0">
 
@@ -127,16 +163,17 @@
                     </content>
                 </ScrollPane>
             </center>
-         <bottom>
-            <TextArea fx:id="consoleLog" editable="false" focusTraversable="false" prefHeight="118.0" prefWidth="800.0" BorderPane.alignment="CENTER">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </TextArea>
-         </bottom>
+            <bottom>
+                <TextArea fx:id="consoleLog" editable="false" focusTraversable="false" prefHeight="118.0"
+                          prefWidth="800.0" BorderPane.alignment="CENTER">
+                    <font>
+                        <Font size="10.0"/>
+                    </font>
+                </TextArea>
+            </bottom>
         </BorderPane>
     </children>
     <stylesheets>
-        <URL value="@style.css" />
+        <URL value="@style.css"/>
     </stylesheets>
 </VBox>

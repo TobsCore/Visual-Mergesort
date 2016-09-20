@@ -67,6 +67,7 @@ class MainController(
       borderPane.top() = actionBar
     }
   }
+
   def toggleLogging(): Unit = {
     if (borderPane.bottom() != null) {
       borderPane.bottom() = null
@@ -161,7 +162,7 @@ class MainController(
       elementGroup.children.add(sortElement)
     }
 
-    elementGroup.translateX <== scrollPane.getScene.getWindow.width/2 - elementGroup.getBoundsInParent.getWidth/2
+    elementGroup.translateX <== scrollPane.getScene.getWindow.width / 2 - elementGroup.getBoundsInParent.getWidth / 2
 
     elementGroup.id = "level-0"
 
@@ -201,7 +202,7 @@ class MainController(
     }
   }
 
-  def runSorting():Unit = {
+  def runSorting(): Unit = {
     runButton.disable = true
     isPlaying() = true
     playPauseMenu.disable = false
@@ -222,8 +223,8 @@ class MainController(
 
     transition(1).onFinished = {
       event: ActionEvent =>
-        if(amountOfThreads > 1){
-        sorter.merge(sorter.finalGroups(0), sorter.finalGroups(1), (sorter.maxDepth - 1).toInt, 3)
+        if (amountOfThreads > 1) {
+          sorter.merge(sorter.finalGroups(0), sorter.finalGroups(1), (sorter.maxDepth - 1).toInt, 3)
         }
         sorter.playFinalMerge()
         cleanEverythingUp
@@ -255,9 +256,14 @@ class MainController(
 
 
 object ElementOrder {
+
   sealed trait EnumVal
+
   case object Random extends EnumVal
+
   case object Ordered extends EnumVal
+
   case object Inverse extends EnumVal
+
   val elementOrder = Seq(Random, Ordered, Inverse)
 }

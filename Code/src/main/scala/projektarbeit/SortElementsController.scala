@@ -17,18 +17,6 @@ import scalafx.scene.paint.Color
   * Created by Patrick König & Tobias Kerst on 08.09.16.
   */
 class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initialGroup: Group, val amountOfThreads: Int) {
-  def getSequences(): List[SequentialTransition] = {
-    List(seq1, seq2, groupSeq)
-  }
-
-  def play(): Unit = {
-    seq1.play()
-    seq2.play()
-  }
-
-  def playFinalMerge(): Unit = {
-    groupSeq.play()
-  }
 
 
   private val moveDownByPixel = 130
@@ -44,20 +32,20 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
   val autoScrollActivated = amountOfThreads == 1
   var finalGroups: Array[Group] = new Array[Group](2)
 
-  def calculatedXPosition(index: Int, group: Group): NumberBinding = {
-    amountOfThreads match {
-      case 1 => initialGroup.translateX + 0
-      case 2 => {
-        index match {
-          case 0 => group.children.toList.asInstanceOf[List[SortElement]].foreach(_.changeColor(Color.DarkGreen));initialGroup.translateX - group.getBoundsInParent.getWidth / 2 + SortElement.width / 2
-          case 1 => group.children.toList.asInstanceOf[List[SortElement]].foreach(_.changeColor(Color.DarkRed));initialGroup.translateX + initialGroup.getBoundsInParent.getWidth / 2 - group.getBoundsInParent.getWidth / 2 - SortElement.width / 2
-        }
-      }
-      case number => throw new IllegalArgumentException(s"Cannot run on more than 2 Threads! You tried to run it on $number threads")
+  def run(): Unit = {
+    val threadElements = initialGroupElements.grouped(amountOfElementsPerThread)
+    for ((list, index) <- threadElements.zipWithIndex) {
+      finalGroups(index) = createThread(index, list.map(_.duplicate))
     }
   }
 
+  def play(): Unit = {
+    seq1.play()
+    seq2.play()
+  }
+
   def createThread(index: Int, list: List[SortElement]): Group = {
+
     val group = new Group() {
       children.addAll(list.asJava)
       id = s"thread-${index}"
@@ -67,13 +55,13 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
     consoleText += s"Create Thread $index with elements $list \n"
     val timeline = new Timeline {
       autoReverse = false
-        keyFrames = Seq(
-          at (0.05.s) {
-            consoleLog.text -> consoleText
-          },
-          at (0.1.s) {
-            consoleLog.scrollTop -> Double.MaxValue
-          }
+      keyFrames = Seq(
+        at(0.05.s) {
+          consoleLog.text -> consoleText
+        },
+        at(0.1.s) {
+          consoleLog.scrollTop -> Double.MaxValue
+        }
       )
     }
     addToSequence(index, timeline)
@@ -83,92 +71,8 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
     sort(group, 0, index)
   }
 
-  def run(): Unit = {
-    val threadElements = initialGroupElements.grouped(amountOfElementsPerThread)
-    for ((list, index) <- threadElements.zipWithIndex) {
-      finalGroups(index) = createThread(index, list.map(_.duplicate))
-    }
-  }
-
-  def relocateElementGroup(group: Group, depth: Int, threadNumber: Int): Timeline = {
-    //val factor = 1.0/(maxDepth)
-    val consoleTextLength: Int = consoleText.length
-    val timeline = new Timeline {
-      autoReverse = false
-      keyFrames = Seq(
-        /*at (0.15.s) {
-          group.getScene.lookup("#scrollPaneID").asInstanceOf[ScrollPane].vvalue -> (factor * (if(depth == 0){depth} else {depth + 1}))
-        },*/
-        at (0.2.s) {
-          group.opacity -> 1.0 },
-        at(1.s) {
-          group.translateY -> (group.translateY() + moveDownByPixel)
-        }
-      )
-    }
-    addToSequence(threadNumber, timeline)
-
-    timeline
-  }
-
-  def addToSequence(threadNumber: Int, timeline: Timeline): Boolean = {
-    if (threadNumber == 0) seq1.children.add(timeline)
-    else if (threadNumber == 1 )seq2.children.add(timeline)
-    else groupSeq.children.add(timeline)
-  }
-
-  def createMergeGroup(mergeList: List[SortElement], depth: Int): Group = {
-    val group = new Group() {
-      opacity = 0.0
-      children.addAll(mergeList.asJava)
-      id = s"level-${depth + 1}"
-    }
-    group
-  }
-
-  def createGroup(parentGroup: Group, splitList: (List[SortElement], List[SortElement]), part: EnumVal, depth: Int): Group = {
-
-    val duplicateList = (part match {
-      case Part.Left => splitList._1
-      case Part.Right => splitList._2
-      case _ => throw new IllegalArgumentException(s"$part is not a valid argument")
-    }).map(_.duplicate())
-
-    val group = new Group() {
-        opacity = 0.0
-        children.addAll(duplicateList.asJava)
-        translateY = parentGroup.translateY() + (if (depth > 0) moveDownByPixel else 0)
-        id = s"level-${depth + 1}"
-      }
-      part match {
-        case Part.Left =>
-          group.translateX <== parentGroup.translateX - group.getBoundsInParent.getWidth / 2 + SortElement.width / 2
-        case Part.Right =>
-          group.translateX <== parentGroup.translateX + parentGroup.getBoundsInParent.getWidth / 2 - group.getBoundsInParent.getWidth/2 - SortElement.width/2
-
-      }
-    group
-  }
-
-
-  def scroll(group: Group, depth: Int) = {
-    if(autoScrollActivated) {
-      val factor = 1.0 / (maxDepth)
-      val timeline = new Timeline {
-        autoReverse = false
-        keyFrames = Seq(
-          at(0.5.s) {
-            group.getScene.lookup("#scrollPaneID").asInstanceOf[ScrollPane].vvalue -> (factor * (depth + 1))
-          }
-        )
-      }
-
-      seq1.children.add(timeline)
-    }
-
-  }
-
   def sort(parentGroup: Group, depth: Int, threadNumber: Int): Group = {
+
     val elements: List[SortElement] = parentGroup.children.toList.asInstanceOf[List[SortElement]]
     if (elements.size > 1) {
 
@@ -180,8 +84,12 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
       scroll(left, depth)
       val timelineLeft = relocateElementGroup(left, depth, threadNumber)
       consoleText += s"SPLIT $elements - ${elements.size} elements\n"
-      timelineLeft.keyFrames.add(at(0.1.s) {consoleLog.text -> consoleText})
-      timelineLeft.keyFrames.add(at(0.12.s) {consoleLog.scrollTop -> Double.MaxValue})
+      timelineLeft.keyFrames.add(at(0.1.s) {
+        consoleLog.text -> consoleText
+      })
+      timelineLeft.keyFrames.add(at(0.12.s) {
+        consoleLog.scrollTop -> Double.MaxValue
+      })
       val sortedLeft = sort(left, depth + 1, threadNumber)
 
 
@@ -189,7 +97,9 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
       pane.children.add(right)
       scroll(right, depth)
       val timelineRight = relocateElementGroup(right, depth, threadNumber)
-      timelineRight.keyFrames.add(at(0.1.s) {consoleLog.text -> consoleText})
+      timelineRight.keyFrames.add(at(0.1.s) {
+        consoleLog.text -> consoleText
+      })
       val sortedRight = sort(right, depth + 1, threadNumber)
 
       return merge(sortedLeft, sortedRight, depth + 1, threadNumber)
@@ -198,10 +108,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
     parentGroup
   }
 
-
-
   def merge(leftGroup: Group, rightGroup: Group, depth: Int, threadNumber: Int): Group = {
-
 
     val leftList: List[SortElement] = leftGroup.getChildren.toList.asInstanceOf[List[SortElement]]
     val rightList: List[SortElement] = rightGroup.children.toList.asInstanceOf[List[SortElement]]
@@ -216,10 +123,10 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
     val timeline = new Timeline {
       autoReverse = false
       keyFrames = Seq(
-        at (0.05.s) {
+        at(0.05.s) {
           consoleLog.text -> consoleText
         },
-        at (0.09.s) {
+        at(0.09.s) {
           consoleLog.scrollTop -> Double.MaxValue
         }
       )
@@ -229,24 +136,24 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
     var i = 0
     var j = 0
 
-   for (k <- 0 until totalSize) {
+    for (k <- 0 until totalSize) {
 
-     if(i < leftSize && j < rightSize) {
-       if(leftList(i) < rightList(j)) {
+      if (i < leftSize && j < rightSize) {
+        if (leftList(i) < rightList(j)) {
           resultList = resultList.updated(k, leftList(i))
-         i += 1
-       } else {
-         resultList = resultList.updated(k, rightList(j))
-         j += 1
-       }
-     } else if(i >= leftSize && j < rightSize){
-       resultList = resultList.updated(k, rightList(j))
-       j += 1
-     } else {
-       resultList = resultList.updated(k, leftList(i))
-       i += 1
-     }
-   }
+          i += 1
+        } else {
+          resultList = resultList.updated(k, rightList(j))
+          j += 1
+        }
+      } else if (i >= leftSize && j < rightSize) {
+        resultList = resultList.updated(k, rightList(j))
+        j += 1
+      } else {
+        resultList = resultList.updated(k, leftList(i))
+        i += 1
+      }
+    }
 
     val resultListDuplicate: List[SortElement] = resultList.map(_.duplicate())
     val group = createMergeGroup(resultListDuplicate, depth)
@@ -269,7 +176,6 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
       group.translateX <== newXPosition
     }
 
-    //group.translateX() = leftGroup.translateX()
     pane.children.add(group)
     showGroup(group, threadNumber)
     val realdepth: Int = maxDepth.toInt - depth
@@ -283,18 +189,123 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
     group
   }
 
+  def getSequences(): List[SequentialTransition] = {
+    List(seq1, seq2, groupSeq)
+  }
+
+  def playFinalMerge(): Unit = {
+    groupSeq.play()
+  }
+
+  def calculatedXPosition(index: Int, group: Group): NumberBinding = {
+    amountOfThreads match {
+      case 1 => initialGroup.translateX + 0
+      case 2 => {
+        index match {
+          case 0 => group.children.toList.asInstanceOf[List[SortElement]].foreach(_.changeColor(Color.DarkGreen)); initialGroup.translateX - group.getBoundsInParent.getWidth / 2 + SortElement.width / 2
+          case 1 => group.children.toList.asInstanceOf[List[SortElement]].foreach(_.changeColor(Color.DarkRed)); initialGroup.translateX + initialGroup.getBoundsInParent.getWidth / 2 - group.getBoundsInParent.getWidth / 2 - SortElement.width / 2
+        }
+      }
+      case number => throw new IllegalArgumentException(s"Cannot run on more than 2 Threads! You tried to run it on $number threads")
+    }
+  }
+
+  def relocateElementGroup(group: Group, depth: Int, threadNumber: Int): Timeline = {
+    //val factor = 1.0/(maxDepth)
+    val consoleTextLength: Int = consoleText.length
+    val timeline = new Timeline {
+      autoReverse = false
+      keyFrames = Seq(
+        /*at (0.15.s) {
+          group.getScene.lookup("#scrollPaneID").asInstanceOf[ScrollPane].vvalue -> (factor * (if(depth == 0){depth} else {depth + 1}))
+        },*/
+        at(0.2.s) {
+          group.opacity -> 1.0
+        },
+        at(1.s) {
+          group.translateY -> (group.translateY() + moveDownByPixel)
+        }
+      )
+    }
+    addToSequence(threadNumber, timeline)
+
+    timeline
+  }
+
+  def addToSequence(threadNumber: Int, timeline: Timeline): Boolean = {
+
+    if (threadNumber == 0) seq1.children.add(timeline)
+    else if (threadNumber == 1) seq2.children.add(timeline)
+    else groupSeq.children.add(timeline)
+  }
+
+
+  def createMergeGroup(mergeList: List[SortElement], depth: Int): Group = {
+
+    val group = new Group() {
+      opacity = 0.0
+      children.addAll(mergeList.asJava)
+      id = s"level-${depth + 1}"
+    }
+    group
+  }
+
+  def createGroup(parentGroup: Group, splitList: (List[SortElement], List[SortElement]), part: EnumVal, depth: Int): Group = {
+
+    val duplicateList = (part match {
+      case Part.Left => splitList._1
+      case Part.Right => splitList._2
+      case _ => throw new IllegalArgumentException(s"$part is not a valid argument")
+    }).map(_.duplicate())
+
+    val group = new Group() {
+      opacity = 0.0
+      children.addAll(duplicateList.asJava)
+      translateY = parentGroup.translateY() + (if (depth > 0) moveDownByPixel else 0)
+      id = s"level-${depth + 1}"
+    }
+    part match {
+      case Part.Left =>
+        group.translateX <== parentGroup.translateX - group.getBoundsInParent.getWidth / 2 + SortElement.width / 2
+      case Part.Right =>
+        group.translateX <== parentGroup.translateX + parentGroup.getBoundsInParent.getWidth / 2 - group.getBoundsInParent.getWidth / 2 - SortElement.width / 2
+
+    }
+    group
+  }
+
+
+  def scroll(group: Group, depth: Int) = {
+
+    if (autoScrollActivated) {
+      val factor = 1.0 / (maxDepth)
+      val timeline = new Timeline {
+        autoReverse = false
+        keyFrames = Seq(
+          at(0.5.s) {
+            group.getScene.lookup("#scrollPaneID").asInstanceOf[ScrollPane].vvalue -> (factor * (depth + 1))
+          }
+        )
+      }
+
+      seq1.children.add(timeline)
+    }
+
+  }
+
   def relocateElement(element: SortElement, i: Int, depth: Int, threadNumber: Int) = {
-    val factor = 1.0/(maxDepth)
+
+    val factor = 1.0 / (maxDepth)
     val timeline = new Timeline {
       autoReverse = false
       keyFrames = Seq(
         /*at (0.15.s) {
           element.getScene.lookup("#scrollPaneID").asInstanceOf[ScrollPane].vvalue -> (factor*(maxDepth-depth + 1))
         },*/
-        at (0.2.s) {
+        at(0.2.s) {
           element.opacityProperty -> 1.0
         },
-        at (1.0.s) {
+        at(1.0.s) {
           element.translateY -> (element.translateY() + moveDownByPixel)
         }
 
@@ -304,18 +315,20 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
   }
 
   def showGroup(group: Group, threadNumber: Int) = {
+
     val timeline = new Timeline {
       autoReverse = false
 
       keyFrames = Seq(
-        at (0.2.s) {
-          group.opacity -> 1.0 }
+        at(0.2.s) {
+          group.opacity -> 1.0
+        }
 
-        )
+      )
 
     }
     if (threadNumber == 0) seq1.children.add(timeline)
-    else if (threadNumber == 1 )seq2.children.add(timeline)
+    else if (threadNumber == 1) seq2.children.add(timeline)
     else groupSeq.children.add(timeline)
 
   }
@@ -324,8 +337,12 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
 
 
 object Part {
+
   sealed trait EnumVal
+
   case object Left extends EnumVal
+
   case object Right extends EnumVal
+
   val partitions = Seq(Left, Right)
 }

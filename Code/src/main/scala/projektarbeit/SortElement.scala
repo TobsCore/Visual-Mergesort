@@ -9,22 +9,25 @@ import scalafx.scene.text.Text
 /**
   * Created by Patrick König & Tobias Kerst on 06.09.16.
   */
-class SortElement(val number: Int, var _xPos: Double, var _yPos: Double) extends Group with Ordered[SortElement]  {
-  require(number >= 1 && number <= 99 , "the number must be between 1 and 99 (inclusive)")
+class SortElement(val number: Int, var _xPos: Double, var _yPos: Double) extends Group with Ordered[SortElement] {
+  require(number >= 1 && number <= 99, "the number must be between 1 and 99 (inclusive)")
 
 
   var text = new Text(number.toString)
   text.style = "-fx-font-size: 10px; -fx-background: #f00"
 
-  val offset = if (number < 10) { SortElement.smallNumberOffset } else { 0 }
+  val offset = if (number < 10) {
+    SortElement.smallNumberOffset
+  } else {
+    0
+  }
   text.translateX() = xPos + offset
   text.translateY() = _yPos + number + SortElement.width
 
   var color = Color.DARKBLUE
   var rectangle = new Rectangle(new javafx.scene.shape.Rectangle(_xPos, _yPos, SortElement.width, number))
   rectangle.setFill(color)
-  this.getChildren.addAll(rectangle,text)
-
+  this.getChildren.addAll(rectangle, text)
 
 
   def changeColor(color: Color): Unit = {
@@ -32,15 +35,15 @@ class SortElement(val number: Int, var _xPos: Double, var _yPos: Double) extends
     this.rectangle.setFill(color)
   }
 
-  def xPos_= (x: Double) {
+  def xPos_=(x: Double) {
     _xPos = x
     text.translateX = _xPos + offset
     rectangle.x = x
   }
 
- def yPos_= (y: Double) {
+  def yPos_=(y: Double) {
     _yPos = y
-   text.translateY = _yPos + number + SortElement.width
+    text.translateY = _yPos + number + SortElement.width
     rectangle.y = y
   }
 
@@ -81,7 +84,7 @@ class SortElement(val number: Int, var _xPos: Double, var _yPos: Double) extends
 
 }
 
-object SortElement{
+object SortElement {
   // To place small numbers (numbers < 10) centered under the rectangle, this offset is needed.
   val smallNumberOffset = 3
   // This is the rectangles width
