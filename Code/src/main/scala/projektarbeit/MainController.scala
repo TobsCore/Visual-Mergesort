@@ -267,12 +267,12 @@ class MainController(
       transition.foreach(_.pause)
       playPauseButton.text = "Play"
       playPauseButton.disable() = false
-      playbackSpeed.disable() = true
+      transition.foreach(_.rate.unbind())
     } else {
       transition.foreach(_.play)
       playPauseButton.text = "Pause"
       playPauseButton.disable() = false
-      playbackSpeed.disable() = false
+      transition.foreach(_.rate <== MathBindings.pow(2.0, playbackSpeed.value))
     }
 
     this.isPlaying() = !this.isPlaying()
