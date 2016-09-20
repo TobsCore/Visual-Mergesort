@@ -46,6 +46,15 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
 
   def createThread(index: Int, list: List[SortElement]): Group = {
 
+    if (amountOfThreads > 1) {
+      val color =
+      index match {
+        case 0 => Color.RoyalBlue
+        case 1 => Color.SlateBlue
+        case _ => throw new IllegalArgumentException(s"Index $index is not supported")
+      }
+      list.foreach(_.changeColor(color))
+    }
     val group = new Group() {
       children.addAll(list.asJava)
       id = s"thread-$index"
@@ -202,8 +211,8 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
     amountOfThreads match {
       case 1 => initialGroup.translateX + 0
       case 2 => index match {
-        case 0 => group.children.toList.asInstanceOf[List[SortElement]].foreach(_.changeColor(Color.DarkGreen)); initialGroup.translateX - group.getBoundsInParent.getWidth / 2 + SortElement.width / 2
-        case 1 => group.children.toList.asInstanceOf[List[SortElement]].foreach(_.changeColor(Color.DarkRed)); initialGroup.translateX + initialGroup.getBoundsInParent.getWidth / 2 - group.getBoundsInParent.getWidth / 2 - SortElement.width / 2
+        case 0 => initialGroup.translateX - group.getBoundsInParent.getWidth / 2 + SortElement.width / 2
+        case 1 => initialGroup.translateX + initialGroup.getBoundsInParent.getWidth / 2 - group.getBoundsInParent.getWidth / 2 - SortElement.width / 2
       }
       case number => throw new IllegalArgumentException(s"Cannot run on more than 2 Threads! You tried to run it on $number threads")
     }

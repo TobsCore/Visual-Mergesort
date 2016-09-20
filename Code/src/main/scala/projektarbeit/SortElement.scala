@@ -30,11 +30,6 @@ class SortElement(val number: Int, var _xPos: Double, var _yPos: Double) extends
   this.getChildren.addAll(rectangle, text)
 
 
-  def changeColor(color: Color): Unit = {
-    this.color = color
-    this.rectangle.setFill(color)
-  }
-
   def xPos_=(x: Double) {
     _xPos = x
     text.translateX = _xPos + offset
@@ -51,11 +46,16 @@ class SortElement(val number: Int, var _xPos: Double, var _yPos: Double) extends
 
   def yPos = _yPos
 
-
   def duplicate(): SortElement = {
     val duplicate = new SortElement(number, _xPos, _yPos)
     duplicate.changeColor(this.color)
     duplicate
+  }
+
+
+  def changeColor(color: Color): Unit = {
+    this.color = color
+    this.rectangle.setFill(color)
   }
 
   override def compare(that: SortElement): Int = {
