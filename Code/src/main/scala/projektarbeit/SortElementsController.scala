@@ -22,7 +22,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
 
   val initialGroupElements: List[SortElement] = initialGroup.children.toList.asInstanceOf[List[SortElement]]
   val amountOfElementsPerThread: Int = Math.ceil(initialGroupElements.size / amountOfThreads.toDouble).toInt
-  val maxDepth = Math.ceil(Math.log(initialGroupElements.size) / Math.log(2)) * 2 + 1
+  val maxDepth:Int = (Math.ceil(Math.log(initialGroupElements.size) / Math.log(2)) * 2).toInt + 1
   val seq1 = new SequentialTransition()
   val seq2 = new SequentialTransition()
   val groupSeq = new SequentialTransition()
@@ -99,7 +99,8 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
 
       val left = createGroup(parentGroup, splitList, Left, depth)
       pane.children.add(left)
-      scroll(left, depth, threadNumber)
+      val realDepth = if (amountOfThreads == 1) depth else depth + 1
+      scroll(left, realDepth, threadNumber)
       val timelineLeft = relocateElementGroup(left, depth, threadNumber)
       consoleText += s"SPLIT $elements - ${elements.size} elements\n"
       timelineLeft.keyFrames.add(at(0.1.s) {
@@ -113,7 +114,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
 
       val right = createGroup(parentGroup, splitList, Right, depth)
       pane.children.add(right)
-      scroll(right, depth, threadNumber)
+      scroll(right, realDepth, threadNumber)
       val timelineRight = relocateElementGroup(right, depth, threadNumber)
       timelineRight.keyFrames.add(at(0.1.s) {
         consoleLog.text -> consoleText
@@ -197,7 +198,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
 
     pane.children.add(group)
     showGroup(group, threadNumber)
-    val realdepth: Int = if(amountOfThreads == 1) maxDepth.toInt - depth else  maxDepth.toInt - depth - 1
+    val realdepth: Int = if(amountOfThreads == 1) maxDepth - depth else  maxDepth - depth - 1
     scroll(group, realdepth, threadNumber)
     for ((element, i) <- resultListDuplicate.zipWithIndex) {
       element.opacity() = 0

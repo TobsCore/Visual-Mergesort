@@ -244,7 +244,8 @@ class MainController(
 
 
 
-    transition(1).onFinished = {
+
+    transition(0).onFinished = {
       event: ActionEvent =>
         if (amountOfThreads > 1) {
           sorter.merge(sorter.finalGroups(0), sorter.finalGroups(1), 0, 3)
