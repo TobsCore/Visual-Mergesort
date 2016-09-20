@@ -22,6 +22,8 @@ object VisualMergesort extends JFXApp {
   stage = new PrimaryStage() {
     title = "Visual Mergesort"
     scene = new Scene(root)
+    minWidth = 800
+    minHeight = 600
   }
 
 }

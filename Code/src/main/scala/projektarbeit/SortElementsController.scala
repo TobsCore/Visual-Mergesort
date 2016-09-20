@@ -35,7 +35,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
   def run(): Unit = {
     val threadElements = initialGroupElements.grouped(amountOfElementsPerThread)
     for ((list, index) <- threadElements.zipWithIndex) {
-      finalGroups(index) = createThread(index, list.map(_.duplicate))
+      finalGroups(index) = createThread(index, list.map(_.duplicate()))
     }
   }
 
@@ -48,7 +48,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
 
     val group = new Group() {
       children.addAll(list.asJava)
-      id = s"thread-${index}"
+      id = s"thread-$index"
       opacity = 1.0
     }
 
@@ -59,7 +59,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
         at(0.05.s) {
           consoleLog.text -> consoleText
         },
-        at(0.1.s) {
+        at(0.09.s) {
           consoleLog.scrollTop -> Double.MaxValue
         }
       )
@@ -159,14 +159,15 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
     val group = createMergeGroup(resultListDuplicate, depth)
     group.translateY = newYValue
 
-    //TODO: In eigene methode auslagern
-    val rightestPosition = rightGroup.translateX + rightGroup.children.get(0).asInstanceOf[SortElement].xPos + rightGroup.getBoundsInParent.getWidth
-    val leftestPosition = leftGroup.translateX
-    val widthOfParentsGroups = rightestPosition - leftestPosition
-    val middleOfParentGroup = rightestPosition - widthOfParentsGroups / 2
-    val widthOfNewGroup = group.children.size * SortElement.wholeElementWidth - SortElement.offsetToNextElement
 
-    val newXPosition = middleOfParentGroup - widthOfNewGroup / 2
+    val newXPosition = {
+      val rightestPosition = rightGroup.translateX + rightGroup.children.get(0).asInstanceOf[SortElement].xPos + rightGroup.getBoundsInParent.getWidth
+      val leftestPosition = leftGroup.translateX
+      val widthOfParentsGroups = rightestPosition - leftestPosition
+      val middleOfParentGroup = rightestPosition - widthOfParentsGroups / 2
+      val widthOfNewGroup = group.children.size * SortElement.wholeElementWidth - SortElement.offsetToNextElement
+      middleOfParentGroup - widthOfNewGroup / 2
+    }
 
     if (resultList.size == 2) {
       val hackedValueBySuspicion: Int = 20
@@ -189,7 +190,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
     group
   }
 
-  def getSequences(): List[SequentialTransition] = {
+  def sequences: List[SequentialTransition] = {
     List(seq1, seq2, groupSeq)
   }
 
@@ -200,25 +201,18 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
   def calculatedXPosition(index: Int, group: Group): NumberBinding = {
     amountOfThreads match {
       case 1 => initialGroup.translateX + 0
-      case 2 => {
-        index match {
-          case 0 => group.children.toList.asInstanceOf[List[SortElement]].foreach(_.changeColor(Color.DarkGreen)); initialGroup.translateX - group.getBoundsInParent.getWidth / 2 + SortElement.width / 2
-          case 1 => group.children.toList.asInstanceOf[List[SortElement]].foreach(_.changeColor(Color.DarkRed)); initialGroup.translateX + initialGroup.getBoundsInParent.getWidth / 2 - group.getBoundsInParent.getWidth / 2 - SortElement.width / 2
-        }
+      case 2 => index match {
+        case 0 => group.children.toList.asInstanceOf[List[SortElement]].foreach(_.changeColor(Color.DarkGreen)); initialGroup.translateX - group.getBoundsInParent.getWidth / 2 + SortElement.width / 2
+        case 1 => group.children.toList.asInstanceOf[List[SortElement]].foreach(_.changeColor(Color.DarkRed)); initialGroup.translateX + initialGroup.getBoundsInParent.getWidth / 2 - group.getBoundsInParent.getWidth / 2 - SortElement.width / 2
       }
       case number => throw new IllegalArgumentException(s"Cannot run on more than 2 Threads! You tried to run it on $number threads")
     }
   }
 
   def relocateElementGroup(group: Group, depth: Int, threadNumber: Int): Timeline = {
-    //val factor = 1.0/(maxDepth)
-    val consoleTextLength: Int = consoleText.length
     val timeline = new Timeline {
       autoReverse = false
       keyFrames = Seq(
-        /*at (0.15.s) {
-          group.getScene.lookup("#scrollPaneID").asInstanceOf[ScrollPane].vvalue -> (factor * (if(depth == 0){depth} else {depth + 1}))
-        },*/
         at(0.2.s) {
           group.opacity -> 1.0
         },
@@ -278,7 +272,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
   def scroll(group: Group, depth: Int) = {
 
     if (autoScrollActivated) {
-      val factor = 1.0 / (maxDepth)
+      val factor = 1.0 / maxDepth
       val timeline = new Timeline {
         autoReverse = false
         keyFrames = Seq(
@@ -290,12 +284,10 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
 
       seq1.children.add(timeline)
     }
-
   }
 
   def relocateElement(element: SortElement, i: Int, depth: Int, threadNumber: Int) = {
 
-    val factor = 1.0 / (maxDepth)
     val timeline = new Timeline {
       autoReverse = false
       keyFrames = Seq(

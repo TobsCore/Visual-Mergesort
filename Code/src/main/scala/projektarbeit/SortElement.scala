@@ -55,7 +55,7 @@ class SortElement(val number: Int, var _xPos: Double, var _yPos: Double) extends
   def duplicate(): SortElement = {
     val duplicate = new SortElement(number, _xPos, _yPos)
     duplicate.changeColor(this.color)
-    return duplicate
+    duplicate
   }
 
   override def compare(that: SortElement): Int = {
@@ -78,7 +78,7 @@ class SortElement(val number: Int, var _xPos: Double, var _yPos: Double) extends
     this.number > that.number
   }
 
-  override def toString(): String = {
+  override def toString: String = {
     this.number.toString
   }
 

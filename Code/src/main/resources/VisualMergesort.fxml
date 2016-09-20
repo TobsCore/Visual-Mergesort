@@ -103,7 +103,7 @@
                             BorderPane.alignment="CENTER">
                     <children>
                         <Slider fx:id="amountOfElementsSlider" blockIncrement="1.0" layoutX="326.0" layoutY="18.0"
-                                majorTickUnit="9.33" max="32.0" min="4.0" prefHeight="26.0" prefWidth="248.0"
+                                majorTickUnit="9.33" max="64.0" min="4.0" prefHeight="26.0" prefWidth="248.0"
                                 showTickMarks="true" snapToTicks="false" value="16.0" AnchorPane.rightAnchor="70.0"/>
                         <Label layoutX="413.0" layoutY="17.0" text="Elements" AnchorPane.rightAnchor="315.0">
                             <padding>

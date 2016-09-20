@@ -105,7 +105,7 @@ class MainController(
   }
 
   def quitApplication(): Unit = {
-    Platform.exit();
+    Platform.exit()
     System.exit(0)
   }
 
@@ -130,7 +130,7 @@ class MainController(
     try {
       if (!result.equals("")) {
         val elementList: List[Int] = resultMap.map(_.toInt).toList
-        if (elementList.filter(number => (number > 99 || number <= 0)).size > 0) {
+        if (elementList.exists(number => number > 99 || number <= 0)) {
           throw new IllegalArgumentException
         }
         placeElementsOnPane(elementList)
@@ -236,9 +236,9 @@ class MainController(
 
     val sorter = new SortElementsController(pane, consoleLog, elementGroup, amountOfThreads)
     sorter.maxDepth = Math.ceil(Math.log(elementGroup.children.size) / Math.log(2)) * 2 + 1
-    sorter.run
+    sorter.run()
 
-    transition = sorter.getSequences()
+    transition = sorter.sequences
     transition.foreach(_.rate <== MathBindings.pow(2.0, playbackSpeed.value))
 
     sorter.play()
