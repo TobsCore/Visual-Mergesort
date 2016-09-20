@@ -14,9 +14,6 @@
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem disable="true" mnemonicParsing="false" text="Import"/>
-                        <MenuItem disable="true" mnemonicParsing="false" text="Export"/>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
                         <Menu mnemonicParsing="false" text="Generate Random Data">
                             <items>
                                 <MenuItem mnemonicParsing="false" onAction="#generateRandomNumbers"
@@ -59,15 +56,7 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="View">
                     <items>
-                        <MenuItem disable="true" mnemonicParsing="false" text="Show Statistic">
-                            <accelerator>
-                                <KeyCodeCombination alt="UP" code="H" control="UP" meta="UP" shift="DOWN"
-                                                    shortcut="DOWN"/>
-                            </accelerator>
-                        </MenuItem>
-                        <SeparatorMenuItem mnemonicParsing="false"/>
-                        <MenuItem disable="false" mnemonicParsing="false" onAction="#toggleLogging"
-                                  text="Toggle Log Console">
+                        <MenuItem disable="false" mnemonicParsing="false" text="Toggle Log Console" onAction="#toggleLogging">
                             <accelerator>
                                 <KeyCodeCombination alt="UP" code="L" control="UP" meta="UP" shift="UP"
                                                     shortcut="DOWN"/>
@@ -102,8 +91,8 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#openAboutDialog" text="About"/>
-                        <MenuItem disable="true" mnemonicParsing="false" text="Help"/>
+                        <MenuItem mnemonicParsing="false" onAction="#openAboutDialog" text="About" />
+                        <MenuItem disable="false" mnemonicParsing="false" onAction="#openHelp" text="Help" />
                     </items>
                 </Menu>
             </menus>

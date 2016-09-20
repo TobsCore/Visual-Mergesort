@@ -1,6 +1,8 @@
 package projektarbeit
 
+import java.awt.Desktop
 import java.io.IOException
+import java.net.URI
 
 import eu.lestard.advanced_bindings.api.MathBindings
 import projektarbeit.ElementOrder.EnumVal
@@ -59,6 +61,7 @@ class MainController(
 
   runButton.defaultButton <== !generateButton.defaultButton
   playPauseMenu.text <==> playPauseButton.text
+  //pane.minWidth <== pane.getScene.getWindow.width
 
 
   def toggleActionBar(): Unit = {
@@ -105,6 +108,12 @@ class MainController(
   def quitApplication(): Unit = {
     Platform.exit();
     System.exit(0)
+  }
+
+  def openHelp(): Unit = {
+    if (Desktop.isDesktopSupported) {
+      Desktop.getDesktop.browse(new URI("https://github.com/TobsCore/Visual-Mergesort"))
+    }
   }
 
   def createCustomElements(preselectedValue: Option[String]): Unit = {
@@ -177,14 +186,14 @@ class MainController(
       elementGroup.children.add(sortElement)
     }
 
-    elementGroup.translateX <== scrollPane.getScene.getWindow.width / 2 - elementGroup.getBoundsInParent.getWidth / 2
+    pane.setPrefWidth(elementGroup.getBoundsInParent.getWidth * 2)
+    elementGroup.translateX <== pane.width/2 - elementGroup.getBoundsInParent.getWidth/2
 
     elementGroup.id = "level-0"
 
     consoleLog.text() = ""
     pane.children.clear()
     pane.children.add(elementGroup)
-    pane.setPrefWidth(elementGroup.getBoundsInParent.getWidth)
     scrollPane.vvalue = 0.0
 
     val depth = Math.ceil(Math.log(elementGroup.children.size) / Math.log(2)) * 2 + 2
