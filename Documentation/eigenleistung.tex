@@ -10,12 +10,14 @@ Fenster zur Visualisierung des Mergesort in verschiedene Bereiche zu unterteilen
 befindet sich eine \texttt{AnchorPane}, die dazu dient, das Anordnen der Schalt- und Kontrollflächen zu erleichtern, da diese dort
 relativ zu den Rändern und anderen Elementen ausgerichtet werden können.
 
+%TODO bild3, caption: Anchorpane mit Schaltflächen
 BILD1
 
 Im Zentrum der \texttt{BorderPane} befindet sich eine \texttt{ScrollPane}, die alle weiteren Elemente beinhaltet,
 die zur Darstellung der eigentlichen Zeichenfläche dienen. In diesem Teil finden ausschließlich die Animationen statt - somit sind keine Interaktionen mit der
 Benutzeroberfläche möglich.
 
+%TODO bild4, caption: Scrollpane mit generierten Elementen
 BILD2
 
 Zuletzt befindet sich im unteren Teil der \texttt{BorderPane} eine \texttt{TextArea}, die für alle textuellen Ausgaben in der Konsole
@@ -23,6 +25,7 @@ verantwortlich ist. Hier kann der Benutzer optionalalerweise das Geschehen, welc
 auf leserische Art mitverfolgen.
 
 BILD3
+%TODO bild5, caption: Textarea als Konsole
 \section{Das Objekt VisualMergesort}
 Das Objekt VisualMergesort ist ein Singleton-Objekt der anonymen Klasse VisualMergesort, welches garantiert einzigartig ist. Das bedeutet, dass keine weiteren Objekte gleicher Art erzeugt werden können. „VisualMergesort“ erbt von JFXApp und definiert somit den Startpunkt unserer Applikation.
 

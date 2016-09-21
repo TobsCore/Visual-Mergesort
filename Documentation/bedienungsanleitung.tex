@@ -10,27 +10,40 @@ java -jar Visual-Mergesort.jar
 
 Startet man die Applikation, so öffnet sich folgendes Fenster:
 
-%TODO: Bild einfügen
+%TODO: bild1, caption: Applikation direkt nach dem Starten
 
 Über \texttt{ENTER} oder das Klicken auf \texttt{Generate} können direkt die über den Slider voreingestellten 16 Zufallselemente in willkürlicher Reihenfolge generiert werden. Alternativ kann über die Menüleiste \texttt{File} $\rightarrow$ \texttt{Generate Random Data} eine andere Reihenfolge ausgewählt werden. Um einen schnellen Start mit der gewünschten Menge zu ermöglichen, existieren folgende Shortcuts, welche optional verwendet werden können:
+
+Je nach benutztem Shortcut wird eine andere Menge von Elementen auf der Zeichenfläche platziert. Der Slider für die Anzahl der zu zeichnenden Elemente gilt bei allen Optionen, außer bei der generierung von benutzerspezifischen Elementen (siehe unten).
 
 \begin{description}
 \item[STRG + B] Generiert eine Menge von Zufallszahlen in willkürlicher Reihenfolge (default).
 
+%TODO: bild2, caption: Elemente in zufälliger Reihenfolge
+
 \item[STRG + O] Generiert eine Menge von Zufallszahlen in vorsortierter, aufsteigender Reihenfolge.
+
+%TODO: bild6, caption: Elemente vorsortiert in aufsteigender Reihenfolge
 
 \item[STRG + I] Generiert eine Menge von Zufallszahlen, welche absteigend sortiert ist.
 
-\item[STRG + U] Sowohl die Menge der Zahlen als auch die Reihenfolge kann über den Benutzer manuell eingegeben werden.
+%TODO: bild7, caption: Elemente vorsortiert in absteigender Reihenfolge
+
+\item[STRG + U] Sowohl die Menge der Zahlen als auch die Reihenfolge kann über den Benutzer manuell eingegeben werden. Hierzu öffnet sich ein Fenster, bei dem die gewünschten Werte eingegeben werden. Dabei ist darauf zu achten, dass jeder Wert durch ein Komma vom nächsten Wert getrennt wird.
+
+%TODO: bild8, caption: Generieren von benutzerspezifischen Elementen
+
+Bestätigt man anschließend durch das Drücken auf den Button \texttt{OK}, erscheinen die eingegebenen Werte als Elemente auf der Zeichenfläche
+
+%TODO: bild9, caption: Benutzerspezifische Elemente wurden generiert
 \end{description}
 
-Wurde eine dieser Optionen und die Anzahl der Elemente über den Slider ausgewählt, werden diese auf der Zeichenfläche platziert:
-
-%TODO: Bild einfügen
 
 
-Mit \texttt{ENTER}, einem Klick auf \textbf{Run} oder dem optionalen Shortcut \texttt{STRG + r} wird der Sortieralgorithmus gestartet. Über den Slider mit der Signatur \textit{Threads} kann die Anzahl der für den Algorithmus verwendeten Threads eingestellt werden.\\
-Wurde die Animation gestartet, kann diese jederzeit in ihrer Geschwindigkeit über den Regler unter dem Generate-Button variiert oder über den Button \textit{Pause} bzw. \textit{Play} komplett pausiert bzw. fortgesetzt werden.
+
+
+Mit \texttt{ENTER}, einem Klick auf \textbf{Run} oder dem optionalen Shortcut \texttt{STRG + r} wird der Sortieralgorithmus gestartet. Über den Slider mit der Signatur \textit{Threads} kann die Anzahl der für den Algorithmus verwendeten Threads eingestellt werden. Hierbei kann man zwischen einem und zwei Threads wählen.\\
+Wurde die Animation gestartet, kann diese jederzeit in ihrer Geschwindigkeit über den Regler unter dem Generate-Button variiert oder über den Button \textit{Pause} bzw. \textit{Play} komplett pausiert bzw. fortgesetzt werden. Beim Starten der Applikation fällt mit Sicherheit auf, dass sich das System automatisch zum Geschehen mitbewegt, um das Vorgehen besser zu visualisieren. Möchte man sich bestimmte Teile genauer ansehen, kann die Anwendung pausiert werden - Anschließend kann man sich frei auf der Zeichenfläche bewegen.
 
 Darüber hinaus kann über den Menüpunkt View die Ansicht der Applikation zu jeder Zeit angepasst werden. Hier existieren die Optionen
 \texttt{Toggle Log Console} und \texttt{Toggle Action Bar}. \texttt{Toggle Log Console} sorgt für das Ein- und Ausblenden der Konsole
@@ -42,5 +55,17 @@ werden:
 \begin{description}
 \item[STRG + K] Blendet die Aktionsbar ein und aus.
 
+%TODO: bild10, caption: Visual Mergesort mit ausgeblendeter Aktionsbar
+
 \item[STRG + L] Blendet die Konsole ein und aus.
+
+%TODO: bild11, caption: Visual Mergesort mit ausgeblendeter Konsole
 \end{description}
+
+Um den Algorithmus effizienter zu machen, ist es möglich, beim Visual Mergesort die Anzahl der verwendeten Threads, die den Sortieralgorithmus ausführen, zu verändern. Dadurch kann sich der Benutzer vor Augen halten, wie der Mergesort parallelisiert werden kann, um dessen Leistung zu steigern. Wurde über den Slider \texttt{Threads} die Zahl 2 ausgewählt, wird die zu sortierende Liste beim Starten der Anwendung über \texttt{Run} direkt in zwei Listen geteilt, welche jeweils einem \texttt{Thread 1} und einem \texttt{Thread 2} zugewiesen werden:
+
+%TODO: bild12, caption: Visual Mergesort mit zwei Threads
+
+Ab hier führt jeder Thread den Mergesort-Algorithmus für die Liste durch, die ihm zugeteilt wurde, bis diese vollständig sortiert ist. Zum Schluss kommt es zu einem finalen Merge, bei dem die beiden durch die Threads generierten Teillisten zu einer Ganzen zusammengefügt werden. Hierbei kann es, beispielsweise bei einer ungeraden Anzahl an Ausgangselementen dazu kommen, dass ein Thread mehr Zeit benötigt, als der andere, da dieser ein Element weniger sortieren muss. Für diesen Sonderfall wird die Autoscrollfunktion automatisch deaktiviert, da die Threads an verschiedenen Stellen auf der Zeichenfläche arbeiten. Vor dem final Merge wartet der eine Thread auf den anderen, bis dessen Liste auch sortiert ist.
+
+%TODO: bild13, caption: Thread 2 wartet auf Thread 1
