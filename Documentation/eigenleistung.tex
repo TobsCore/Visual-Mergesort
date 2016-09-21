@@ -341,4 +341,36 @@ def scroll(group: Group, depth: Int) = {
 }
 \end{lstlisting}
 
-Die Methode \texttt{relocateElementGroup} erzeugt eine Animation, welche die übergebene Gruppe in 0.2 Sekunden sichtbar macht und sie binnen einer Sekunde von der Elterngruppe um einen festgelegten Wert nach unten bewegt.
+\section{Implementierung der Animationen}
+
+Die Methode \texttt{relocateElementGroup} erzeugt eine Animation, welche die übergebene Gruppe in 0.2 Sekunden sichtbar macht und sie binnen einer Sekunde von der Elterngruppe um einen festgelegten Wert nach unten bewegt. Hierbei ist zu beachten, dass die \texttt{threadNumber} mit an die Methode übergeben wird, da bei mehreren Threads jeder seine eigene Animationssequenz besitzt, die später parallel zu den Animationssequenzen der anderen Threads abgespielt wird.
+
+\begin{lstlisting}[language=Scala]
+def relocateElementGroup(group: Group, depth: Int, threadNumber: Int): Timeline = {
+  val timeline = new Timeline {
+    autoReverse = false
+    keyFrames = Seq(
+      at(0.2.s) {
+        group.opacity -> 1.0
+      },
+      at(1.s) {
+        group.translateY -> (group.translateY() + SortElementsController.moveDownByPixel)
+      }
+    )
+  }
+  addToSequence(threadNumber, timeline)
+
+  timeline
+}
+\end{lstlisting}
+
+Um den Threads ihre Animationen zuzuteilen, wird die Methode \texttt{addToSequence} benutzt. Hier werden zwei verschiedene Transitionen für die beiden möglichen Threads gepflegt. Zusätzlich gibt es noch eine weitere Transition, die den final merge beim Sortieren mit zwei Threads übernimmt.
+
+\begin{lstlisting}[language=Scala]
+  def addToSequence(threadNumber: Int, timeline: Timeline): Boolean = {
+
+    if (threadNumber == 0) seq1.children.add(timeline)
+    else if (threadNumber == 1) seq2.children.add(timeline)
+    else {println("Adds transition to last group"); groupSeq.children.add(timeline)}
+  }
+  \end{lstlisting}
