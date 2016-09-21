@@ -85,7 +85,6 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
         10))
       y <== group.translateY - 20
     }
-    println(s"Index: $index: Text: ${threadText.translateX()} | Group: ${group.translateX()}")
     pane.children.add(threadText)
     sort(group, 0, index)
   }
@@ -250,7 +249,7 @@ class SortElementsController(val pane: Pane, val consoleLog: TextArea, val initi
 
     if (threadNumber == 0) seq1.children.add(timeline)
     else if (threadNumber == 1) seq2.children.add(timeline)
-    else {println("Adds transition to last group"); groupSeq.children.add(timeline)}
+    else groupSeq.children.add(timeline)
   }
 
 
