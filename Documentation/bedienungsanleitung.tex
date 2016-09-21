@@ -1,6 +1,11 @@
 \chapter{Bedienungsanleitung}\label{chap:bedienungsanleitung}
+<<<<<<< 6698e18a6826b73d51b69de60d027315d5ebcb3e
 
 Im Normalfall liegt der Visual-Megesort als Datei mit der Endung \texttt{.jar} vor. Die Dateiendung JAR kennzeichnet Archive, die mehrere Java-Dateien und deren Metainformationen enthalten. Um die Datei ausführen zu können, muss die \texttt{Java Runtime Environment} installiert sein. Die Laufzeitumgebung kann gegebenenfalls kostenlos im Internet heruntergeladen werden.
+=======
+\section{Bedienen der Oberfläche}
+Im Normalfall liegt der Visual-Megesort als Datei mit der Endung \texttt{.jar} vor. Wir haben den Namen \texttt{Visual-Mergesort.jar} gewählt. Die Dateiendung JAR kennzeichnet Archive, die mehrere Java-Dateien und deren Metainformationen enthalten. Um die Datei ausführen zu können, muss die \texttt{Java Runtime Environment} installiert sein. Die Laufzeitumgebung kann gegebenenfalls kostenlos im Internet heruntergeladen werden.
+>>>>>>> Docu: Bedienungsanleitung
 
 Die Anwendung kann man durch einen Doppelklick, oder aus der Konsole durch den folgenden Aufruf starten.
 
@@ -8,12 +13,13 @@ Die Anwendung kann man durch einen Doppelklick, oder aus der Konsole durch den f
 java -jar Visual-Mergesort.jar
 \end{verbatim}
 
-Startet man die Applikation, so öffnet sich folgendes Fenster:
+Startet man die Applikation, so öffnet sich folgendes Fenster (Abbildung \ref{figure:start-app}):
 
 \begin{figure}[!htb]
     \centering
-      \includegraphics[width=0.85\linewidth]{bild1}
+      \includegraphics[width=0.75\linewidth]{bild1}
     \caption{Applikation direkt nach dem Starten}
+    \label{figure:start-app}
 \end{figure}
 
 Über \texttt{ENTER} oder das Klicken auf \texttt{Generate} können direkt die über den Slider voreingestellten 16 Zufallselemente in willkürlicher Reihenfolge generiert werden. Alternativ kann über die Menüleiste \texttt{File} $\rightarrow$ \texttt{Generate Random Data} eine andere Reihenfolge ausgewählt werden. Um einen schnellen Start mit der gewünschten Menge zu ermöglichen, existieren folgende Shortcuts, welche optional verwendet werden können:
@@ -25,7 +31,7 @@ Je nach benutztem Shortcut wird eine andere Menge von Elementen auf der Zeichenf
 
 \begin{figure}[!htb]
     \centering
-      \includegraphics[width=0.85\linewidth]{bild2}
+      \includegraphics[width=0.75\linewidth]{bild2}
     \caption{Elemente in zufälliger Reihenfolge}
 \end{figure}
 
@@ -33,7 +39,7 @@ Je nach benutztem Shortcut wird eine andere Menge von Elementen auf der Zeichenf
 
 \begin{figure}[!htb]
     \centering
-      \includegraphics[width=0.85\linewidth]{bild6}
+      \includegraphics[width=0.75\linewidth]{bild6}
     \caption{Elemente vorsortiert in aufsteigender Reihenfolge}
 \end{figure}
 
@@ -41,7 +47,7 @@ Je nach benutztem Shortcut wird eine andere Menge von Elementen auf der Zeichenf
 
 \begin{figure}[!htb]
     \centering
-      \includegraphics[width=0.85\linewidth]{bild7}
+      \includegraphics[width=0.75\linewidth]{bild7}
     \caption{Elemente vorsortiert in absteigender Reihenfolge}
 \end{figure}
 
@@ -49,7 +55,7 @@ Je nach benutztem Shortcut wird eine andere Menge von Elementen auf der Zeichenf
 
 \begin{figure}[!htb]
     \centering
-      \includegraphics[width=0.85\linewidth]{bild8}
+      \includegraphics[width=0.75\linewidth]{bild8}
     \caption{Generieren von benutzerspezifischen Elementen}
 \end{figure}
 
@@ -57,7 +63,7 @@ Bestätigt man anschließend durch das Drücken auf den Button \texttt{OK}, ersc
 
 \begin{figure}[!htb]
     \centering
-      \includegraphics[width=0.85\linewidth]{bild9}
+      \includegraphics[width=0.75\linewidth]{bild9}
     \caption{Benutzerspezifische Elemente wurden generiert}
 \end{figure}
 \end{description}
@@ -89,7 +95,7 @@ werden:
 
 \begin{figure}[!htb]
     \centering
-      \includegraphics[width=0.85\linewidth]{bild11}
+      \includegraphics[width=0.75\linewidth]{bild11}
     \caption{Visual Mergesort mit ausgeblendeter Konsole}
 \end{figure}
 \end{description}
@@ -98,7 +104,7 @@ Um den Algorithmus effizienter zu machen, ist es möglich, beim Visual Mergesort
 
 \begin{figure}[!htb]
     \centering
-      \includegraphics[width=0.85\linewidth]{bild12}
+      \includegraphics[width=0.75\linewidth]{bild12}
     \caption{Visual Mergesort mit zwei Threads}
 \end{figure}
 
@@ -106,6 +112,93 @@ Ab hier führt jeder Thread den Mergesort-Algorithmus für die Liste durch, die 
 
 \begin{figure}[!htb]
     \centering
-      \includegraphics[width=0.85\linewidth]{bild13}
+      \includegraphics[width=0.75\linewidth]{bild13}
     \caption{Thread 2 wartet auf Thread 1}
 \end{figure}
+
+\clearpage
+\section{Weiterentwickeln}
+
+Falls man das Programm manuell kompilieren möchte, oder man die Funktionen weiterentwickeln möchte, haben wir hier eine kleine Anleitung, wie welche Programme man benötigt und wo welche Dateien liegen. Außerdem möchten wir zeigen, wie man das Programm manuell kompiliert und wie man schlussendlich eine ausführbare Datei bekommt.
+
+\subsection{Voraussetzungen}
+
+Wenn man das Programm selber kompilieren und weiter-entwickeln möchte, benötigt man die folgenden Dinge:
+
+\begin{enumerate}
+\item SBT (Scala Build Tool)
+\item git
+\item JVM und JDK
+\end{enumerate}
+
+Wir gehen davon aus, dass sowohl JVM als auch JDK installiert sind. Alternativ kann man auf \url{https://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.html#A1096936} nachlesen, wie man diese für sein Betriebssystem installiert.
+
+Das Scala Built Tool kann man auf der Projektseite\footnote{\url{http://www.scala-sbt.org/index.html}} herunter laden, und im Anschluss kann man dieses installieren. Über dieses Build Tool wird dann später Scala in der entsprechenden Version geladen, sodass man Scala selber nicht installieren muss. Möchte man Scala dennoch installieren, um beispielsweise die \texttt{REPL} (\cite{GettingStartedWithTheScalaREPL}) zu nutzen, so kann man Scala über die Webseite \url{http://scala-lang.org/} herunter laden.
+
+Zuletzt benötigt man noch git\footnote{\url{https://git-scm.com/book/en/v2/Getting-Started-Installing-Git}}, um das Projekt über über Github beziehen zu können.
+
+\subsection{Programm starten}
+
+Zuerst muss da Projekt von geladen werden. Über git kann man den folgenden Befehl ausführen, um das Projekt von Github zu \texttt{clonen}. Im Nachfolgenden werden die Befehle aus im Terminal ausgeführt. Diese Schritt-für-Schritt--Anleitung wurde auf Linux und OSX getestet, sollte jedoch auf Windows ähnlich funktionieren.
+
+\begin{verbatim}
+git clone https://github.com/TobsCore/Visual-Mergesort.git
+\end{verbatim}
+
+Es ist ein neues Verzeichnis mit den Projektdaten erstellt worden. Wenn man in dieses Verzeichnis navigiert, befinden sich dort zwei Ordner und eine \texttt{README.md} Datei.
+
+\begin{verbatim}
+cd Visual-Mergesort
+ls
+\end{verbatim}
+
+In den Ordnern befinden sich die folgenden Daten:
+
+\begin{description}
+\item[Code] In diesem Ordner ist das eigentliche Programm enthalten, sowie die sbt-Konfiguration und einige Intellij-Dateien.
+\item[Documentation] Hier ist die Dokumentation über unsere Projektarbeit enthalten, die wir geschrieben habe. Die Dokumentation ist in \LaTeX geschrieben und kann über \texttt{xelatex} kompiliert werden. Mehr dazu in \ref{sec:latex}.
+\end{description}
+
+Wenn man nun in den \texttt{Code} Ordner wechselt, befinden sich darin wiederrum 4 Ordner (3 sichtbar, 1 nicht sichtbar):
+
+\begin{description}
+\item[project] Hier sind die sbt Projektdateien enthalten.
+\item[src] Dies ist der wichtigste Unterordner. Hier ist der Programmcode enthalten, da es sich um den \texttt{Source}--Ordner handelt.
+\item[target] Hier landen kompilierte Dateien und Caches. Die ausführbare \texttt{Visual-Mergesort.jar}--Datei wird beispielsweise auch in diesen Ordner geschrieben.
+\item[.idea] Dies ist der Intellij Projektordner.
+\end{description}
+
+Zuletzt möchten wir noch die Ordnerstruktur des \texttt{src} Ordners erklären. In dem Unterordner \texttt{main} befinden sich noch die Ordner \texttt{resources} und \texttt{scala}. In \texttt{resources}, sind Bilder, die CSS Dateien und die \texttt{FXML} Dateien enthalten. Der ganze Programmcode ist in dem Ordner \texttt{scala}.
+
+Um das Programm nun kompilieren zu können, gehen wir zurück in den Ordner \texttt{Visual-Mergesort/Code/}. In diesem Ordner sollte sich eine Datei mit dem Namen \texttt{build.sbt} befinden. Wenn man nun den Befehl
+
+\begin{verbatim}
+sbt compile
+\end{verbatim}
+
+ausführt, so wird der Programmcode kompiliert und kann im Anschluss über
+
+\begin{verbatim}
+sbt run
+\end{verbatim}
+
+ausgeführt werden. Nun wird die Anwendung ausgeführt.
+
+\subsubsection{Ausführbare Datei erstellen}
+Da man nicht immer den Programmcode beziehen und kompilieren möchte, ist es sinnvoll, wenn man sich eine ausführbare Anwendung erstellen lässt. Dies ist, wie bereits erwähnt, eine \texttt{.jar} Datei. Wir benutzen ein sbt--Plugin, das sich um die Erstellung dieser Datei kümmert. Man kann die Erstellung über
+
+\begin{verbatim}
+sbt assembly
+\end{verbatim}
+
+anstoßen. Die generierte Datei liegt dann in dem Ordner \texttt{target/scala-2.11/} und heißt \texttt{Visual-Mergesort.jar}. Mit
+
+\begin{verbatim}
+java -jar Visual-Mergesort.jar
+\end{verbatim}
+
+kann man die Anwendung starten.
+
+\subsection{Dokumentation}\label{sec:latex}
+
+Die Dokumentation ist in \LaTeX geschrieben und kann über \texttt{xelatex} erstellt werden. Das Programm kann auf Linux, Windows und OSX installiert werden. Wir haben zusätzlich ein \texttt{Makefile} angelegt, das das Kompilieren und anschließende Aufräumen für uns übernimmt. Zusätzlich kann man hierüber auch die \texttt{Bibtex} Datei in das Dokument einbauen. \texttt{BibTex} wird genutzt, um die Literaturquellen zu verwalten. Die Datei \texttt{Documentation/README.md} beschreibt, welche Befehle man über Make\footnote{Es kann sein, dass man das Make--Progamm installieren muss, um das Makefile nutzen zu können. Dies war bei uns zumindest auf Windows--Systemen der Fall} ausführen kann und was diese Befehle bewirken.
