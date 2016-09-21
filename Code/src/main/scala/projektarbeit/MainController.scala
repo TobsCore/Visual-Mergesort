@@ -112,7 +112,8 @@ class MainController(
 
   def openHelp(): Unit = {
     if (Desktop.isDesktopSupported) {
-      Desktop.getDesktop.browse(new URI("https://github.com/TobsCore/Visual-Mergesort"))
+      val ausarbeitungWebpage= "https://github.com/TobsCore/Visual-Mergesort/raw/master/Documentation/Ausarbeitung.pdf"
+      Desktop.getDesktop.browse(new URI(ausarbeitungWebpage))
     }
   }
 
