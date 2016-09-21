@@ -10,22 +10,33 @@ Fenster zur Visualisierung des Mergesort in verschiedene Bereiche zu unterteilen
 befindet sich eine \texttt{AnchorPane}, die dazu dient, das Anordnen der Schalt- und Kontrollflächen zu erleichtern, da diese dort
 relativ zu den Rändern und anderen Elementen ausgerichtet werden können.
 
-%TODO bild3, caption: Anchorpane mit Schaltflächen
-BILD1
+
+\begin{figure}[!htb]
+    \centering
+      \includegraphics[width=0.75\linewidth]{bild3}
+    \caption{Anchorpane mit Schaltflächen}
+\end{figure}
 
 Im Zentrum der \texttt{BorderPane} befindet sich eine \texttt{ScrollPane}, die alle weiteren Elemente beinhaltet,
 die zur Darstellung der eigentlichen Zeichenfläche dienen. In diesem Teil finden ausschließlich die Animationen statt - somit sind keine Interaktionen mit der
 Benutzeroberfläche möglich.
 
-%TODO bild4, caption: Scrollpane mit generierten Elementen
-BILD2
+\begin{figure}[!htb]
+    \centering
+      \includegraphics[width=0.75\linewidth]{bild4}
+    \caption{Scrollpane mit generierten Elementen}
+\end{figure}
 
 Zuletzt befindet sich im unteren Teil der \texttt{BorderPane} eine \texttt{TextArea}, die für alle textuellen Ausgaben in der Konsole
 verantwortlich ist. Hier kann der Benutzer optionalalerweise das Geschehen, welches im Zentrum animiert wird,
 auf leserische Art mitverfolgen.
 
-BILD3
-%TODO bild5, caption: Textarea als Konsole
+\begin{figure}[!htb]
+    \centering
+      \includegraphics[width=0.75\linewidth]{bild5}
+    \caption{Textarea als Konsole}
+\end{figure}
+
 \section{Das Objekt VisualMergesort}
 Das Objekt VisualMergesort ist ein Singleton-Objekt der anonymen Klasse VisualMergesort, welches garantiert einzigartig ist. Das bedeutet, dass keine weiteren Objekte gleicher Art erzeugt werden können. „VisualMergesort“ erbt von JFXApp und definiert somit den Startpunkt unserer Applikation.
 
@@ -62,8 +73,9 @@ In diesem Objekt wird das in FXML vordefinierte Layout unserer GUI in die Stage 
 Die Klasse SortElement ist für die Objekte verantwortlich, die durch den Algorithmus auf der Zeichenfläche sortiert werden sollen. Die zu sortierenden Objekte sind zusammengesetzte Gruppen und bestehen aus einem Rechteck sowie einem darunter liegenden Text, welcher den Wert des Objektes angibt. Die Höhe des Rechtecks verhält sich proportional zu diesem Wert.
 Der Text benötigt, um mittig unter dem Rechteck zu stehen, noch einen offset, falls der Wert einstellig ist.
 
-%TODO: Caption
-\begin{lstlisting}[language=Scala]
+Über das \texttt{require} werden Voraussetzungen für die Klasse angegeben, die zu Exceptions führen, wenn diese nicht korrekt sind.
+
+\begin{lstlisting}[language=Scala,caption=Kopf der SortElement Klasse]
 class SortElement(val number: Int, var _xPos: Double, var _yPos: Double) extends Group with Ordered[SortElement]  {
   require(number >= 1 && number <= 99 , "the number must be between 1 and 99 (inclusive)")
 
@@ -91,8 +103,7 @@ Dieser Code definiert zwei simple Methoden \texttt{xPos} und \texttt{yPos}, welc
 
 Als nächstes werden die Setter neu definiert:
 
-%TODO: Caption
-\begin{lstlisting}[language=Scala]
+\begin{lstlisting}[language=Scala,caption=Setter Methoden]
 def xPos_= (x: Double) {
   _xPos = x
   text.translateX = _xPos + offset
@@ -203,7 +214,7 @@ Nachdem die Elemente erzeugt wurden, ist die Anwendung betriebsbereit und der Ru
 
 In der Methode \texttt{generateNumbers} wird eine Liste mit Zufallszahlen zwischen dem Minimalwert {texttt{defaultMinimumNumber} und dem Maximalwert \texttt{defaultMaximumNumber} generiert, die so viele Elemente enthält, wie über den Slider in der Applikation eingestellt wurde. Der Unterstrich dient in diesem Fall als Platzhalter für jedes Element in der Liste. Je nachdem, welcher Button zuvor betätigt wurde, wird die Liste  anschließend optional noch sortiert oder invertiert.
 
-\begin{lstlisting}[language=Scala]
+\begin{lstlisting}[language=Scala,caption=Erstellung der Zahlen-Elemente]
 def generateNumbers(elementOrder: EnumVal): Unit = {
 
   // Get the selected amount of elements
@@ -266,7 +277,7 @@ pane.setPrefHeight(depth * 130)
 
 Wurde die zu sortierende Menge auf der Zeichenfläche platziert, kann der Benutzer auf „Run“ klicken, um den Algorithmus zu starten. Dadurch wird die Methode \texttt{runSorting} ausgeführt.
 
-\begin{lstlisting}[language=Scala]
+\begin{lstlisting}[language=Scala,caption=runSorting startet die Sortierung mit anschließender Animationen]
 def runSorting():Unit = {
   runButton.disable = true
   isPlaying() = true
@@ -294,7 +305,7 @@ Die Implementierung der Logik für den Algorithmus befindet sich in der Klasse S
 
 Wie schon erwähnt, wird bei unserer Implementierung des Mergesort-Algorithmus nicht mit einer einzigen Gruppe gearbeitet, sondern mit vielen Listen, die nicht überschrieben werden. Das dient dazu, die schon gesplitteten und gemergten Elemente auf der Zeichenfläche unangetastet zu lassen. Um dies zu realisieren, müssen Duplikate der Eingangslisten erstellt werden, mit denen weitergearbeitet werden kann, ohne die schon gezeichneten Objekte zu beeinflussen. Man braucht also eine zweite Liste, welche Objekte mit äquivalenten Werten enthält. Für diese Aufgabe existiert die Methode \texttt{createGroup}, welche in unserer \texttt{sort} - Methode aufgerufen wird.
 
-\begin{lstlisting}[language=Scala]
+\begin{lstlisting}[language=Scala,caption=Erstellung der Gruppe]
 def createGroup(parentGroup: Group, splitList: (List[SortElement], List[SortElement]), part: EnumVal, depth: Int): Group = {
 
   val duplicateList = (part match {
@@ -325,7 +336,7 @@ Die Methode createGroup erzeugt gleich zu Beginn ein Duplikat der eingegangenen 
 \section{Implementierung des Autoscrolls}
 Um dem Benutzer den Fokus auf den Algorithmus zu erleichtern, haben wir es für sinnvoll erachtet, einen automatischen Scrollmechanismus zu implementieren, welcher stets das Geschehen zum Mittelpunkt der Szene macht. Hierbei machen wir uns noch einmal die zuvor für die Größe der Zeichenfläche genutzte Tiefe der Gruppenstruktur zu Nutze.
 
-\begin{lstlisting}[language=Scala]
+\begin{lstlisting}[language=Scala,caption=Das Autoscrolling auf der Pane]
 def scroll(group: Group, depth: Int) = {
   val factor = 1.0/(maxDepth)
   val timeline = new Timeline {
@@ -345,7 +356,7 @@ def scroll(group: Group, depth: Int) = {
 
 Die Methode \texttt{relocateElementGroup} erzeugt eine Animation, welche die übergebene Gruppe in 0.2 Sekunden sichtbar macht und sie binnen einer Sekunde von der Elterngruppe um einen festgelegten Wert nach unten bewegt. Hierbei ist zu beachten, dass die \texttt{threadNumber} mit an die Methode übergeben wird, da bei mehreren Threads jeder seine eigene Animationssequenz besitzt, die später parallel zu den Animationssequenzen der anderen Threads abgespielt wird.
 
-\begin{lstlisting}[language=Scala]
+\begin{lstlisting}[language=Scala,caption=Umpositionierung der Elemente]
 def relocateElementGroup(group: Group, depth: Int, threadNumber: Int): Timeline = {
   val timeline = new Timeline {
     autoReverse = false
@@ -366,7 +377,7 @@ def relocateElementGroup(group: Group, depth: Int, threadNumber: Int): Timeline 
 
 Um den Threads ihre Animationen zuzuteilen, wird die Methode \texttt{addToSequence} benutzt. Hier werden zwei verschiedene Transitionen für die beiden möglichen Threads gepflegt. Zusätzlich gibt es noch eine weitere Transition, die den final merge beim Sortieren mit zwei Threads übernimmt.
 
-\begin{lstlisting}[language=Scala]
+\begin{lstlisting}[language=Scala,caption=Einteilung der Animationen in die entsprechende SequentialTransition]
   def addToSequence(threadNumber: Int, timeline: Timeline): Boolean = {
 
     if (threadNumber == 0) seq1.children.add(timeline)
