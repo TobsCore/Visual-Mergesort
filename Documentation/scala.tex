@@ -1,11 +1,11 @@
 \chapter{Scala}
-Wir haben uns entschieden, das Programm in Scala zu schreiben, einer Sprache, die bereits schon im Jahr 2001 von Martin Odersky entwickelt wurde, jedoch erst seit kurzem einen großen Bekanntheitsgrad erlangt hat. Grund dafür ist der Hype um die sogenannte \textit{funktionale Programmierung} und das Bedürfnis, Anwendungen nebenläufig zu entwickeln.
-Wir möchten nun zu Beginn die Gründe nennen, warum Scala sich als moderne Programmiersprache anbietet, die sogar von Javas Hauptentwickler James Gosling als bevorzugte Java-Alternative betitelt wurde \footnote{James Gosling wurde auf einer Konferenz gefragt, welche Programmiersprache er heutzutage anstelle von Java auf der JVM nutzen würde, worauf er entschieden mit ``Scala'' antwortete --- \url{http://www.adam-bien.com/roller/abien/entry/java_net_javaone_which_programming}}.
+Wir haben uns entschieden, das Programm in Scala zu schreiben, einer Sprache, die bereits schon im Jahr 2001 von Martin Odersky\footnote{\url{https://de.wikipedia.org/wiki/Martin_Odersky}} entwickelt wurde, jedoch erst seit Kurzem einen großen Bekanntheitsgrad erlangt hat. Grund dafür ist der Hype um die sogenannte \textit{funktionale Programmierung} und das Bedürfnis, Anwendungen nebenläufig zu entwickeln.\\
+Wir möchten nun zu Beginn die Gründe nennen, warum Scala sich als moderne Programmiersprache anbietet, die sogar von Javas Hauptentwickler James Gosling\footnote{\url{https://de.wikipedia.org/wiki/James_Gosling}} als bevorzugte Java-Alternative betitelt wurde \footnote{James Gosling wurde auf einer Konferenz gefragt, welche Programmiersprache er heutzutage anstelle von Java auf der JVM nutzen würde, worauf er entschieden mit ``Scala'' antwortete --- \url{http://www.adam-bien.com/roller/abien/entry/java_net_javaone_which_programming}}.
 
 \section{Laufzeit-Umgebung}
-Scala ist wie Java eine Programmiersprache, die zu Bytecode kompiliert wird. Dieser Bytecode wird dann von der \textit{Java Virtual Machine} (\texttt{JVM}) benutzt um daraus Maschinencode zu erstellen. Die JVM ist mittlerweile auf sehr vielen Rechnern installiert und sogar das Android Betriebssystem setzt auf eine Variante der JVM (\texttt{Dalvik}).
+Scala ist wie Java eine Programmiersprache, die zu Bytecode kompiliert wird. Dieser Bytecode wird dann von der \textit{Java Virtual Machine} (\texttt{JVM}) benutzt, um daraus Maschinencode zu erstellen. Die JVM ist mittlerweile auf sehr vielen Rechnern installiert und sogar das Android Betriebssystem setzt auf eine Variante der JVM (\texttt{Dalvik}).
 
-Die JVM hat den großen Vorteil, dass sie mittlerweile seit 20 Jahren aktiv entwickelt wird und die gesamte Java-Umgebung besonders im Enterprise Bereich eingesetzt wird. Das Resultat ist ein sehr stabiles und vor allem perfomantes System, das aus dem heutigen IT-Markt nicht mehr wegzudenken ist.
+Die JVM hat den großen Vorteil, dass sie mittlerweile seit 20 Jahren aktiv entwickelt wird und die gesamte Java-Umgebung besonders im Enterprise--Bereich eingesetzt wird. Das Resultat ist ein sehr stabiles und vor allem perfomantes System, das aus dem heutigen IT-Markt nicht mehr wegzudenken ist.
 
 \section{Bibliotheken}
 Scala wird also nicht zu irgendeinem Bytecode kompiliert, sondern zu Java-Bytecode, um genau zu sein. Dies hat den großen Vorteil, dass man neben der JVM-Unterstützung auch auf etablierte Java Bibliotheken zugreifen kann. Beispielsweise ist der Einsatz von Google GSON\footnote{Link zu der Projektseite von Google GSON: \url{https://github.com/google/gson}}, das das Serialisieren von Objekten in JSON und zurück ermöglicht, über Scala so möglich, wie auch über Java.
@@ -20,12 +20,12 @@ JavaFX 8 ist der offzielle Nachfolger von Swing. Zu Beginn sollte es eine Script
 
 \begin{description}
 \item[Scene Graph]\hfill\\
-JavaFX ist besonders leicht zu entwickeln, da es auf den \texttt{Scene Graph} setzt. Der Scene Graph ist eine Baumstruktur, bei der die Elemente hierachisch angeordnet werden. Elemente im Scene Graph sind vom Type \texttt{Node} ~\cite{ProJavaFX8}. Wenn man also beispielsweise einen Button auf der Bildfläche platzieren möchte, dann hat man ein Button Objekt, welches von \texttt{Node} erbt
+JavaFX ist besonders leicht zu entwickeln, da es auf den \texttt{Scene Graph} setzt. Der \texttt{Scene Graph} ist eine Baumstruktur, bei der die Elemente hierachisch angeordnet werden. Elemente im \texttt{Scene Graph} sind vom Type \texttt{Node} ~\cite{ProJavaFX8}. Wenn man also beispielsweise einen Button auf der Bildfläche platzieren möchte, dann hat man ein Button Objekt, welches von \texttt{Node} erbt.
 
 \begin{figure}[!htb]
     \centering
       \includegraphics[width=0.75\linewidth]{scene-graph}
-    \caption{Darstellung der Baumstruktur im Scene Graph}{\url{http://www.smarks.org/svjugfx20100414/flood.html}}
+    \caption{Darstellung der Baumstruktur im \texttt{Scene Graph}}{\url{http://www.smarks.org/svjugfx20100414/flood.html}}
     \label{fig:scene-graph}
 \end{figure}
 
@@ -45,9 +45,9 @@ Neben der Trennung von Ablauf, Logik und Gestaltung nach dem \textit{MVC}-Prinzi
 ermöglicht. Man erkennt, dass das Präfix \texttt{-fx-} vor dem CSS-Befehl steht.
 
 \item[Properties und Bindings]\hfill\\
-Das Koppeln von von Eigenschaften einer Klasse an eine andere Klasse ist ein tolles Feature, welches das Entwickeln von komplexen Anwendungen noch weiter vereinfacht. Intern wird das \texttt{Observable}-Interface benutzt, die Komponenten zu aneinander zu binden.
+Das Koppeln von Eigenschaften einer Klasse an eine andere Klasse ist ein tolles Feature, welches das Entwickeln von komplexen Anwendungen noch weiter vereinfacht. Intern wird das \texttt{Observable}-Interface benutzt, die Komponenten aneinander zu binden.
 
-Um Bindings und die dazu benutzten Properties besser zu verstehen, verweisen wir auf die sehr gute Zusammenfassung auf \cite{JavaBeginner-Binding}
+Um Bindings und die dazu benutzten Properties besser zu verstehen, verweisen wir auf die sehr gute Zusammenfassung von \cite{JavaBeginner-Binding}.
 \end{description}
 
 \subsection{ScalaFX}
@@ -70,7 +70,7 @@ rect1.heightProperty().bind(rect2.heightProperty().add(rect3.heightProperty()))
 
 Der Scala Code ist wesentlich intuitiver und lesbarer, was genau der Sinn dieser \texttt{DSL} ist. Das Beispiel stammt aus \cite{ProJavaFX8} (Seite 574f.).
 
-\item[Angepasste Animations Syntax]\hfill\\
+\item[Angepasste Animations--Syntax]\hfill\\
 Da Animationen ein wichtiger Bestandteil von JavaFX sind, wurde die Syntax wesentlich verbessert. Auch hier möchten wir uns an \cite{ProJavaFX8} halten und Scala Code mit Java Code vergleichen.
 
 \underline{Scala}:
@@ -86,10 +86,10 @@ new Timeline(new KeyFrame(Duration.seconds(3), collapse))
 \end{lstlisting}
 
 \item[Typsichere APIs]\hfill\\
-Ein Vorteil von Scala, wie wir noch kennen lernen werden, ist dass die Sprache \textit{statisch typisiert} ist. ScalaFX ist garantiert \textit{typsicher}, was zur Folge hat, dass Fehler bereits beim Kompilieren auftreten und nicht erst zur Laufzeit zu Fehlern führen wird. ~\cite{TypesAndProgrammingLanguages}
+Ein Vorteil von Scala, wie wir noch kennen lernen werden, ist, dass die Sprache \textit{statisch typisiert} ist. ScalaFX ist garantiert \textit{typsicher}, was zur Folge hat, dass Fehler bereits beim Kompilieren auftreten und nicht erst zur Laufzeit zu Fehlern führen wird. ~\cite{TypesAndProgrammingLanguages}
 
 \item[Interoperabilität zwischen ScalaFX und JavaFX]\hfill\\
-ScalaFX liegt wie ein Wrapper um JavaFX und bietet Funktionen an, die die Arbeit mit JavaFX erleichtern. Dies wird dadurch vereinfacht, dass man ganz einfach zwischen JavaFX und ScalaFX wechseln kann. Ein besonders hilfreiches Konzept sind hierbei \textit{Implizite Konvertierungen}. So kann man beispielsweise eine \texttt{javafx.scene.Shape.button} an eine Methode übergeben, die ein \texttt{scalafx.scene.Shape.button} als Argument erwartet.
+ScalaFX liegt wie ein Wrapper um JavaFX und bietet Funktionen an, die die Arbeit mit JavaFX erleichtern. Dies wird dadurch vereinfacht, dass man ganz einfach zwischen JavaFX und ScalaFX wechseln kann. Ein besonders hilfreiches Konzept sind hierbei \textit{Implizite Konvertierungen}. So kann man beispielsweise eine \texttt{javafx"".scene"".Shape"".button} an eine Methode übergeben, die ein \texttt{scalafx"".scene"".Shape"".button} als Argument erwartet.
 \end{description}
 
 Da es sich bei ScalaFX primär um syntaktische Verbesserungen handelt, kann man argumentieren, dass die Benutzung obsolet ist. Wir haben uns bewusst für die Integration entschieden, da wir näher an der Scala Syntax bleiben wollten und die Lesbarkeit von Source-Code für uns ein wichtiger Aspekt ist\footnote{Eine Interessante Diskussion zu diesem Thema findet man auch hier \url{http://stackoverflow.com/a/22744881}}.
@@ -106,7 +106,7 @@ FXML wird nicht kompiliert, somit können Änderungen ohne vorheriges Rekompilie
 Ein großer Vorteil ist, dass man einzelnen Knoten \texttt{ID}s und \texttt{Class}es zuteilen kann, wie in HTML. Diese lassen sich dann über CSS stylen. Hierbei wird eine leicht veränderte CSS-Syntax verwendet, aber jeder der sich in der Webgestaltung auskennt, wird sich hier schnell zurecht finden. Neben dem Stylen von Elementen ist die \textbf{Lokalisierung} des Inhalts heutzutage auch extrem wichtig, da der Softwaremarkt mittlerweile kaum mehr auf einen Sprachraum beschränkt ist. Hier bietet FXML eingebaute Features, die diese Lokalisierung sehr einfach ermöglichen.\\
 Und da JavaFX das Laden und verarbeiten von FXML Dateien erlaubt, kann man auch mit anderen JVM--Sprachen, wie in unserem Fall Scala, FXML nutzen. Wir haben jedoch eine zusätzliche Library genutzt, die das Benutzen und Arbeiten mit FXML Dateien erleichtert: ScalaFXML~\cite{ScalaFXML}.
 
-Zuletzt muss man in Verbindung mit FXML noch den Scene Builder\footnote{Der Scene Builder ist mittlerweile Open Source und kann hier herunter geladen werden \url{http://gluonhq.com/labs/scene-builder/}. Weitere Informationen findet man noch auf der mittlerweile archivierten Oracle Seite unter \url{http://www.oracle.com/technetwork/java/javase/downloads/javafxscenebuilder-info-2157684.html}} nennen. Dieses Tool erleichtert die Gestaltung von einfachen User Interfaces, indem Elemente per Drag \& Drop platziert werden können und man somit eine Oberfläche gestalten kann, ohne sich genauer mit dem FXML Code auseinander setzen zu müssen. Das Programm hat uns am Anfang geholfen, die Syntax besser zu verstehen und die Elemente besser zu platzieren. Da wir in unserer Arbeit jedoch immer öfter Kleinigkeiten im Layout anpassen mussten, haben wir im Verlauf immer mehr auf den Scene Builder verzichtet, da die Anpassung einer ID, oder Größe oder das Einfügen eine Buttons händisch tatsächlich schnell geht und der Scene Builder nicht fehlerfrei funktionierte. Bei unser wurde die Menüzeile des Scene-Builders (von wo aus man das Layout beispielsweise als native Anwendung ohne Logik testen kann) durch das Menü unserer Anwendung überschrieben \footnote{Der Fehler wird hier beschrieben: \url{https://bugs.openjdk.java.net/browse/JDK-8089659}. Wir haben das Tag \texttt{useSystemMenuBar} genutzt, um auf OSX die native Menüzeile zu nutzen, was das Layout natürlicher macht.}.
+Zuletzt muss man in Verbindung mit FXML noch den Scene Builder\footnote{Der Scene Builder ist mittlerweile Open Source und kann hier herunter geladen werden \url{http://gluonhq.com/labs/scene-builder/}. Weitere Informationen findet man noch auf der mittlerweile archivierten Oracle Seite unter \url{http://www.oracle.com/technetwork/java/javase/downloads/javafxscenebuilder-info-2157684.html}} nennen. Dieses Tool erleichtert die Gestaltung von einfachen User Interfaces, indem Elemente per Drag \& Drop platziert werden können und man somit eine Oberfläche gestalten kann, ohne sich genauer mit dem FXML Code auseinander setzen zu müssen. Das Programm hat uns am Anfang geholfen, die Syntax besser zu verstehen und die Elemente besser zu platzieren. Da wir in unserer Arbeit jedoch immer öfter Kleinigkeiten im Layout anpassen mussten, haben wir im Verlauf immer mehr auf den Scene Builder verzichtet, da die Anpassung einer ID, oder Größe oder das Einfügen eine Buttons händisch tatsächlich schnell geht und der Scene Builder nicht fehlerfrei funktionierte. Bei uns wurde die Menüzeile des Scene-Builders, die man beispielsweise nutzen kann, um von dort aus das Layout als native Anwendung ohne Logik zu testen,  durch das Menü unserer Anwendung überschrieben \footnote{Der Fehler wird hier beschrieben: \url{https://bugs.openjdk.java.net/browse/JDK-8089659}. Wir haben das Tag \texttt{useSystemMenuBar} genutzt, um auf OSX die native Menüzeile zu nutzen, was das Layout natürlicher macht.}.
 
 \section{Grundlegendes und Syntax}
 Die Programmiersprache Scala ist sehr komplex und die Sprache hier vorzustellen und zu erklären würde den Umfang dieser Ausarbeitung sprengen. Dennoch möchten wir einige Grundlegende Spracheigenschaften vorstellen, sodass man den später vorgestellten Code besser nachvollziehen kann.\\
@@ -114,7 +114,7 @@ Man kann zwar Scala Code schreiben, der sehr an Java Code erinnert, jedoch wird 
 
 Da dies das erste Programm ist, das wir in Scala geschrieben haben, kann man bestimmt viele Sachen besser machen, wenn man entsprechend Erfahrung hat. Dennoch haben wir probiert, viele der tollen Features zu nutzen, die Scala bietet.
 
-Viele der folgenden Beispiel kann man in der \textbf{REPL} (\texttt{Read-Evaluate-Print-Loop}) testen. Die REPL ist so etwas wie eine interaktive Console, in der man Scala Code testen und ausprobieren kann. Da wir diese für unsere Projektarbeit nicht direkt benötigten, aber eine tolle Möglichkeit darstellt um Scala Code zu testen, verweisen wir auf die tolle Beschreibung von \cite{GettingStartedWithTheScalaREPL}
+Viele der folgenden Beispiele kann man in der \textbf{REPL} (\texttt{Read-Evaluate-Print-Loop}) testen. Die REPL ist so etwas wie eine interaktive Console, in der man Scala Code testen und ausprobieren kann. Da wir diese für unsere Projektarbeit nicht direkt benötigten, aber eine tolle Möglichkeit darstellt um Scala Code zu testen, verweisen wir auf die tolle Beschreibung von \cite{GettingStartedWithTheScalaREPL}
 
 \subsection{Typinferenz}
 Scala ist eine statisch typisierte Sprache. Das bedeutet, dass eine Variable von einem Typ ist, der sich auch nicht ändert. In Java gibt man den Typ bei der Deklaration direkt mit an. Wenn man Beispielsweise einen Variable \texttt{helloWorld} vom Type \texttt{String} hat, die den Wert \texttt{Hello World} hat, dann wird dies wie folgt angegeben:
@@ -203,7 +203,7 @@ Die beiden Methoden machen beide das Selbe. Wenn wir die Methode in der \texttt{
   res1: Boolean = true
 \end{verbatim}
 
-Wir werden die Methode \texttt{isLarge} im Weiteren Verlauf noch weiter benutzen um die Funktionen von Scala hervorzuheben.
+Wir werden die Methode \texttt{isLarge} im weiterhin benutzen, um die Funktionen von Scala hervorzuheben.
 
 \subsection{Strings}
 
@@ -224,7 +224,7 @@ println(s"Is the number $number a large number: ${isLarge(number)}")
 Das Weglassen von \texttt{System.out} ist kein Fehler, sondern ein Scala nicht nötig. Durch das Voransetzen von \texttt{s} an den String, kann man Variablen durch \texttt{\$} ganz einfach einsetzen. Ausdrücke werden durch \texttt{\$\{\}} eingefügt, müssen also geklammert werden.
 
 \subsubsection{Mehrzeilige Strings mit Sonderzeichen}
-Ein weiteres tolles Feature ist, dass man mehrzeilige Strings nicht manuell umbrechen muss. Durch das Setzen von 3 Anführungszeichen zu Beginn des Strings, kann man den String einfach umbrechen:
+Ein weiteres tolles Feature ist, dass man mehrzeilige Strings nicht manuell umbrechen muss. Durch das Setzen von drei Anführungszeichen zu Beginn des Strings, kann man den String einfach umbrechen:
 
 \begin{lstlisting}[language=Scala]
 val multiLineString = """This
@@ -247,10 +247,10 @@ Eine tolle Beschreibung für diese Funktionalität gibt es in \cite{ScalaCookboo
 
 Eine weitere syntaktische Neuerung ist, dass die Methode \texttt{stripMargin()} ohne die Klammern aufgerufen wird. Dies ist in Scala möglich, wenn eine Methode keine Argumente erwartet.
 
-Tatsächlich ist es möglich, dass man sogar den Punkt zwischen dem String (also dem Objekt) und der Methode weglässt. Dies bezeichnet man als \textit{Postfix Operator Notation}, ein Feature, was Code teilweise sehr lesbar und schön macht, aber auch zu unerwartetem Verhalten führen kann \footnote{Diese Stackoverflow Diskussion klärt einige dieser Fragen, setzt jedoch voraus, dass man sich mit der Scala Syntax auskennt: \url{http://stackoverflow.com/questions/13011204/scalas-postfix-ops}}
+Tatsächlich ist es möglich, dass man sogar den Punkt zwischen dem String (also dem Objekt) und der Methode weglässt. Dies bezeichnet man als \textit{Postfix Operator Notation}, ein Feature, was Code teilweise sehr lesbar und schön macht, aber auch zu unerwartetem Verhalten führen kann.\footnote{Diese Stackoverflow Diskussion klärt einige dieser Fragen, setzt jedoch voraus, dass man sich mit der Scala Syntax auskennt: \url{http://stackoverflow.com/questions/13011204/scalas-postfix-ops}}
 
 \subsection{Getter \& Setter}\label{sec:getter-and-setter}
-Die Nutzung von Getter-- und Setter--Methoden Zugriff auf die Attribute eines Objekts ist gang und gäbe in Java. In Scala wird auf die Felder wie zugegriffen, als wären diese public, obwohl dies nicht der Fall ist. Scala generiert beim Kompilieren die Methoden, die den Zugriff auf die Variablen erlauben. Ein Beispiel\footnote{Das Beispiel stammt von \url{http://dustinmartin.net/getters-and-setters-in-scala/}} soll dies veranschaulichen:
+Die Nutzung von Getter-- und Setter--Methoden Zugriff auf die Attribute eines Objekts ist gang und gäbe in Java. In Scala wird auf die Felder so zugegriffen, als wären diese public, obwohl dies nicht der Fall ist. Scala generiert beim Kompilieren die Methoden, die den Zugriff auf die Variablen erlauben. Ein Beispiel\footnote{Das Beispiel stammt von \url{http://dustinmartin.net/getters-and-setters-in-scala/}} soll dies veranschaulichen:
 
 \begin{lstlisting}[language=Scala, caption=Beispiel Klasse Person]
 class Person() {
@@ -259,7 +259,7 @@ class Person() {
 }
 \end{lstlisting}
 
-Da die Klasse keine Methoden hat könnte man meinen, dass der Zugriff auf \texttt{name} und \texttt{age} nicht möglich ist. Jedoch wurden die Getter-- und Setter--Methoden von Scala automatisch erstellt und man kann nun auf die Felder zugreifen:
+Da die Klasse keine Methoden hat, könnte man meinen, dass der Zugriff auf \texttt{name} und \texttt{age} nicht möglich ist. Jedoch wurden die Getter-- und Setter--Methoden von Scala automatisch erstellt und man kann nun auf die Felder zugreifen:
 
 \begin{lstlisting}[language=Scala]
 person = new Person()
@@ -272,7 +272,7 @@ Man kann die Getter und Setter auch überschreiben, siehe hierzu \cite{ScalaCook
 
 \subsection{For--Schleifen}\label{sec:for-loops}
 
-Schleifen sind ein elementares Konstrukt aus der Programmierung. Bei den For--Schleifen wird dabei meistens eine Zählvariable benutzt, die bis zu einem gewissen Wert zählt und mit der man dann Sachen machen kann. Ein klassisches Beispiel ist das Befüllen eines Arrays mit Werten.
+Schleifen sind ein elementares Konstrukt aus der Programmierung. Bei den For--Schleifen wird dabei meistens eine Zählvariable benutzt, die bis zu einem gewissen Wert zählt und auf die man währenddessen zugreifen kann. Ein klassisches Beispiel ist das Befüllen eines Arrays mit Werten.
 
 \begin{lstlisting}[language=Java,caption=Typische For--Schleife aus der Java Programmierung]
 for (int i = 0; i <= array.length; i++) {
@@ -280,7 +280,7 @@ for (int i = 0; i <= array.length; i++) {
 }
 \end{lstlisting}
 
-Bei dem obigen Beispiel wird das Quadrat der Zählvariablen gespeichert. Da man hierbei manuell prüfen muss, wie lang das Array-Objekt ist \texttt{array.length}. Um typische Fehler zu vermeiden (beispielsweise \texttt{ArrayIndexOutOfBoundsException}), wurden Iteratoren eingeführt und man durchläuft Listen etc. durch For-Each Schleifen. Wenn man jedoch einen Index-Zugriff ermöglichen will, so benötigt man wieder eine Zählvariable.
+In dem obigen Beispiel wird das Quadrat vom Index als Wert in dem Array gespeichert. Dabei wird jedoch im Schleifen--Kopf manuell geprüft, ob das Ende des Arrays erreicht ist Um typische Fehler zu vermeiden (beispielsweise \texttt{ArrayIndexOutOfBoundsException}), wurden Iteratoren eingeführt und man durchläuft damit Listen etc. durch For-Each Schleifen. Wenn man jedoch einen Index-Zugriff ermöglichen will, so benötigt man wieder eine Zählvariable.
 
 \begin{lstlisting}[language=Java]
 int i = 0;
@@ -290,7 +290,7 @@ for (int element : array) {
 }
 \end{lstlisting}
 
-Da die Zählvariable \texttt{i} somit \textit{varriabel} sein müsste, gibt es in Scala einen anderen Ansatz. Man kann durch ein Schleifenkonstrukt wie folgt, die obige Ausgabe erreichen:
+Da die Zählvariable \texttt{i} somit \textit{variabel} sein müsste, gibt es in Scala einen anderen Ansatz. Man kann durch ein Schleifenkonstrukt wie folgt, die obige Ausgabe erreichen:
 
 \begin{lstlisting}[language=Scala]
 val array = new Array(1,2,3,4,5,6)
@@ -317,7 +317,7 @@ for ((element, index) <- array.zipWithIndex) {
 }
 \end{lstlisting}
 
-Nun haben wir einige Schleifen-Konstrukte kennen gelernt, jedoch nutzt man in Scala üblicherweise die \texttt{foreach}--Methode, die direkt in der Collection angeboten wird. Hier macht sich bemerktbar, dass Scala eine funktionale Programmiersprache ist. Man übergibt an die \texttt{foreach}--Methode nämlich eine Funktion, die jedes Mal ausgeführt wird. Am besten guckt man sich ein Beispiel an, um mit der Syntax vertraut zu werden.
+Nun haben wir einige Schleifen-Konstrukte kennen gelernt, jedoch nutzt man in Scala üblicherweise die \texttt{foreach}--Methode, die direkt in der Collection angeboten wird. Hier macht sich bemerkbar, dass Scala eine funktionale Programmiersprache ist. Man übergibt an die \texttt{foreach}--Methode nämlich eine Funktion, die jedes Mal ausgeführt wird. Am besten betrachtet man ein Beispiel, um mit der Syntax vertraut zu werden.
 
 \begin{lstlisting}[language=Scala]
 val array = new Array(1,2,3,4,5,6)
@@ -336,7 +336,7 @@ e: Int => println(e)
 val printElements = {e: Int => println(e)}
 \end{lstlisting}
 
-Nun gibt es in Scala noch einige Möglichkeiten, den Code weiter zu minimieren und somit lesbarer zu machen. So kann man die Typangabe von \texttt{e: Int} weglassen und lediglich \texttt{e} schreiben, da die foreach Methode auf einer Liste von \texttt{Int}s aufgerufen wird.
+Nun gibt es in Scala noch einige Möglichkeiten, den Code weiter zu minimieren und somit lesbarer zu machen. So kann man die Typangabe von \texttt{e: Int} weglassen und lediglich \texttt{e} schreiben, da die \texttt{foreach}--Methode auf einer Liste von \texttt{Int}s aufgerufen wird.
 
 \begin{lstlisting}[language=Scala,numbers=none]
 array.foreach(e => println(e))
@@ -361,7 +361,7 @@ Tupel sind ein in Scala eingebautes Feature, welches bei Java seit jeher vermiss
 
 In Scala gibt es Tupel, die bis zu 22 Elemente beinhalten können. \footnote{Auch wir haben uns die Frage gestellt, wieso gerade 22 Elemente die Obergrenze darstellen: \url{http://stackoverflow.com/questions/4152223/why-are-scala-functions-limited-to-22-parameters}}
 
-Beispielsweise kann man wie folgt einen Tupel zurück geben:
+Beispielsweise kann man wie folgt ein Tupel zurückgeben:
 
 \begin{lstlisting}[language=Scala, numbers=none]
 def returnTuples(): (Int, String) = {
@@ -420,5 +420,3 @@ def getClassAsString(x: Any): String = x match {
 Das Beispiel und eine Diskussion, wie man mit dem \textit{default} Fall umgehen sollte kann man in \cite{ScalaCookbook} (Section 3.7 --- \textit{Using a Match Expression Like a switch Statement} \& Section 3.8 --- \textit{Matching Multiple Conditions with One Case Statement}) nachlesen.
 
 Einige weitere Beispiel findet man auf der Seite \url{https://kerflyn.wordpress.com/2011/02/14/playing-with-scalas-pattern-matching/}.
-
-\subsection{Exception Handling \& Optional}

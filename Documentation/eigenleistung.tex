@@ -28,7 +28,7 @@ Benutzeroberfläche möglich.
 \end{figure}
 
 Zuletzt befindet sich im unteren Teil der \texttt{BorderPane} eine \texttt{TextArea}, die für alle textuellen Ausgaben in der Konsole
-verantwortlich ist. Hier kann der Benutzer optionalalerweise das Geschehen, welches im Zentrum animiert wird,
+verantwortlich ist. Hier kann der Benutzer optionalerweise das Geschehen, welches im Zentrum animiert wird,
 auf leserische Art mitverfolgen.
 
 \begin{figure}[!htb]
@@ -189,8 +189,6 @@ class MainController(
                       private val actionBar: AnchorPane) {
 \end{lstlisting}
 
-Erzeugen der Elemente und Initialisierung der Anwendung durch den Benutzer
-
 Um den Visual-Mergesort betriebsbereit zu machen, hat der Benutzer die Möglichkeit, aus drei verschiedenen Möglichkeiten auszuwählen, um die zu sortierenden Elemente auf der Zeichenfläche zu platzieren. Im Menü lässt sich über die vorhandenen Schaltflächen auswählen, ob die Elemente vom System zufällig verteilt, vorsortiert oder invertiert erzeugt werden sollen. Hierzu dient ein Enum, das je nach betätigtem Button mit dem entsprechenden Wert an die Methode \texttt{generateNumbers} übergeben wird.
 
 \begin{lstlisting}[language=Scala]
@@ -212,7 +210,7 @@ def generateInverseNumbers(): Unit = {
 
 Nachdem die Elemente erzeugt wurden, ist die Anwendung betriebsbereit und der Run-Button wird aktiviert.
 
-In der Methode \texttt{generateNumbers} wird eine Liste mit Zufallszahlen zwischen dem Minimalwert {texttt{defaultMinimumNumber} und dem Maximalwert \texttt{defaultMaximumNumber} generiert, die so viele Elemente enthält, wie über den Slider in der Applikation eingestellt wurde. Der Unterstrich dient in diesem Fall als Platzhalter für jedes Element in der Liste. Je nachdem, welcher Button zuvor betätigt wurde, wird die Liste  anschließend optional noch sortiert oder invertiert.
+In der Methode \texttt{generateNumbers} wird eine Liste mit Zufallszahlen zwischen dem Minimalwert \texttt{defaultMinimumNumber} und dem Maximalwert \texttt{defaultMaximumNumber} generiert, die so viele Elemente enthält, wie über den Slider in der Applikation eingestellt wurde. Der Unterstrich dient in diesem Fall als Platzhalter für jedes Element in der Liste. Je nachdem, welcher Button zuvor betätigt wurde, wird die Liste  anschließend optional noch sortiert oder invertiert.
 
 \begin{lstlisting}[language=Scala,caption=Erstellung der Zahlen-Elemente]
 def generateNumbers(elementOrder: EnumVal): Unit = {
@@ -301,7 +299,7 @@ def runSorting():Unit = {
 
 Durch die Methode \texttt{runSorting} wird der Run-Button deaktiviert und der Algorithmus zum Sortieren der Elemente durchgeführt, welcher die vorher generierte Gruppe als Eingangsmenge übernimmt. Anschließend wird die Animation, die den Algorithmus visualisiert, gestartet.
 
-Die Implementierung der Logik für den Algorithmus befindet sich in der Klasse SortElementsController.
+Die Implementierung der Logik für den Algorithmus befindet sich in der Klasse \texttt{SortElementsController}.
 
 Wie schon erwähnt, wird bei unserer Implementierung des Mergesort-Algorithmus nicht mit einer einzigen Gruppe gearbeitet, sondern mit vielen Listen, die nicht überschrieben werden. Das dient dazu, die schon gesplitteten und gemergten Elemente auf der Zeichenfläche unangetastet zu lassen. Um dies zu realisieren, müssen Duplikate der Eingangslisten erstellt werden, mit denen weitergearbeitet werden kann, ohne die schon gezeichneten Objekte zu beeinflussen. Man braucht also eine zweite Liste, welche Objekte mit äquivalenten Werten enthält. Für diese Aufgabe existiert die Methode \texttt{createGroup}, welche in unserer \texttt{sort} - Methode aufgerufen wird.
 
