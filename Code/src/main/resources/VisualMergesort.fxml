@@ -31,7 +31,7 @@
                                     </accelerator>
                                 </MenuItem>
                                 <MenuItem mnemonicParsing="false" onAction="#generateInverseNumbers"
-                                          text="Reverse Sorted Numbers">
+                                          text="Inverse Sorted Numbers">
                                     <accelerator>
                                         <KeyCodeCombination alt="UP" code="I" control="UP" meta="UP" shift="UP"
                                                             shortcut="DOWN"/>
