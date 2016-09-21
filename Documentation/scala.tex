@@ -1,5 +1,5 @@
 \chapter{Scala}
-Wir haben uns entschieden, das Programm in Scala zu schreiben, einer Sprache, die bereits schon im Jahr 2001 von Martin Odersky\footnote{\url{https://de.wikipedia.org/wiki/Martin_Odersky}} entwickelt wurde, jedoch erst seit Kurzem einen großen Bekanntheitsgrad erlangen konnte. Grund dafür ist der Hype um die sogenannte \textit{funktionale Programmierung} und das Bedürfnis, Anwendungen nebenläufig zu entwickeln.\\
+Wir haben uns entschieden, das Programm in Scala zu schreiben, einer Sprache, die bereits schon im Jahr 2001 von Martin Odersky\footnote{\url{https://de.wikipedia.org/wiki/Martin_Odersky}} entwickelt wurde, jedoch erst seit Kurzem einen großen Bekanntheitsgrad erlangen konnte. Grund dafür ist der Hype um die sogenannte \textit{funktionale Programmierung} und das Bedürfnis, nebenläufige Anwendungen zu entwickeln.\\
 Wir möchten nun zu Beginn die Gründe nennen, warum Scala sich als moderne Programmiersprache anbietet. Sogar von Javas Hauptentwickler James Gosling\footnote{\url{https://de.wikipedia.org/wiki/James_Gosling}} wurde Scala als bevorzugte Java-Alternative betitelt. \footnote{James Gosling wurde auf einer Konferenz gefragt, welche Programmiersprache er heutzutage anstelle von Java auf der JVM nutzen würde, worauf er entschieden mit ``Scala'' antwortete --- \url{http://www.adam-bien.com/roller/abien/entry/java_net_javaone_which_programming}}.
 
 \section{Laufzeit-Umgebung}
@@ -8,7 +8,7 @@ Scala ist wie Java eine Programmiersprache, die zu Bytecode kompiliert wird. Die
 Die JVM hat den großen Vorteil, dass sie mittlerweile seit 20 Jahren aktiv entwickelt wird und die gesamte Java-Umgebung besonders im Enterprise--Bereich eingesetzt wird. Das Resultat ist ein sehr stabiles und vor allem perfomantes System, das aus dem heutigen IT-Markt nicht mehr wegzudenken ist.
 
 \section{Bibliotheken}
-Scala wird also nicht zu irgendeinem Bytecode kompiliert, sondern zu Java-Bytecode, um genau zu sein. Dies hat den großen Vorteil, dass man neben der JVM-Unterstützung auch auf etablierte Java Bibliotheken zugreifen kann. Beispielsweise ist der Einsatz von Google GSON\footnote{Link zu der Projektseite von Google GSON: \url{https://github.com/google/gson}}, das das Serialisieren von Objekten in JSON und zurück ermöglicht, über Scala so möglich, wie auch über Java.
+Scala wird also nicht zu irgendeinem Bytecode kompiliert, sondern zu Java-Bytecode, um genau zu sein. Dies hat den großen Vorteil, dass man neben der JVM-Unterstützung auch auf etablierte Java Bibliotheken zugreifen kann. Beispielsweise ist der Einsatz von Google GSON\footnote{Link zu der Projektseite von Google GSON: \url{https://github.com/google/gson}}, das das Serialisieren von Objekten in JSON und zurück ermöglicht, über Scala möglich, wie auch über Java.
 
 So ist es dann auch kaum überraschend, dass der Einsatz von den üblichen Java Bibliotheken in Scala möglich ist. Ein Beispiel ist \texttt{JavaFX}, welches seit Java 8 Teil des \textit{Java Development Kit} (\texttt{JDK}) ist.
 
@@ -30,7 +30,7 @@ JavaFX ist besonders leicht zu entwickeln, da es auf den \texttt{Scene Graph} se
 \end{figure}
 
 Ein Vorteil ist, dass man so Objekte gruppieren kann und dadurch Operationen auf der Gruppe ausführen kann. So wird bei einer Verschiebe-Operation (auch \textit{Translation} genannt) jedes Element in der Gruppe verschoben, was den Code lesbarer und wartbarer macht.\\
-Außerdem ist somit eine zum Eltern Element relative Positionierung möglich.
+Außerdem ist somit eine zum Eltern--Element relative Positionierung möglich.
 
 \item[Klares MVC]\hfill\\
 Bei JavaFX wird das Konzept für das Design in einer separaten Datei, einer \textbf{FXML} Datei geführt. So muss man das Layout nicht im Code generieren. Im Abschnitt zu FXML~\ref{sec:fxml} wird dies ausführlicher beschrieben.
@@ -38,7 +38,7 @@ Bei JavaFX wird das Konzept für das Design in einer separaten Datei, einer \tex
 \item[Styling über CSS]\hfill\\
 Neben der Trennung von Ablauf, Logik und Gestaltung nach dem \textit{MVC}-Prinzip, lässt sich das Styling durch eine CSS-ähnliche Syntax durchführen, was das Gestalten von Oberflächen durch Designer ermöglicht. Es wird jedoch eine leicht abgewandelte Syntax verwendet. Das Setzen der Textfarbe auf rot (\texttt{\#ff0000} im RGB-Farbraum) wird durch die CSS-Syntax
 \begin{verbatim}
-.button: {
+.button {
   -fx-color: #f00;
 }
 \end{verbatim}
@@ -56,7 +56,7 @@ ScalaFX ist eine \textit{Domain Specifig Language}\footnote{Bei einer \texttt{DS
 \begin{description}
 \item[Lesbare Bind-Ausdrücke]\hfill\\
 Binding und Properties gehören zu den tollen Funktionen, die JavaFX bietet, jedoch ist die Syntax teilweise sehr umständlich.
-\paragraph{Beispiel:} Wenn man drei Rechtecke hat (\texttt{rect1}, \texttt{rect2} und \texttt{reckt3}) und man möchte, dass das Rechteck \texttt{rect1} so hoch ist, wie \texttt{rect2} und \texttt{rect3}, dann bindet man die Höhe von \texttt{rect1} an die summierte Höhe von \texttt{rect2} und \texttt{rect3}.
+\paragraph{Beispiel:} Wenn man drei Rechtecke hat (\texttt{rect1}, \texttt{rect2} und \texttt{rect3}) und man möchte, dass das Rechteck \texttt{rect1} so hoch ist, wie \texttt{rect2} und \texttt{rect3}, dann bindet man die Höhe von \texttt{rect1} an die summierte Höhe von \texttt{rect2} und \texttt{rect3}.
 
 \underline{Scala}:
 \begin{lstlisting}[language=scala,caption=Scala Beispiel Code für natürliche Bindings,numbers=none]
@@ -89,7 +89,7 @@ new Timeline(new KeyFrame(Duration.seconds(3), collapse))
 Ein Vorteil von Scala, den wir noch kennen lernen werden, ist, dass die Sprache \textit{statisch typisiert} ist. ScalaFX ist garantiert \textit{typsicher}, was zur Folge hat, dass Fehler bereits beim Kompilieren auftreten und diese nicht erst zur Laufzeit zu Fehlern führen. ~\cite{TypesAndProgrammingLanguages}
 
 \item[Interoperabilität zwischen ScalaFX und JavaFX]\hfill\\
-ScalaFX liegt wie ein Wrapper um JavaFX und bietet Funktionen an, die die Arbeit mit JavaFX erleichtern. Dies wird dadurch vereinfacht, dass man ganz einfach zwischen JavaFX und ScalaFX wechseln kann. Ein besonders hilfreiches Konzept sind hierbei \textit{Implizite Konvertierungen}. So kann man beispielsweise eine \texttt{javafx"".scene"".Shape"".button} an eine Methode übergeben, die ein \texttt{scalafx"".scene"".Shape"".button} als Argument erwartet.
+ScalaFX liegt wie ein Wrapper um JavaFX und bietet Funktionen an, die die Arbeit mit JavaFX erleichtern. Dies wird dadurch vereinfacht, dass man ganz einfach zwischen JavaFX und ScalaFX wechseln kann. Ein besonders hilfreiches Konzept sind hierbei \textit{Implizite Konvertierungen}. So kann man beispielsweise ein \texttt{javafx"".scene"".Shape"".button} an eine Methode übergeben, die ein \texttt{scalafx"".scene"".Shape"".button} als Argument erwartet.
 \end{description}
 
 Da es sich bei ScalaFX primär um syntaktische Verbesserungen handelt, kann man argumentieren, dass die Benutzung obsolet ist. Wir haben uns bewusst für die Integration entschieden, da wir näher an der Scala Syntax bleiben wollten und die Lesbarkeit von Source-Code für uns ein wichtiger Aspekt ist\footnote{Eine Interessante Diskussion zu diesem Thema findet man auch hier \url{http://stackoverflow.com/a/22744881}}.
@@ -114,7 +114,7 @@ Man kann zwar Scala Code schreiben, der sehr an Java Code erinnert, jedoch wird 
 
 Da dies das erste Programm ist, das wir in Scala geschrieben haben, kann man bestimmt viele Sachen besser machen, wenn man entsprechend Erfahrung hat. Dennoch haben wir probiert, viele der tollen Features zu nutzen, die Scala bietet.
 
-Viele der folgenden Beispiele kann man in der \textbf{REPL} (\texttt{Read-Evaluate-Print-Loop}) testen. Die REPL ist so etwas wie eine interaktive Console, in der man Scala Code testen und ausprobieren kann. Da wir diese für unsere Projektarbeit nicht direkt benötigten, aber eine tolle Möglichkeit darstellt um Scala Code zu testen, verweisen wir auf die ausführliche Beschreibung von \cite{GettingStartedWithTheScalaREPL}
+Viele der folgenden Beispiele kann man in der \textbf{REPL} (\texttt{Read-Evaluate-Print-Loop}) testen. Die REPL ist so etwas wie eine interaktive Console, in der man Scala Code testen und ausprobieren kann. Da wir diese für unsere Projektarbeit nicht direkt benötigten, die \texttt{REPL} aber eine tolle Möglichkeit darstellt um Scala Code zu testen, verweisen wir auf die ausführliche Beschreibung von \cite{GettingStartedWithTheScalaREPL}.
 
 \subsection{Typinferenz}
 Scala ist eine statisch typisierte Sprache. Das bedeutet, dass eine Variable von einem Typ ist, der sich auch nicht ändert. In Java gibt man den Typ bei der Deklaration direkt mit an. Wenn man Beispielsweise eine Variable \texttt{helloWorld} vom Type \texttt{String} hat, die den Wert \texttt{Hello World} hat, dann wird dies wie folgt angegeben:
@@ -161,7 +161,7 @@ number = 2
 \end{lstlisting}
 
 \subsection{Methoden}
-Methoden werden ähnlich wie in Java geschrieben. Sie haben einen Rückgabetyp und eine ParameterListe. Wir wollen uns im folgenden Code eine sehr einfache Methode angucken:
+Methoden werden ähnlich wie in Java geschrieben. Sie haben einen Rückgabetyp und eine Parameterliste. Wir wollen uns im folgenden Code eine sehr einfache Methode angucken:
 
 \begin{lstlisting}[language=Scala]
 def isLarge(value: Int): Boolean = {
@@ -174,7 +174,7 @@ def isLarge(value: Int): Boolean = {
 
 Die Methode mit dem Namen \texttt{isLarge} nimmt also als Parameter einen \texttt{Integer}, den man mit dem Namen \texttt{value} anspricht. Die Methode hat den Rückgabetyp \texttt{Boolean}.
 
-Die Methode zeigt auch schon einige Besonderheiten an Scala. Man erkennt, dass das Schlüsselwort \texttt{return} nicht angegeben werden muss. In Java würde man \texttt{return true} und \texttt{return false} schreiben müssen \footnote{Man kann if Statements wie einen ternären Operator nutzen, siehe: \cite{ScalaCookbook} Section 3.6 --- \textit{Using the if Construct Like a Ternary Operator}} \footnote{Return Statements sollten vermieden werden, wie in \cite{ScalaInDepth} Section 2.2.1 --- \textit{Don't use return} beschrieben}. Dies hat den Hintergrund, dass \textbf{jeder Ausdruck ausgewertet wird} und somit etwas zurück gegeben wird. Wenn man nichts zurückgeben möchte, so gibt man \texttt{Unit} an. Unit gibt an, dass man mit dem Ergebnis, das zurückgegeben wird, nichts anfangen kann und kommt dem \texttt{void} in Java nahe. Beispielsweise die \texttt{println()} Methode hat den Rückgabetyp \texttt{Unit}.
+Die Methode zeigt auch schon einige Besonderheiten an Scala. Man erkennt, dass das Schlüsselwort \texttt{return} nicht angegeben werden muss. In Java würde man \texttt{return true} und \texttt{return false} schreiben müssen \footnote{Man kann if Statements wie einen ternären Operator nutzen, siehe: \cite{ScalaCookbook} Section 3.6 --- \textit{Using the if Construct Like a Ternary Operator}} \footnote{Return Statements sollten vermieden werden, wie in \cite{ScalaInDepth} Section 2.2.1 --- \textit{Don't use return} beschrieben}. Dies hat den Hintergrund, dass \textbf{jeder Ausdruck ausgewertet wird} und somit etwas zurück gegeben wird. Wenn man nichts zurückgeben möchte, so gibt man \texttt{Unit} an. Unit bedeutet, dass man mit dem Ergebnis, das zurückgegeben wird, nichts anfangen kann und kommt dem \texttt{void} in Java nahe. Beispielsweise die \texttt{println()} Methode hat den Rückgabetyp \texttt{Unit}.
 
 Um das obige Beispiel noch klarer zu machen, speichern wir den von dem If-Statement zurückgegebenen Wert in einem Value, den wir dann zurück geben werden:
 
@@ -280,7 +280,7 @@ for (int i = 0; i <= array.length; i++) {
 }
 \end{lstlisting}
 
-In dem obigen Beispiel wird das Quadrat vom Index als Wert in dem Array gespeichert. Dabei wird jedoch im Schleifen-Kopf manuell geprüft, ob das Ende des Arrays erreicht ist Um typische Fehler zu vermeiden (beispielsweise \texttt{ArrayIndexOutOfBoundsException}), wurden Iteratoren eingeführt und man durchläuft damit Listen etc. durch For-Each Schleifen. Wenn man jedoch den Zugriff über einen Index ermöglichen will, benötigt man wieder eine Zählvariable.
+In dem obigen Beispiel wird das Quadrat vom Index als Wert in dem Array gespeichert. Dabei wird jedoch im Schleifen-Kopf manuell geprüft, ob das Ende des Arrays erreicht ist. Um typische Fehler zu vermeiden (beispielsweise \texttt{ArrayIndexOutOfBoundsException}), wurden Iteratoren eingeführt und man durchläuft damit Listen etc. durch For-Each Schleifen. Wenn man jedoch den Zugriff über einen Index ermöglichen will, benötigt man wieder eine Zählvariable.
 
 \begin{lstlisting}[language=Java]
 int i = 0;
@@ -304,7 +304,7 @@ Wie man erkennt, greift man nicht mehr über \texttt{array[i]} auf ein Element i
 \begin{lstlisting}[language=Scala,caption=For--Each in Scala]
 var i = 0
 for (element <- array) {
-  println(s"$i: $element)
+  println(s"$i: $element")
   i += 1
 }
 \end{lstlisting}
@@ -330,7 +330,7 @@ Hier wird die an die For-Each Methode die Funktion
 e: Int => println(e)
 \end{lstlisting}
 
-übergeben. Da in dem Array Elemente vom Typ enthalten sind, nimmt die Funktion Werte \texttt{e} von Typ \texttt{Int}. Für diese Werte wird dann die Funktion \texttt{println(e)} aufgerufen. Man kann diesen Ausdruck auch in einem Value speichern und so an die \texttt{forearch}--Methode übergeben.
+übergeben. Da in dem Array Elemente vom Typ \texttt{Int} enthalten sind, nimmt die Funktion Werte \texttt{e} von Typ \texttt{Int}. Für diese Werte wird dann die Funktion \texttt{println(e)} aufgerufen. Man kann diesen Ausdruck auch in einem Value speichern und so an die \texttt{forearch}--Methode übergeben.
 
 \begin{lstlisting}[language=Scala,numbers=none]
 val printElements = {e: Int => println(e)}
@@ -342,7 +342,7 @@ Nun gibt es in Scala noch einige Möglichkeiten, den Code weiter zu minimieren u
 array.foreach(e => println(e))
 \end{lstlisting}
 
-Und da klar ist, auf welches Element zugegriffen wird, kann man den Variablennamen ganz weglassen und einfach auf das Element zugreifen mit \texttt{\_}. Das sieht das so aus:
+Und da klar ist, auf welches Element zugegriffen wird, kann man den Variablennamen ganz weglassen und einfach auf das Element zugreifen mit \texttt{\_}. Das sieht dann so aus:
 
 \begin{lstlisting}[language=Scala,numbers=none]
 array.foreach(println(_))
@@ -354,7 +354,7 @@ Benötigt man den Index, dann kann man auch hier wieder die \texttt{zipWithIndex
 array.zipWithIndex.foreach(e => println(s"${e._2}: ${e._1}"))
 \end{lstlisting}
 
-Was es mit dem \texttt{e.\_2} und \texttt{e.\_} auf sich hat, sehen wir im kommenden Abschnitt.
+Was es mit dem \texttt{e.\_2} und \texttt{e.\_1} auf sich hat, sehen wir im kommenden Abschnitt.
 
 \subsection{Tupel}
 Tupel sind ein in Scala eingebautes Feature, welches bei Java seit jeher vermisst wird. In einem Tupel werden zwei oder mehr Elemente abgespeichert, auf die man im Anschluss zugreifen möchte. Der Urpsrung liegt darin, dass man in Methoden nur ein Objekt zurückgeben kann, welches man im Methodenkopf auch angeben muss. Möchte man mehr als ein Element zurückgeben, so muss man ein neues Objekt entwerfen, das die beiden Ergebnisse umschließt, ein sogenanntes \texttt{Wrapper}--Objekt. Dass es solche Objekte, beispielsweise als \texttt{Pair}, \texttt{Tripel} oder anderweitig nicht in der Java--Standard--Bibliothek gibt, wird häufig bemängelt\footnote{\url{https://dzone.com/articles/whats-wrong-java-8-part-v}}, auch wenn es Bibliotheken\footnote{\url{http://www.javatuples.org}} gibt, die diese Funktionalität nachrüsten.

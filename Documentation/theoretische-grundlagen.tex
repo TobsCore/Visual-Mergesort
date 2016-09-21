@@ -1,6 +1,6 @@
 \chapter{Theoretische Grundlgen}\label{chap:theoretische-grundlagen}
 \section{Rekursion}
-Um den Mergesort-Algorithmus in seiner eleganten Form zu verstehen, ist es unausweichbar, sich zuerst mit dem
+Um den Mergesort-Algorithmus in seiner eleganten Form zu verstehen, ist es unausweichlich, sich zuerst mit dem
 Konzept der Rekursion zu befassen. Generell bedeutet Rekursion, dass ein Regelwerk erneut auf die Dinge angewendet werden kann,
 welche mit diesem Regelwerk erzeugt wurden, was potenziell zu einer endlosen Produktionsschleife, wie beispielsweise bei einer Rückköpplung
 führen kann. In der Informatik dient Rekursion dazu, sonst sehr komplexe Sachverhalte elegant zu formulieren. Vereinfachterweise ist eine rekursive Methode
@@ -26,8 +26,7 @@ Ein Beispiel hierfür wäre die einfache Berechnung der Fakultät einer Zahl in 
 Der rekursive Methodenaufruf befindet sich direkt hinter dem zweiten \texttt{return} Ausdruck. Hier wird die gleich Methode immer wieder
 mit einer um eins dekrementierten Zahl aufgerufen, bis die vordefinierte Abbruchbedingung $n <= 1$ eintritt.
 
-Alternativ lässt sich die gleiche Funktion auch iterativ implementieren, wobei die Methode nur ein einziges Mal aufgerufen wird,
-und das Problem linear löst:
+Alternativ lässt sich die gleiche Funktion auch iterativ implementieren, wobei die Methode nur ein einziges Mal aufgerufen wird, und das Problem linear gelöst wird:
 
 \begin{lstlisting}[language=Java]
   public static berechne_fakultaet_iterariv(int n){
@@ -112,4 +111,4 @@ def merge(resultList:List[SortElement], leftList:List[SortElement], rightList:Li
 }
 \end{lstlisting}
 
-Diese Methode nimmt zwei vorsortierte Listen an und setzt alle Elemente dieser Teillisten zu einer einzigen, sortierten Liste zusammen. Hierzu wird für jeden Index $k$ der Ergebnisliste bestimmt, welches Element aus den beiden Listen an dieser Stelle einsortiert wird. Vorausgesetzt, die Ergebnisliste enthält noch nicht alle Elemente mindestens einer Teilliste, werden bei jedem Schritt die jeweils kleinsten Elemente der beiden Teillisten miteinander verglichen, die sich noch nicht in der Ergebnisliste befinden. Das kleinere wird an den aktuellen Index $k$ der Ergebnisliste gesetzt und der Zeiger $i$ bzw. $j$ der Teilliste wird inkrementiert, um auf das nächstgrößere Element zu zeigen. An dieser Stelle macht man es sich zunutze, dass die beiden Teillisten vorsortiert sind, da das nächstgrößere Element mit dem Hochzählen des Indexes $i$ bzw. $j$ der Teillisten automatisch ausgewählt wird. In diesem Codebeispiel existiert also eine einzige Liste, die fortlaufend aktualisiert wird, bis sie das Ergebnis beinhaltet. Zur Visualisierung des Algorithmus in unserer Applikation werden wir später für jedes Zwischenergebnis, welches gesplittet oder zusammengesetzt wurde, eine eigene Gruppe anlegen.
+Diese Methode nimmt zwei vorsortierte Listen an und setzt alle Elemente dieser Teillisten zu einer einzigen, sortierten Liste zusammen. Hierzu wird für jeden Index $k$ der Ergebnisliste bestimmt, welches Element aus den beiden Listen an dieser Stelle einsortiert wird. Vorausgesetzt, die Ergebnisliste enthält noch nicht alle Elemente mindestens einer Teilliste, werden bei jedem Schritt die jeweils kleinsten Elemente der beiden Teillisten miteinander verglichen, die sich noch nicht in der Ergebnisliste befinden. Das Kleinere wird an den aktuellen Index $k$ der Ergebnisliste gesetzt und der Zeiger $i$ bzw. $j$ der Teilliste wird inkrementiert, um auf das nächstgrößere Element zu zeigen. An dieser Stelle macht man es sich zunutze, dass die beiden Teillisten vorsortiert sind, da das nächstgrößere Element mit dem Hochzählen des Indexes $i$ bzw. $j$ der Teillisten automatisch ausgewählt wird. In diesem Codebeispiel existiert also eine einzige Liste, die fortlaufend aktualisiert wird, bis sie das Ergebnis beinhaltet. Zur Visualisierung des Algorithmus in unserer Applikation werden wir später für jedes Zwischenergebnis, welches gesplittet oder zusammengesetzt wurde, eine eigene Gruppe anlegen.
