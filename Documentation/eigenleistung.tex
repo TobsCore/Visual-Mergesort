@@ -299,7 +299,7 @@ def runSorting():Unit = {
 
 Durch die Methode \texttt{runSorting} wird der Run-Button deaktiviert und der Algorithmus zum Sortieren der Elemente durchgeführt, welcher die vorher generierte Gruppe als Eingangsmenge übernimmt. Anschließend wird die Animation, die den Algorithmus visualisiert, gestartet.
 
-Die Implementierung der Logik für den Algorithmus befindet sich in der Klasse \texttt{SortElementsController}.
+Die Implementierung der Logik für den Algorithmus befindet sich in der Klasse \texttt{Sort""Elements""Controller}.
 
 Wie schon erwähnt, wird bei unserer Implementierung des Mergesort-Algorithmus nicht mit einer einzigen Gruppe gearbeitet, sondern mit vielen Listen, die nicht überschrieben werden. Das dient dazu, die schon gesplitteten und gemergten Elemente auf der Zeichenfläche unangetastet zu lassen. Um dies zu realisieren, müssen Duplikate der Eingangslisten erstellt werden, mit denen weitergearbeitet werden kann, ohne die schon gezeichneten Objekte zu beeinflussen. Man braucht also eine zweite Liste, welche Objekte mit äquivalenten Werten enthält. Für diese Aufgabe existiert die Methode \texttt{createGroup}, welche in unserer \texttt{sort} - Methode aufgerufen wird.
 
